@@ -1,0 +1,111 @@
+name: Build macOS
+
+on:
+  push:
+    branches: [ main, copilot/add-zimaos-image-writer, develop ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  QT_VERSION: '6.7.2'
+
+jobs:
+  build-macos:
+    name: Build macOS DMG
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: recursive
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: ${{ env.QT_VERSION }}
+        host: 'mac'
+        target: 'desktop'
+        arch: 'clang_64'
+        modules: 'qtsvg qt5compat'
+        cache: true
+    
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: '3.27.x'
+    
+    - name: Get version
+      id: version
+      run: |
+        if [[ $GITHUB_REF == refs/tags/* ]]; then
+          VERSION=${GITHUB_REF#refs/tags/}
+        else
+          VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo "dev-$(git rev-parse --short HEAD)")
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Version: $VERSION"
+    
+    - name: Configure CMake
+      run: |
+        mkdir build
+        cd build
+        cmake ../src \
+          -DCMAKE_BUILD_TYPE=MinSizeRel \
+          -DCMAKE_PREFIX_PATH="${Qt6_DIR}/.." \
+          -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+    
+    - name: Build
+      run: |
+        cd build
+        cmake --build . --config MinSizeRel --parallel
+    
+    - name: Create DMG
+      run: |
+        cd build
+        
+        # Create app bundle structure
+        APP_NAME="ZimaOS Imager.app"
+        if [ -d "rpi-imager.app" ]; then
+          mv "rpi-imager.app" "${APP_NAME}"
+        fi
+        
+        # Run macdeployqt to bundle Qt frameworks
+        macdeployqt "${APP_NAME}" -dmg
+        
+        # Rename DMG with version
+        VERSION="${{ steps.version.outputs.version }}"
+        DMG_NAME="ZimaOS-Imager-${VERSION}-macOS.dmg"
+        
+        if [ -f "ZimaOS Imager.dmg" ]; then
+          mv "ZimaOS Imager.dmg" "${DMG_NAME}"
+        elif [ -f "rpi-imager.dmg" ]; then
+          mv "rpi-imager.dmg" "${DMG_NAME}"
+        fi
+        
+        echo "Created DMG: ${DMG_NAME}"
+        ls -lh "${DMG_NAME}"
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ZimaOS-Imager-macOS
+        path: build/ZimaOS-Imager-*-macOS.dmg
+        if-no-files-found: error
+        retention-days: 30
+    
+    - name: Create GitHub Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/ZimaOS-Imager-*-macOS.dmg
+        draft: false
+        prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-beta') || contains(github.ref, '-alpha') }}
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

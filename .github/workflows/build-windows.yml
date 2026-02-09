@@ -1,0 +1,110 @@
+name: Build Windows
+
+on:
+  push:
+    branches: [ main, copilot/add-zimaos-image-writer, develop ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  QT_VERSION: '6.7.2'
+
+jobs:
+  build-windows:
+    name: Build Windows Installer
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: recursive
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: ${{ env.QT_VERSION }}
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_mingw'
+        modules: 'qtsvg qt5compat'
+        tools: 'tools_mingw90'
+        cache: true
+    
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: '3.27.x'
+    
+    - name: Get version
+      id: version
+      shell: bash
+      run: |
+        if [[ $GITHUB_REF == refs/tags/* ]]; then
+          VERSION=${GITHUB_REF#refs/tags/}
+        else
+          VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo "dev-$(git rev-parse --short HEAD)")
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Version: $VERSION"
+    
+    - name: Configure CMake
+      shell: bash
+      run: |
+        mkdir build
+        cd build
+        cmake ../src \
+          -G "MinGW Makefiles" \
+          -DCMAKE_BUILD_TYPE=MinSizeRel \
+          -DCMAKE_PREFIX_PATH="${Qt6_DIR}/.." \
+          -DCMAKE_C_COMPILER=gcc \
+          -DCMAKE_CXX_COMPILER=g++
+    
+    - name: Build
+      shell: bash
+      run: |
+        cd build
+        cmake --build . --config MinSizeRel --parallel
+    
+    - name: Package
+      shell: bash
+      run: |
+        cd build
+        # Copy Qt dependencies
+        windeployqt.exe --release --no-translations rpi-imager.exe
+        
+        # Create zip package
+        VERSION="${{ steps.version.outputs.version }}"
+        PACKAGE_NAME="ZimaOS-Imager-${VERSION}-Windows-x64"
+        mkdir -p "${PACKAGE_NAME}"
+        cp rpi-imager.exe "${PACKAGE_NAME}/"
+        cp -r * "${PACKAGE_NAME}/" 2>/dev/null || true
+        
+        # Create zip file
+        powershell Compress-Archive -Path "${PACKAGE_NAME}" -DestinationPath "${PACKAGE_NAME}.zip"
+        
+        echo "Created package: ${PACKAGE_NAME}.zip"
+        ls -lh "${PACKAGE_NAME}.zip"
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ZimaOS-Imager-Windows-x64
+        path: build/ZimaOS-Imager-*-Windows-x64.zip
+        if-no-files-found: error
+        retention-days: 30
+    
+    - name: Create GitHub Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/ZimaOS-Imager-*-Windows-x64.zip
+        draft: false
+        prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-beta') || contains(github.ref, '-alpha') }}
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
