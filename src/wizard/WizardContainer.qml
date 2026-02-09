@@ -153,13 +153,12 @@ Item {
     }
 
     Component.onCompleted: {
-        // Set initial step based on language selection preference and network connectivity at startup.
-        // Language selection step is shown first if requested, then device selection (if online) or OS selection (if offline).
+        // Set initial step - always start with OS selection (skip device selection for ZimaOS)
+        // Language selection step is shown first if requested
         if (showLanguageSelection) {
             currentStep = stepLanguageSelection
-        } else if (hasNetworkConnectivity) {
-            currentStep = stepDeviceSelection
         } else {
+            // For ZimaOS, always start with OS selection (no device selection needed)
             currentStep = stepOSSelection
         }
         
@@ -183,26 +182,19 @@ Item {
     Connections {
         target: imageWriter
         function onOsListUnavailableChanged() {
-            // When OS list becomes available after starting offline, navigate to device
-            // selection so the user can choose their target device (now that the list is available).
+            // For ZimaOS, we don't navigate to device selection since it's skipped
+            // Just ensure we stay on OS selection if offline and network comes back
             // Guard: don't interrupt an active write operation.
             if (root.hasNetworkConnectivity && root.currentStep === root.stepOSSelection && !root.isWriting) {
-                console.log("OS list now available - navigating to device selection")
-                root.jumpToStep(root.stepDeviceSelection)
+                console.log("OS list now available - staying on OS selection")
+                // Stay on OS selection step
             }
         }
     }
 
     // Wizard step names for sidebar (grouped for cleaner display)
-    // When offline, skip Device selection
-    readonly property var stepNames: hasNetworkConnectivity ? [
-        qsTr("Device"),
-        qsTr("OS"), 
-        qsTr("Storage"),
-        qsTr("Customisation"),
-        qsTr("Writing"),
-        qsTr("Done")
-    ] : [
+    // For ZimaOS, always skip Device selection
+    readonly property var stepNames: [
         qsTr("OS"), 
         qsTr("Storage"),
         qsTr("Customisation"),
@@ -214,22 +206,21 @@ Item {
 
     // Helper function to map wizard step to sidebar index
     function getSidebarIndex(wizardStep) {
-        // When offline, device selection is skipped, so adjust indices
-        var offset = hasNetworkConnectivity ? 0 : -1
+        // For ZimaOS, device selection is always skipped
         
         if (wizardStep === stepDeviceSelection) {
-            // Device is at index 0 when online, not shown when offline
-            return hasNetworkConnectivity ? 0 : -1
+            // Device selection is not shown in ZimaOS
+            return -1
         } else if (wizardStep === stepOSSelection) {
-            return hasNetworkConnectivity ? 1 : 0
+            return 0
         } else if (wizardStep === stepStorageSelection) {
-            return hasNetworkConnectivity ? 2 : 1
+            return 1
         } else if (wizardStep >= firstCustomizationStep && wizardStep <= getLastCustomizationStep()) {
-            return hasNetworkConnectivity ? 3 : 2 // Customization group
+            return 2 // Customization group
         } else if (wizardStep === stepWriting) {
-            return hasNetworkConnectivity ? 4 : 3 // Writing
+            return 3 // Writing
         } else if (wizardStep === stepDone) {
-            return hasNetworkConnectivity ? 5 : 4 // Done
+            return 4 // Done
         }
         return 0
     }
@@ -357,27 +348,14 @@ Item {
 
     // Map sidebar index back to the first wizard step in that group
     function getWizardStepFromSidebarIndex(sidebarIndex) {
-        // When offline, device selection is not shown, so indices shift
-        if (hasNetworkConnectivity) {
-            switch (sidebarIndex) {
-                case 0: return stepDeviceSelection
-                case 1: return stepOSSelection
-                case 2: return stepStorageSelection
-                case 3: return firstCustomizationStep
-                case 4: return stepWriting
-                case 5: return stepDone
-                default: return stepDeviceSelection
-            }
-        } else {
-            // Offline: no device selection in sidebar
-            switch (sidebarIndex) {
-                case 0: return stepOSSelection
-                case 1: return stepStorageSelection
-                case 2: return firstCustomizationStep
-                case 3: return stepWriting
-                case 4: return stepDone
-                default: return stepOSSelection
-            }
+        // For ZimaOS, device selection is always skipped
+        switch (sidebarIndex) {
+            case 0: return stepOSSelection
+            case 1: return stepStorageSelection
+            case 2: return firstCustomizationStep
+            case 3: return stepWriting
+            case 4: return stepDone
+            default: return stepOSSelection
         }
     }
     
@@ -688,10 +666,8 @@ Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
             
-            // Skip device selection if offline (no network = no device list available)
-            // Start with language selection if requested, otherwise device selection if online, or OS selection if offline
-            initialItem: root.showLanguageSelection ? languageSelectionStep : 
-                        (root.hasNetworkConnectivity ? deviceSelectionStep : osSelectionStep)
+            // Skip device selection for ZimaOS - start with OS selection
+            initialItem: root.showLanguageSelection ? languageSelectionStep : osSelectionStep
             
             // Smooth transitions between steps
             pushEnter: Transition {

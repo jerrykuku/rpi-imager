@@ -77,6 +77,9 @@ WizardStepBase {
         
         // Initialize hasValidStorageOptions
         root.updateStorageStatus()
+        
+        // Auto-select first USB drive for ZimaOS
+        Qt.callLater(root.autoSelectFirstUsbDrive)
     }
     
     // Watch for device removal - when selectedStorageName becomes empty, clear the currentIndex
@@ -89,6 +92,8 @@ WizardStepBase {
                 dstlist.currentIndex = -1
                 root.selectedDeviceName = ""
                 root.nextButtonEnabled = false
+                // Try to auto-select another USB drive if available
+                Qt.callLater(root.autoSelectFirstUsbDrive)
             }
         }
     }
@@ -178,6 +183,10 @@ WizardStepBase {
             // Update storage status when device list changes
             onCountChanged: {
                 root.updateStorageStatus()
+                // Try to auto-select USB drive when list changes (e.g., new device connected)
+                if (!root.wizardContainer.selectedStorageName || root.wizardContainer.selectedStorageName.length === 0) {
+                    Qt.callLater(root.autoSelectFirstUsbDrive)
+                }
             }
             
             // No storage devices or no valid options message (visually hidden, for screen readers only)
@@ -561,6 +570,43 @@ WizardStepBase {
         } else {
             return qsTr("No valid storage devices are currently available. Uncheck 'Exclude system drives' to show hidden system drives, or connect a new storage device.")
         }
+    }
+    
+    // Auto-select first USB drive for ZimaOS
+    function autoSelectFirstUsbDrive() {
+        var model = root.imageWriter.getDriveList()
+        if (!model || model.rowCount() === 0) {
+            return
+        }
+        
+        // Role values from DriveListModel
+        var deviceRole = 0x101
+        var descriptionRole = 0x102
+        var sizeRole = 0x103
+        var isUsbRole = 0x104
+        var isReadOnlyRole = 0x106
+        var isSystemRole = 0x107
+        var mountpointsRole = 0x108
+        
+        // Find first USB drive that is selectable (not read-only, not system or filter is off)
+        for (var i = 0; i < model.rowCount(); i++) {
+            var idx = model.index(i, 0)
+            var isUsb = model.data(idx, isUsbRole)
+            var isReadOnly = model.data(idx, isReadOnlyRole)
+            var isSystem = model.data(idx, isSystemRole)
+            
+            // Check if this drive is selectable
+            var shouldHide = isSystem && filterSystemDrives.checked
+            if (isUsb && !isReadOnly && !shouldHide) {
+                // Found a selectable USB drive - auto-select it
+                console.log("Auto-selecting first USB drive at index", i)
+                dstlist.currentIndex = i
+                root.selectDriveByIndex(i)
+                return
+            }
+        }
+        
+        console.log("No selectable USB drive found for auto-selection")
     }
     // Stern confirmation when disabling system drive filtering
     ConfirmUnfilterDialog {
