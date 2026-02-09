@@ -270,14 +270,14 @@ endif()
 # Find Qt components - different requirements for CLI-only vs GUI builds
 if(BUILD_CLI_ONLY)
     # CLI-only build: need ONLY Core and Network for downloading
-    find_package(Qt6 6.9 COMPONENTS Core Network OPTIONAL_COMPONENTS LinguistTools)
+    find_package(Qt6 6.4 COMPONENTS Core Network OPTIONAL_COMPONENTS LinguistTools)
 else()
     # Regular GUI build: need Core, Quick, Svg, Network, Gui
     # DBus is required on Linux for suspend inhibitor and native file dialogs (portals)
     if(UNIX AND NOT APPLE)
-        find_package(Qt6 6.9 COMPONENTS Core Gui Quick Svg Network DBus OPTIONAL_COMPONENTS LinguistTools)
+        find_package(Qt6 6.4 COMPONENTS Core Gui Quick Svg Network DBus OPTIONAL_COMPONENTS LinguistTools)
     else()
-        find_package(Qt6 6.9 COMPONENTS Core Gui Quick Svg Network OPTIONAL_COMPONENTS LinguistTools)
+        find_package(Qt6 6.4 COMPONENTS Core Gui Quick Svg Network OPTIONAL_COMPONENTS LinguistTools)
     endif()
 endif()
 if (Qt6_FOUND)
@@ -286,7 +286,7 @@ if (Qt6_FOUND)
         set(CMAKE_OSX_DEPLOYMENT_TARGET "12" CACHE STRING "" FORCE)
     endif()
 else()
-    message(FATAL_ERROR "Missing suitable Qt library (must be at least version 6.9)" )
+    message(FATAL_ERROR "Missing suitable Qt library (must be at least version 6.4)" )
 endif()
 if(${QT}WinExtras_FOUND)
     set(EXTRALIBS ${EXTRALIBS} ${QT}::WinExtras)
@@ -396,8 +396,10 @@ if(BUILD_CLI_ONLY)
     set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "rpi-imager-cli")
 endif()
 
-# Create an rpi-imager_lupdate target
-qt_add_lupdate(TS_FILES ${TRANSLATIONS} SOURCE_TARGETS ${PROJECT_NAME} OPTIONS -no-obsolete -locations none)
+# Create an rpi-imager_lupdate target - only if LinguistTools is available and Qt >= 6.5
+if(Qt6LinguistTools_FOUND AND Qt6_VERSION VERSION_GREATER_EQUAL "6.5")
+    qt_add_lupdate(TS_FILES ${TRANSLATIONS} SOURCE_TARGETS ${PROJECT_NAME} OPTIONS -no-obsolete -locations none)
+endif()
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY AUTOMOC ON)
 set_property(TARGET ${PROJECT_NAME} PROPERTY AUTORCC ON)
@@ -438,10 +440,13 @@ endif()
 
 # Qt policies only needed for GUI builds
 if(NOT BUILD_CLI_ONLY)
-    qt_policy(SET QTP0001 NEW)
+    # Qt policies are only available in Qt 6.5+, comment out for Qt 6.4
+    if(Qt6_VERSION VERSION_GREATER_EQUAL "6.5")
+        qt_policy(SET QTP0001 NEW)
 
-    if (QT_KNOWN_POLICY_QTP0004)
-        qt_policy(SET QTP0004 NEW)
+        if (QT_KNOWN_POLICY_QTP0004)
+            qt_policy(SET QTP0004 NEW)
+        endif()
     endif()
 
     set(QT_QML_GENERATE_QMLLS_INI ON)
