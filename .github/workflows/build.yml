@@ -101,10 +101,14 @@ jobs:
       run: |
         echo "Build Status Summary:"
         echo "Linux AppImage: ${{ needs.build-linux-appimage.result }}"
+        echo ""
+        echo "Note: Windows and macOS builds run in separate workflows"
+        echo "  - build-windows.yml: Windows installer"
+        echo "  - build-macos.yml: macOS DMG"
         
         if [[ "${{ needs.build-linux-appimage.result }}" != "success" ]]; then
-          echo "Some builds failed!"
+          echo "Linux build failed!"
           exit 1
         fi
         
-        echo "All builds completed successfully!"
+        echo "Linux build completed successfully!"
