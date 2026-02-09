@@ -1,0 +1,66 @@
+name: Quick Build
+
+on:
+  push:
+    branches: [ main, copilot/add-zimaos-image-writer ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-check:
+    name: Build Check (CMake Only)
+    runs-on: ubuntu-22.04
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    
+    - name: Install Qt6 from Ubuntu repository
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          cmake \
+          git \
+          libgnutls28-dev \
+          libarchive-dev \
+          libcurl4-openssl-dev \
+          liblzma-dev \
+          qt6-base-dev \
+          qt6-declarative-dev \
+          qt6-svg-dev \
+          qt6-tools-dev \
+          libqt6svg6 \
+          qml6-module-qtquick \
+          qml6-module-qtquick-controls \
+          qml6-module-qtquick-layouts \
+          qml6-module-qtquick-templates \
+          qml6-module-qtquick-window \
+          qml6-module-qtqml-workerscript
+    
+    - name: Configure CMake
+      run: |
+        mkdir -p build
+        cd build
+        cmake ../src -DCMAKE_BUILD_TYPE=Release
+    
+    - name: Build
+      run: |
+        cd build
+        make -j$(nproc)
+    
+    - name: Check binary
+      run: |
+        ls -lh build/rpi-imager
+        file build/rpi-imager
+        ldd build/rpi-imager
+    
+    - name: Upload binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: zimaos-imager-linux-x86_64-binary
+        path: build/rpi-imager
+        retention-days: 7

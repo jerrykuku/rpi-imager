@@ -1,7 +1,18 @@
 # ZimaOS Imager - Quick Start Guide
 
+[![Build Status](https://github.com/jerrykuku/rpi-imager/workflows/Build%20ZimaOS%20Imager/badge.svg)](https://github.com/jerrykuku/rpi-imager/actions)
+[![Quick Build](https://github.com/jerrykuku/rpi-imager/workflows/Quick%20Build/badge.svg)](https://github.com/jerrykuku/rpi-imager/actions)
+
 ## 🎯 What This Is
 A simplified image writer for ZimaOS that automatically detects USB drives and skips unnecessary device selection.
+
+## 📥 Download
+
+### Pre-built Binaries
+Download the latest build from the [Releases page](../../releases) or from [GitHub Actions artifacts](../../actions).
+
+- **Linux AppImage**: Works on most Linux distributions
+- Automated builds on every commit to main branch
 
 ## 🚀 For End Users
 

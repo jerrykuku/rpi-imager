@@ -1,5 +1,7 @@
 # ZimaOS Imager Configuration
 
+[![Build Status](https://github.com/jerrykuku/rpi-imager/workflows/Build%20ZimaOS%20Imager/badge.svg)](https://github.com/jerrykuku/rpi-imager/actions)
+
 This is a fork of Raspberry Pi Imager that has been adapted for ZimaOS. It provides a simple interface to write ZimaOS images to USB drives.
 
 ## Key Changes
@@ -89,7 +91,36 @@ Then add the wrapper object and commit to the repository:
 
 ## Building
 
-See the main README.md for build instructions. The build process remains the same as the original Raspberry Pi Imager.
+### Automated Builds (GitHub Actions)
+
+The project includes GitHub Actions workflows that automatically build ZimaOS Imager:
+
+- **Linux AppImage**: Built automatically on every push and pull request
+- **Releases**: When you create a tag (e.g., `v1.0.0`), a GitHub Release is automatically created with the AppImage
+
+#### Download Pre-built Binaries
+
+Check the [Releases page](../../releases) for pre-built AppImages.
+
+### Manual Build
+
+See the main README.md for manual build instructions. The build process remains the same as the original Raspberry Pi Imager.
+
+#### Linux
+
+```bash
+# Install dependencies
+sudo apt install --no-install-recommends build-essential cmake git libgnutls28-dev
+
+# Build Qt (one-time)
+sudo ./qt/build-qt.sh
+
+# Build AppImage
+./create-appimage.sh
+
+# Run it
+./ZimaOS_Imager-*.AppImage
+```
 
 ## Alternative: Using Custom Repository URL
 
