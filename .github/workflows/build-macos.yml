@@ -54,7 +54,7 @@ jobs:
         host: 'mac'
         target: 'desktop'
         arch: 'clang_64'
-        modules: 'qtsvg qt5compat'
+        modules: 'qt5compat'
         cache: true
     
     - name: Setup CMake

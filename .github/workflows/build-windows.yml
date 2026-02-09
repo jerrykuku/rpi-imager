@@ -54,7 +54,7 @@ jobs:
         host: 'windows'
         target: 'desktop'
         arch: 'win64_mingw'
-        modules: 'qtsvg qt5compat'
+        modules: 'qt5compat'
         tools: 'tools_mingw90'
         cache: true
     
