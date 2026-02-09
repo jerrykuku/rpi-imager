@@ -1,0 +1,24 @@
+{
+  "os_list": [
+    {
+      "name": "ZimaOS 1.2.4",
+      "description": "ZimaOS is a fork of CasaOS, a simple home cloud system",
+      "url": "https://github.com/IceWhaleTech/ZimaOS/releases/download/v1.2.4/zimaos_zimacube-1.2.4_installer.img",
+      "icon": "https://raw.githubusercontent.com/IceWhaleTech/ZimaOS/main/icon.svg",
+      "website": "https://github.com/IceWhaleTech/ZimaOS",
+      "release_date": "2024-12-20",
+      "extract_size": 8589934592,
+      "image_download_size": 2147483648
+    },
+    {
+      "name": "ZimaOS 1.2.3",
+      "description": "ZimaOS is a fork of CasaOS, a simple home cloud system",
+      "url": "https://github.com/IceWhaleTech/ZimaOS/releases/download/v1.2.3/zimaos_zimacube-1.2.3_installer.img",
+      "icon": "https://raw.githubusercontent.com/IceWhaleTech/ZimaOS/main/icon.svg",
+      "website": "https://github.com/IceWhaleTech/ZimaOS",
+      "release_date": "2024-11-15",
+      "extract_size": 8589934592,
+      "image_download_size": 2147483648
+    }
+  ]
+}

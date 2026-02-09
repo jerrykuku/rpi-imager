@@ -7,8 +7,8 @@
  */
 
 
-/* Repository URL */
-#define OSLIST_URL                        "https://downloads.raspberrypi.com/os_list_imagingutility_v4.json"
+/* Repository URL - ZimaOS releases manifest */
+#define OSLIST_URL                        "https://raw.githubusercontent.com/IceWhaleTech/ZimaOS/main/zimaos-imager-manifest.json"
 
 /* Custom repository manifest file extension (without leading dot) */
 #define MANIFEST_EXTENSION                "rpi-imager-manifest"
