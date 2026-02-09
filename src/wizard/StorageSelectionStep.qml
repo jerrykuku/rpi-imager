@@ -22,6 +22,16 @@ WizardStepBase {
     showNextButton: true
     nextButtonEnabled: wizardContainer && wizardContainer.selectedStorageName && wizardContainer.selectedStorageName.length > 0  // Disabled until user selects a storage device
     
+    // Role values from DriveListModel (Qt::UserRole + 1, etc.)
+    readonly property int deviceRole: 0x101
+    readonly property int descriptionRole: 0x102
+    readonly property int sizeRole: 0x103
+    readonly property int isUsbRole: 0x104
+    readonly property int isScsiRole: 0x105
+    readonly property int isReadOnlyRole: 0x106
+    readonly property int isSystemRole: 0x107
+    readonly property int mountpointsRole: 0x108
+    
     // Forward the nextClicked signal as next() function
     // Only auto-advance if no system drive confirmation dialog is needed
     function next() {
@@ -458,7 +468,7 @@ WizardStepBase {
     // e.g., when using screen readers where itemAtIndex() returns null)
     function selectDriveByIndex(index) {
         var model = root.imageWriter.getDriveList()
-        if (!model || index < 0 || index >= model.rowCount()) {
+        if (model === null || model === undefined || index < 0 || index >= model.rowCount()) {
             return
         }
         
@@ -467,24 +477,16 @@ WizardStepBase {
             return
         }
         
-        // Role values from DriveListModel (Qt::UserRole + 1, etc.)
-        var deviceRole = 0x101
-        var descriptionRole = 0x102
-        var sizeRole = 0x103
-        var isReadOnlyRole = 0x106
-        var isSystemRole = 0x107
-        var mountpointsRole = 0x108
-        
-        var isReadOnly = model.data(modelIndex, isReadOnlyRole)
+        var isReadOnly = model.data(modelIndex, root.isReadOnlyRole)
         if (isReadOnly) {
             return  // Can't select read-only devices
         }
         
-        var isSystem = model.data(modelIndex, isSystemRole)
-        var device = model.data(modelIndex, deviceRole)
-        var description = model.data(modelIndex, descriptionRole)
-        var size = model.data(modelIndex, sizeRole)
-        var mountpoints = model.data(modelIndex, mountpointsRole) || []
+        var isSystem = model.data(modelIndex, root.isSystemRole)
+        var device = model.data(modelIndex, root.deviceRole)
+        var description = model.data(modelIndex, root.descriptionRole)
+        var size = model.data(modelIndex, root.sizeRole)
+        var mountpoints = model.data(modelIndex, root.mountpointsRole) || []
         
         // Create a mock item object with the required properties
         var mockItem = {
@@ -502,16 +504,13 @@ WizardStepBase {
     // Check if a storage item at the given index is selectable (not read-only and not hidden)
     function isStorageItemSelectable(index) {
         var model = root.imageWriter.getDriveList()
-        if (!model || index < 0 || index >= model.rowCount()) {
+        if (model === null || model === undefined || index < 0 || index >= model.rowCount()) {
             return false
         }
         
-        var isReadOnlyRole = 0x106
-        var isSystemRole = 0x107
-        
         var idx = model.index(index, 0)
-        var isReadOnly = model.data(idx, isReadOnlyRole)
-        var isSystem = model.data(idx, isSystemRole)
+        var isReadOnly = model.data(idx, root.isReadOnlyRole)
+        var isSystem = model.data(idx, root.isSystemRole)
         
         // Item is selectable if it's not read-only and either not a system drive or filter is off
         var shouldHide = isSystem && filterSystemDrives.checked
@@ -521,7 +520,7 @@ WizardStepBase {
     // Check if there are any selectable items in the list
     function hasSelectableItems() {
         var model = root.imageWriter.getDriveList()
-        if (!model || model.rowCount() === 0) {
+        if (model === null || model === undefined || model.rowCount() === 0) {
             return false
         }
         
@@ -537,15 +536,14 @@ WizardStepBase {
     function updateStorageStatus() {
         var model = root.imageWriter.getDriveList()
         root.hasValidStorageOptions = hasSelectableItems()
-        root.hasAnyDevices = model && model.rowCount() > 0
+        root.hasAnyDevices = (model !== null && model !== undefined && model.rowCount() > 0)
         
         // Check if we only have read-only devices
         if (root.hasAnyDevices && !root.hasValidStorageOptions) {
-            var isReadOnlyRole = 0x106
             var allReadOnly = true
             for (var i = 0; i < model.rowCount(); i++) {
                 var idx = model.index(i, 0)
-                var isReadOnly = model.data(idx, isReadOnlyRole)
+                var isReadOnly = model.data(idx, root.isReadOnlyRole)
                 if (!isReadOnly) {
                     allReadOnly = false
                     break
@@ -575,25 +573,16 @@ WizardStepBase {
     // Auto-select first USB drive for ZimaOS
     function autoSelectFirstUsbDrive() {
         var model = root.imageWriter.getDriveList()
-        if (!model || model.rowCount() === 0) {
+        if (model === null || model === undefined || model.rowCount() === 0) {
             return
         }
-        
-        // Role values from DriveListModel
-        var deviceRole = 0x101
-        var descriptionRole = 0x102
-        var sizeRole = 0x103
-        var isUsbRole = 0x104
-        var isReadOnlyRole = 0x106
-        var isSystemRole = 0x107
-        var mountpointsRole = 0x108
         
         // Find first USB drive that is selectable (not read-only, not system or filter is off)
         for (var i = 0; i < model.rowCount(); i++) {
             var idx = model.index(i, 0)
-            var isUsb = model.data(idx, isUsbRole)
-            var isReadOnly = model.data(idx, isReadOnlyRole)
-            var isSystem = model.data(idx, isSystemRole)
+            var isUsb = model.data(idx, root.isUsbRole)
+            var isReadOnly = model.data(idx, root.isReadOnlyRole)
+            var isSystem = model.data(idx, root.isSystemRole)
             
             // Check if this drive is selectable
             var shouldHide = isSystem && filterSystemDrives.checked
