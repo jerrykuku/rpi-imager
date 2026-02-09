@@ -1,0 +1,347 @@
+name: Manual Build All Platforms
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., v1.0.0, v1.0.0-rc1, or custom)'
+        required: true
+        default: 'v0.0.0-manual'
+      platforms:
+        description: 'Platforms to build'
+        required: true
+        type: choice
+        options:
+          - All (Linux + Windows + macOS)
+          - Linux only
+          - Windows only
+          - macOS only
+          - Linux + Windows
+          - Linux + macOS
+          - Windows + macOS
+        default: 'All (Linux + Windows + macOS)'
+      build_type:
+        description: 'Build type'
+        required: false
+        type: choice
+        options:
+          - Release
+          - MinSizeRel
+          - Debug
+        default: 'Release'
+      create_release:
+        description: 'Create GitHub Release with artifacts'
+        required: false
+        type: boolean
+        default: true
+      release_draft:
+        description: 'Create as draft release'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  setup:
+    name: Setup Build Configuration
+    runs-on: ubuntu-latest
+    outputs:
+      build_linux: ${{ steps.platforms.outputs.linux }}
+      build_windows: ${{ steps.platforms.outputs.windows }}
+      build_macos: ${{ steps.platforms.outputs.macos }}
+      version: ${{ github.event.inputs.version }}
+    steps:
+      - name: Determine platforms to build
+        id: platforms
+        run: |
+          PLATFORMS="${{ github.event.inputs.platforms }}"
+          
+          # Default all to false
+          LINUX=false
+          WINDOWS=false
+          MACOS=false
+          
+          # Parse platform selection
+          if [[ "$PLATFORMS" == *"All"* ]] || [[ "$PLATFORMS" == *"Linux"* ]]; then
+            LINUX=true
+          fi
+          if [[ "$PLATFORMS" == *"All"* ]] || [[ "$PLATFORMS" == *"Windows"* ]]; then
+            WINDOWS=true
+          fi
+          if [[ "$PLATFORMS" == *"All"* ]] || [[ "$PLATFORMS" == *"macOS"* ]]; then
+            MACOS=true
+          fi
+          
+          echo "linux=$LINUX" >> $GITHUB_OUTPUT
+          echo "windows=$WINDOWS" >> $GITHUB_OUTPUT
+          echo "macos=$MACOS" >> $GITHUB_OUTPUT
+          
+          echo "Build Linux: $LINUX"
+          echo "Build Windows: $WINDOWS"
+          echo "Build macOS: $MACOS"
+
+  build-linux:
+    name: Build Linux AppImage
+    needs: setup
+    if: needs.setup.outputs.build_linux == 'true'
+    runs-on: ubuntu-20.04
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: recursive
+    
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends \
+          build-essential \
+          cmake \
+          git \
+          libgnutls28-dev \
+          libarchive-dev \
+          libcurl4-openssl-dev \
+          liblzma-dev \
+          desktop-file-utils \
+          wget \
+          file \
+          fuse \
+          libfuse2
+    
+    - name: Build Qt
+      run: |
+        sudo ./qt/build-qt.sh
+    
+    - name: Build AppImage
+      run: |
+        ./create-appimage.sh
+    
+    - name: Rename AppImage
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        APPIMAGE=$(ls -1 ZimaOS*.AppImage Raspberry*.AppImage rpi-imager*.AppImage 2>/dev/null | head -1)
+        if [ -n "$APPIMAGE" ]; then
+          mv "$APPIMAGE" "ZimaOS-Imager-${VERSION}-x86_64.AppImage"
+        fi
+        ls -lh ZimaOS-Imager-*.AppImage
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ZimaOS-Imager-Linux-x86_64-manual
+        path: ZimaOS-Imager-*.AppImage
+        retention-days: 30
+
+  build-windows:
+    name: Build Windows
+    needs: setup
+    if: needs.setup.outputs.build_windows == 'true'
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: recursive
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.7.2'
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_mingw'
+        modules: 'qtsvg qt5compat'
+        tools: 'tools_mingw90'
+        cache: true
+    
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: '3.27.x'
+    
+    - name: Configure and Build
+      shell: bash
+      run: |
+        BUILD_TYPE="${{ github.event.inputs.build_type }}"
+        mkdir build
+        cd build
+        cmake ../src \
+          -G "MinGW Makefiles" \
+          -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+          -DCMAKE_PREFIX_PATH="${Qt6_DIR}/.." \
+          -DCMAKE_C_COMPILER=gcc \
+          -DCMAKE_CXX_COMPILER=g++
+        cmake --build . --config $BUILD_TYPE --parallel
+    
+    - name: Package
+      shell: bash
+      run: |
+        cd build
+        windeployqt.exe --release --no-translations rpi-imager.exe
+        
+        VERSION="${{ github.event.inputs.version }}"
+        PACKAGE_NAME="ZimaOS-Imager-${VERSION}-Windows-x64"
+        mkdir -p "${PACKAGE_NAME}"
+        cp rpi-imager.exe "${PACKAGE_NAME}/"
+        cp -r * "${PACKAGE_NAME}/" 2>/dev/null || true
+        
+        powershell Compress-Archive -Path "${PACKAGE_NAME}" -DestinationPath "${PACKAGE_NAME}.zip"
+        ls -lh "${PACKAGE_NAME}.zip"
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ZimaOS-Imager-Windows-x64-manual
+        path: build/ZimaOS-Imager-*-Windows-x64.zip
+        retention-days: 30
+
+  build-macos:
+    name: Build macOS DMG
+    needs: setup
+    if: needs.setup.outputs.build_macos == 'true'
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: recursive
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.7.2'
+        host: 'mac'
+        target: 'desktop'
+        arch: 'clang_64'
+        modules: 'qtsvg qt5compat'
+        cache: true
+    
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: '3.27.x'
+    
+    - name: Configure and Build
+      run: |
+        BUILD_TYPE="${{ github.event.inputs.build_type }}"
+        mkdir build
+        cd build
+        cmake ../src \
+          -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+          -DCMAKE_PREFIX_PATH="${Qt6_DIR}/.." \
+          -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
+          -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+        cmake --build . --config $BUILD_TYPE --parallel
+    
+    - name: Create DMG
+      run: |
+        cd build
+        APP_NAME="ZimaOS Imager.app"
+        if [ -d "rpi-imager.app" ]; then
+          mv "rpi-imager.app" "${APP_NAME}"
+        fi
+        
+        macdeployqt "${APP_NAME}" -dmg
+        
+        VERSION="${{ github.event.inputs.version }}"
+        DMG_NAME="ZimaOS-Imager-${VERSION}-macOS.dmg"
+        
+        if [ -f "ZimaOS Imager.dmg" ]; then
+          mv "ZimaOS Imager.dmg" "${DMG_NAME}"
+        elif [ -f "rpi-imager.dmg" ]; then
+          mv "rpi-imager.dmg" "${DMG_NAME}"
+        fi
+        
+        ls -lh "${DMG_NAME}"
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ZimaOS-Imager-macOS-manual
+        path: build/ZimaOS-Imager-*-macOS.dmg
+        retention-days: 30
+
+  create-release:
+    name: Create Release
+    needs: [setup, build-linux, build-windows, build-macos]
+    if: |
+      always() && 
+      github.event.inputs.create_release == 'true' &&
+      (needs.build-linux.result == 'success' || needs.build-linux.result == 'skipped') &&
+      (needs.build-windows.result == 'success' || needs.build-windows.result == 'skipped') &&
+      (needs.build-macos.result == 'success' || needs.build-macos.result == 'skipped')
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+    
+    - name: Display structure
+      run: |
+        ls -R artifacts/
+    
+    - name: Prepare release files
+      run: |
+        mkdir -p release-files
+        find artifacts -type f \( -name "*.AppImage" -o -name "*.zip" -o -name "*.dmg" \) -exec cp {} release-files/ \;
+        ls -lh release-files/
+    
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ github.event.inputs.version }}
+        name: ZimaOS Imager ${{ github.event.inputs.version }}
+        draft: ${{ github.event.inputs.release_draft }}
+        prerelease: ${{ contains(github.event.inputs.version, '-rc') || contains(github.event.inputs.version, '-beta') || contains(github.event.inputs.version, '-alpha') }}
+        generate_release_notes: true
+        files: release-files/*
+        body: |
+          ## ZimaOS Imager ${{ github.event.inputs.version }}
+          
+          Manual build triggered on ${{ github.event.repository.updated_at }}
+          
+          ### Build Configuration
+          - **Platforms**: ${{ github.event.inputs.platforms }}
+          - **Build Type**: ${{ github.event.inputs.build_type }}
+          - **Version**: ${{ github.event.inputs.version }}
+          
+          ### Downloads
+          Choose the appropriate package for your operating system:
+          - **Linux**: `ZimaOS-Imager-*-x86_64.AppImage`
+          - **Windows**: `ZimaOS-Imager-*-Windows-x64.zip`
+          - **macOS**: `ZimaOS-Imager-*-macOS.dmg`
+          
+          ### Installation
+          - **Linux**: Make executable and run: `chmod +x ZimaOS-Imager-*.AppImage && ./ZimaOS-Imager-*.AppImage`
+          - **Windows**: Extract ZIP and run `rpi-imager.exe`
+          - **macOS**: Open DMG and drag to Applications
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  summary:
+    name: Build Summary
+    needs: [setup, build-linux, build-windows, build-macos, create-release]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Summary
+      run: |
+        echo "## Manual Build Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Version**: ${{ github.event.inputs.version }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Build Type**: ${{ github.event.inputs.build_type }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Platforms**: ${{ github.event.inputs.platforms }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Build Results" >> $GITHUB_STEP_SUMMARY
+        echo "- Linux: ${{ needs.build-linux.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Windows: ${{ needs.build-windows.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- macOS: ${{ needs.build-macos.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Release: ${{ needs.create-release.result }}" >> $GITHUB_STEP_SUMMARY

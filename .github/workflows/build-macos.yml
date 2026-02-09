@@ -8,6 +8,29 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., v1.0.0 or dev-test)'
+        required: false
+        default: ''
+      build_type:
+        description: 'Build type'
+        required: false
+        type: choice
+        options:
+          - MinSizeRel
+          - Release
+          - Debug
+        default: 'MinSizeRel'
+      create_release:
+        description: 'Create GitHub Release'
+        required: false
+        type: boolean
+        default: false
+      qt_version:
+        description: 'Qt version to use'
+        required: false
+        default: '6.7.2'
 
 env:
   QT_VERSION: '6.7.2'
@@ -42,7 +65,10 @@ jobs:
     - name: Get version
       id: version
       run: |
-        if [[ $GITHUB_REF == refs/tags/* ]]; then
+        # Use manual input version if provided
+        if [[ -n "${{ github.event.inputs.version }}" ]]; then
+          VERSION="${{ github.event.inputs.version }}"
+        elif [[ $GITHUB_REF == refs/tags/* ]]; then
           VERSION=${GITHUB_REF#refs/tags/}
         else
           VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo "dev-$(git rev-parse --short HEAD)")
@@ -52,10 +78,11 @@ jobs:
     
     - name: Configure CMake
       run: |
+        BUILD_TYPE="${{ github.event.inputs.build_type || 'MinSizeRel' }}"
         mkdir build
         cd build
         cmake ../src \
-          -DCMAKE_BUILD_TYPE=MinSizeRel \
+          -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
           -DCMAKE_PREFIX_PATH="${Qt6_DIR}/.." \
           -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
           -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
@@ -100,12 +127,13 @@ jobs:
         retention-days: 30
     
     - name: Create GitHub Release
-      if: startsWith(github.ref, 'refs/tags/')
+      if: startsWith(github.ref, 'refs/tags/') || github.event.inputs.create_release == 'true'
       uses: softprops/action-gh-release@v1
       with:
         files: build/ZimaOS-Imager-*-macOS.dmg
         draft: false
         prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-beta') || contains(github.ref, '-alpha') }}
         generate_release_notes: true
+        tag_name: ${{ github.event.inputs.version || github.ref_name }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
