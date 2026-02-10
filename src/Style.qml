@@ -11,12 +11,13 @@ Item {
     id: root
 
     // === COLORS ===
-    readonly property color mainBackgroundColor: "#ffffff"
+    readonly property color mainBackgroundColor: "#FAFAFA"
     readonly property color transparent: "transparent"
     readonly property color zimaBlue: "#0057FF"
 
     readonly property color buttonBackgroundColor: mainBackgroundColor
     readonly property color buttonForegroundColor: zimaBlue
+    readonly property color buttonTextColor: "#404040"
     readonly property color buttonFocusedBackgroundColor: "#d1dcfb"
     readonly property color buttonHoveredBackgroundColor: "#f2f2f2"
 
@@ -46,6 +47,7 @@ Item {
     // descriptions in list views
     readonly property color textDescriptionColor: "#1a1a1a"
     // Sidebar colors
+    readonly property color sidebarTitleColor: "#171717"
     readonly property color sidebarActiveBackgroundColor: zimaBlue
     readonly property color sidebarTextOnActiveColor: "#FFFFFF"
     readonly property color sidebarTextOnInactiveColor: zimaBlue
@@ -115,7 +117,7 @@ Item {
     readonly property int spacingTiny: 8
     readonly property int spacingSmall: 10
     readonly property int spacingSmallPlus: 12
-    readonly property int spacingMedium: 15
+    readonly property int spacingMedium: 16
     readonly property int spacingLarge: 20
     readonly property int spacingExtraLarge: 30
 
@@ -124,8 +126,8 @@ Item {
     readonly property int buttonFontSize: fontSizeSm          // 14px
     readonly property int buttonLineHeight: 20
     readonly property int buttonPadding: 6
-    readonly property int buttonWidthMinimum: 120
-    readonly property int buttonWidthSkip: 150
+    readonly property int buttonWidthMinimum: 90
+    readonly property int buttonWidthSkip: 90
     
     readonly property int sectionMaxWidth: 500
     readonly property int sectionMargins: 24
@@ -133,8 +135,8 @@ Item {
     readonly property int sectionBorderWidth: 1
     readonly property int sectionBorderRadius: 8
     readonly property int listItemBorderRadius: 5
-    readonly property int listItemPadding: 15
-    readonly property int cardPadding: 20
+    readonly property int listItemPadding: 12
+    readonly property int cardPadding: 8
     readonly property int scrollBarWidth: 10
     readonly property int sidebarWidth: 200
     readonly property int sidebarItemBorderRadius: 8

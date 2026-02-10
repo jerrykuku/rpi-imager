@@ -96,7 +96,7 @@ FocusScope {
             MarqueeText {
                 id: titleText
                 text: root.title
-                font.pixelSize: Style.fontSizeTitle
+                font.pixelSize: Style.fontSizeHeading
                 font.family: Style.fontFamilyBold
                 font.bold: true
                 color: Style.formLabelColor
@@ -139,6 +139,7 @@ FocusScope {
             id: buttonRow
             Layout.fillWidth: true
             spacing: Style.spacingMedium
+            Layout.bottomMargin: Style.spacingSmallPlus
             
             // Embedded mode network info on the left
             Text {

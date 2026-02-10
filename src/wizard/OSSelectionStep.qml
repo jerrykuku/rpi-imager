@@ -22,7 +22,7 @@ WizardStepBase {
     readonly property OSListModel osmodel: imageWriter.getOSList()
     
     title: qsTr("Choose operating system")
-    subtitle: qsTr("Select the ZimaOS version you want to install")
+    // subtitle: qsTr("Select the ZimaOS version you want to install")
     showNextButton: true
     // Disable Next until a concrete OS has been selected
     nextButtonEnabled: oslist.currentIndex !== -1 && wizardContainer.selectedOsName.length > 0
@@ -387,7 +387,7 @@ WizardStepBase {
             
             width: parentListView ? parentListView.width : 200
             // Let content determine height for balanced vertical padding
-            height: Math.max(80, row.implicitHeight + Style.spacingSmall + Style.spacingMedium)
+            height: Math.max(96, row.implicitHeight + Style.spacingSmallPlus + Style.spacingSmallPlus)
             
             // Accessibility properties
             Accessible.role: Accessible.ListItem
@@ -411,7 +411,7 @@ WizardStepBase {
                 anchors.bottomMargin: 4
                 anchors.topMargin: 4
                 anchors.rightMargin: (
-                    (parentListView && parentListView.contentHeight > parentListView.height) ? Style.scrollBarWidth + 4 : 4)
+                    (parentListView && parentListView.contentHeight > parentListView.height) ? Style.scrollBarWidth + 4 : 0)
                 Accessible.ignored: true
                 
                 MouseArea {

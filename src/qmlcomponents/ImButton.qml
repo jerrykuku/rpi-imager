@@ -56,7 +56,7 @@ Button {
         font: control.font
         lineHeightMode: Text.FixedHeight
         lineHeight: Style.buttonLineHeight
-        color: control.enabled ? Style.buttonForegroundColor : Qt.rgba(0, 0, 0, 0.3)
+        color: control.enabled ? Style.buttonTextColor : Qt.rgba(0, 0, 0, 0.3)
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight  // Truncate if layout constrains button below content width

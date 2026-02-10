@@ -387,6 +387,7 @@ Item {
             border.color: Style.sidebarBorderColour
             border.width: 0
 
+
             Flickable {
                 id: sidebarScroll
                 clip: true
@@ -394,7 +395,9 @@ Item {
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: sidebarBottom.top
-                anchors.margins: Style.cardPadding
+                anchors.leftMargin: Style.cardPadding
+                anchors.topMargin: Style.cardPadding
+                anchors.bottomMargin: Style.cardPadding
                 contentWidth: -1
                 contentHeight: sidebarColumn.implicitHeight
                 z: 1
@@ -410,12 +413,13 @@ Item {
                     Text {
                         id: sidebarHeader
                         text: qsTr("Setup steps")
-                        font.pixelSize: Style.fontSizeHeading
-                        font.family: Style.fontFamilyBold
+                        font.pixelSize: Style.fontSizeTitle
+                        font.family: Style.fontFamily
                         font.bold: true
-                        color: Style.sidebarTextOnInactiveColor
+                        color: Style.sidebarTitleColor
                         Layout.fillWidth: true
                         Layout.bottomMargin: Style.spacingSmall
+                        Layout.leftMargin: Style.spacingMedium
                         Accessible.role: Accessible.Heading
                         Accessible.name: text
                     }
@@ -466,6 +470,7 @@ Item {
                                     anchors.fill: parent
                                     hoverEnabled: true
                                     enabled: stepItem.isClickable
+                                    z: 2
                                     cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
                                     onClicked: {
                                         var targetStep = root.getWizardStepFromSidebarIndex(stepItem.index);
@@ -477,7 +482,10 @@ Item {
                                 }
                                 RowLayout {
                                     anchors.fill: parent
-                                    anchors.margins: Style.spacingSmall
+                                    anchors.topMargin: Style.spacingSmall
+                                    anchors.bottomMargin: Style.spacingSmall
+                                    anchors.leftMargin: Style.spacingMedium
+                                    anchors.rightMargin: Style.spacingMedium
                                     spacing: Style.spacingTiny
                                     MarqueeText {
                                         Layout.fillWidth: true
@@ -658,24 +666,25 @@ Item {
                 }
             }
         }
-        // Vertical separator between sidebar and content
-        Item {
-            Layout.preferredWidth: 1
-            Layout.fillHeight: true
-            Rectangle {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                width: 1
-                height: parent.height * 0.75
-                color: Style.titleSeparatorColor
-            }
-        }
 
         // Main content area
         StackView {
             id: wizardStack
             Layout.fillWidth: true
             Layout.fillHeight: true
+            // add background rectangle to content area to cover scrollbar gaps and provide consistent background
+            Rectangle {
+                anchors.fill: parent
+                color: Style.listViewRowBackgroundColor
+                border.color: Style.popupBorderColor
+                border.width: 1
+                radius: 14
+                anchors.rightMargin: 8
+                anchors.topMargin: 8
+                anchors.bottomMargin: 8
+                anchors.leftMargin: 8
+                
+            }
 
             // Skip device selection if offline (no network = no device list available)
             // Start with language selection if requested, otherwise device selection if online, or OS selection if offline
@@ -1165,6 +1174,7 @@ Item {
             id: btnRow
             Layout.fillWidth: true
             Layout.topMargin: Style.spacingSmall
+            Layout.bottomMargin: Style.spacingSmall
             spacing: Style.spacingMedium
 
             Item {

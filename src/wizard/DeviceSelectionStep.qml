@@ -253,7 +253,7 @@ WizardStepBase {
             
             width: hwlist.width
             // Let content determine height for balanced vertical padding
-            height: Math.max(60, row.implicitHeight + Style.spacingSmall + Style.spacingMedium)
+            height: Math.max(80, row.implicitHeight + Style.spacingSmallPlus + Style.spacingSmallPlus)
             
             // Accessibility properties
             Accessible.role: Accessible.ListItem
@@ -266,13 +266,15 @@ WizardStepBase {
                 anchors.fill: parent
                 anchors.bottomMargin: 4
                 anchors.topMargin: 4
+                // 内部padding 设置为12
+                
                 color: (hwlist.currentIndex === hwitem.index) ? Style.listViewHighlightColor :
                        (hwMouseArea.containsMouse ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor)
                 // border color is the same as the highlight color
                 border.color: (hwlist.currentIndex === hwitem.index) ? Style.zimaBlue : "transparent"
                 border.width: 1
                 radius: 8
-                anchors.rightMargin: (hwlist.contentHeight > hwlist.height ? Style.scrollBarWidth+4 : 4)
+                anchors.rightMargin: (hwlist.contentHeight > hwlist.height ? Style.scrollBarWidth+4 : 0)
                 Accessible.ignored: true
                 
                 MouseArea {
@@ -296,10 +298,10 @@ WizardStepBase {
                 RowLayout {
                     id: row
                     anchors.fill: parent
-                    anchors.leftMargin: Style.listItemPadding
-                    anchors.rightMargin: Style.listItemPadding
-                    anchors.topMargin: Style.spacingSmall
-                    anchors.bottomMargin: Style.spacingMedium
+                    anchors.leftMargin: 12
+                    anchors.rightMargin: 12
+                    anchors.topMargin: 12
+                    anchors.bottomMargin: 12
                     spacing: Style.spacingMedium
                     
                     // Hardware Icon
