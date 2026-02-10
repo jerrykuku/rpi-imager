@@ -314,9 +314,13 @@ WizardStepBase {
                 anchors.bottom: parent.bottom
                 color: (dstlist.currentIndex === dstitem.index) ? Style.listViewHighlightColor :
                        (dstMouseArea.containsMouse && !dstitem.unselectable ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor)
-                radius: 0
+                radius: 8
+                border.color: (dstlist.currentIndex === dstitem.index) ? Style.zimaBlue : "transparent"
+                border.width: 1
+                anchors.bottomMargin: 4
+                anchors.topMargin: 4
                 opacity: dstitem.unselectable ? 0.5 : 1.0
-                anchors.rightMargin: (dstlist.contentHeight > dstlist.height ? Style.scrollBarWidth : 0)
+                anchors.rightMargin: (dstlist.contentHeight > dstlist.height ? Style.scrollBarWidth + 4 : 4)
                 Accessible.ignored: true
                 
                 MouseArea {

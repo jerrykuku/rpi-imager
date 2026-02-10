@@ -11,7 +11,18 @@ import RpiImager
 Button {
     id: control
     font.family: Style.fontFamily
+    font.pixelSize: Style.buttonFontSize
     font.capitalization: Font.AllUppercase
+
+    implicitHeight: Style.buttonHeightStandard
+    topInset: 0
+    bottomInset: 0
+    leftInset: 0
+    rightInset: 0
+    topPadding: Style.buttonPadding
+    bottomPadding: Style.buttonPadding
+    leftPadding: Style.buttonPadding
+    rightPadding: Style.buttonPadding
     
     // Allow instances to provide a custom accessibility description
     property string accessibleDescription: ""
@@ -30,7 +41,7 @@ Button {
 
     background: Rectangle {
         color: control.enabled ? (control.activeFocus ? Style.buttonFocusedBackgroundColor : (control.hovered ? Style.buttonHoveredBackgroundColor : Style.buttonBackgroundColor)) : Qt.rgba(0, 0, 0, 0.1)
-        radius: (control.imageWriter && control.imageWriter.isEmbeddedMode()) ? Style.buttonBorderRadiusEmbedded : 4
+        radius: (control.imageWriter && control.imageWriter.isEmbeddedMode()) ? Style.buttonBorderRadiusEmbedded : 8
         border.color: control.enabled ? Style.popupBorderColor : Qt.rgba(0, 0, 0, 0.2)
         border.width: 1
         antialiasing: true  // Smooth edges at non-integer scale factors
@@ -43,6 +54,8 @@ Button {
     contentItem: Text {
         text: control.text
         font: control.font
+        lineHeightMode: Text.FixedHeight
+        lineHeight: Style.buttonLineHeight
         color: control.enabled ? Style.buttonForegroundColor : Qt.rgba(0, 0, 0, 0.3)
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

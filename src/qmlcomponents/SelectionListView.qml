@@ -61,7 +61,7 @@ ListView {
     highlight: Rectangle {
         // When focused: use stronger highlight color
         // When not focused (default selected): use subtle highlight to show it's the default choice
-        color: root.activeFocus ? Style.listViewHighlightColor : Style.listViewRowBackgroundColor
+        color: Style.listViewRowBackgroundColor
         radius: 0
         anchors.fill: parent
         anchors.rightMargin: (root.contentHeight > root.height ? Style.scrollBarWidth : 0)

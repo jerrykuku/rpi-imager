@@ -11,7 +11,18 @@ import RpiImager
 Button {
     id: control
     font.family: Style.fontFamily
+    font.pixelSize: Style.buttonFontSize
     font.capitalization: Font.AllUppercase
+
+    implicitHeight: Style.buttonHeightStandard
+    topInset: 0
+    bottomInset: 0
+    leftInset: 0
+    rightInset: 0
+    topPadding: Style.buttonPadding
+    bottomPadding: Style.buttonPadding
+    leftPadding: Style.buttonPadding
+    rightPadding: Style.buttonPadding
     
     // Allow instances to provide a custom accessibility description
     property string accessibleDescription: ""
@@ -34,7 +45,7 @@ Button {
                    ? Style.button2HoveredBackgroundColor
                    : (control.hovered ? Style.button2HoveredBackgroundColor : Style.button2BackgroundColor))
                : Qt.rgba(0, 0, 0, 0.1)
-        radius: (control.imageWriter && control.imageWriter.isEmbeddedMode()) ? Style.buttonBorderRadiusEmbedded : 4
+        radius: (control.imageWriter && control.imageWriter.isEmbeddedMode()) ? Style.buttonBorderRadiusEmbedded : 8
         antialiasing: true  // Smooth edges at non-integer scale factors
         clip: true  // Prevent content overflow at non-integer scale factors
     }
@@ -45,8 +56,10 @@ Button {
     contentItem: Text {
         text: control.text
         font: control.font
+        lineHeightMode: Text.FixedHeight
+        lineHeight: Style.buttonLineHeight
         color: control.enabled
-               ? (control.activeFocus || control.hovered ? Style.raspberryRed : Style.button2ForegroundColor)
+               ? (control.activeFocus || control.hovered ? Style.button2ForegroundColor : Style.button2ForegroundColor)
                : Qt.rgba(0, 0, 0, 0.3)
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

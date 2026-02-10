@@ -171,6 +171,7 @@ FocusScope {
                 Layout.minimumWidth: Style.buttonWidthSkip
                 Layout.maximumWidth: Style.buttonWidthSkip * 1.5  // Allow some growth but cap it
                 Layout.preferredHeight: Style.buttonHeightStandard
+                Layout.maximumHeight: Style.buttonHeightStandard
                 onClicked: root.skipClicked()
                 // Tab order among action buttons: next -> back -> skip -> wrap to first field
                 KeyNavigation.tab: root.initialFocusItem ? root.initialFocusItem : nextButton
@@ -191,6 +192,7 @@ FocusScope {
                 Layout.minimumWidth: Style.buttonWidthMinimum
                 Layout.maximumWidth: Style.buttonWidthMinimum * 1.5  // Allow some growth but cap it
                 Layout.preferredHeight: Style.buttonHeightStandard
+                Layout.maximumHeight: Style.buttonHeightStandard
                 onClicked: root.backClicked()
                 // After back, Tab goes to skip; Shift+Tab goes to next
                 KeyNavigation.tab: skipButton
@@ -206,6 +208,7 @@ FocusScope {
                 Layout.minimumWidth: Style.buttonWidthMinimum
                 Layout.maximumWidth: Style.buttonWidthMinimum * 1.5  // Allow some growth but cap it
                 Layout.preferredHeight: Style.buttonHeightStandard
+                Layout.maximumHeight: Style.buttonHeightStandard
                 onClicked: root.nextClicked()
                 // After next, Tab goes to back; Shift+Tab goes to skip
                 KeyNavigation.tab: backButton

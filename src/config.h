@@ -8,7 +8,7 @@
 
 
 /* Repository URL */
-#define OSLIST_URL                        "https://downloads.raspberrypi.com/os_list_imagingutility_v4.json"
+#define OSLIST_URL                        "https://get.casaos.io/zimaos-manifest-example.json"
 
 /* Custom repository manifest file extension (without leading dot) */
 #define MANIFEST_EXTENSION                "rpi-imager-manifest"

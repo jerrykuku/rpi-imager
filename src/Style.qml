@@ -12,23 +12,23 @@ Item {
 
     // === COLORS ===
     readonly property color mainBackgroundColor: "#ffffff"
-    readonly property color raspberryRed: "#ab1e3a"
     readonly property color transparent: "transparent"
+    readonly property color zimaBlue: "#0057FF"
 
     readonly property color buttonBackgroundColor: mainBackgroundColor
-    readonly property color buttonForegroundColor: raspberryRed
+    readonly property color buttonForegroundColor: zimaBlue
     readonly property color buttonFocusedBackgroundColor: "#d1dcfb"
     readonly property color buttonHoveredBackgroundColor: "#f2f2f2"
 
-    readonly property color button2BackgroundColor: raspberryRed
+    readonly property color button2BackgroundColor: zimaBlue
     readonly property color button2ForegroundColor: mainBackgroundColor
     // Focused: noticeably darker for strong state indication (keyboard focus)
     readonly property color button2FocusedBackgroundColor: "#8f122c"
     // Hovered: noticeably lighter to differentiate from base (≥4.5:1 contrast vs base)
-    readonly property color button2HoveredBackgroundColor: "#eac7ce"
+    readonly property color button2HoveredBackgroundColor: "#0047db"
     // Hovered foreground should be Raspberry Red for ≥4.5:1 contrast on the light hover bg
-    readonly property color button2HoveredForegroundColor: raspberryRed
-    readonly property color raspberryRedHighlight: "#d64561"
+    readonly property color button2HoveredForegroundColor: zimaBlue
+    readonly property color zimaBlueHighlight: "#0047db"
 
     readonly property color titleBackgroundColor: "#f5f5f5"
     readonly property color titleSeparatorColor: "#afafaf"
@@ -37,7 +37,7 @@ Item {
     readonly property color listViewRowBackgroundColor: "#ffffff"
     readonly property color listViewHoverRowBackgroundColor: titleBackgroundColor
     // Selection highlight color for OS/device lists
-    readonly property color listViewHighlightColor: "#BACCE7"
+    readonly property color listViewHighlightColor: "#f4f8fc"
 
     // Utility translucent colors
     readonly property color translucentWhite10: Qt.rgba(255, 255, 255, 0.1)
@@ -46,14 +46,14 @@ Item {
     // descriptions in list views
     readonly property color textDescriptionColor: "#1a1a1a"
     // Sidebar colors
-    readonly property color sidebarActiveBackgroundColor: raspberryRed
+    readonly property color sidebarActiveBackgroundColor: zimaBlue
     readonly property color sidebarTextOnActiveColor: "#FFFFFF"
-    readonly property color sidebarTextOnInactiveColor: raspberryRed
+    readonly property color sidebarTextOnInactiveColor: zimaBlue
     readonly property color sidebarTextDisabledColor: "#E0E0E0"
     // Sidebar controls
     readonly property color sidebarControlBorderColor: "#767676"
     readonly property color sidebarBackgroundColour: mainBackgroundColor
-    readonly property color sidebarBorderColour: raspberryRed
+    readonly property color sidebarBorderColour: zimaBlue
 
     // OS metadata
     readonly property color textMetadataColor: "#646464"
@@ -63,9 +63,9 @@ Item {
 
     readonly property color progressBarTextColor: "white"
     readonly property color progressBarVerifyForegroundColor: "#6cc04a"
-    readonly property color progressBarBackgroundColor: raspberryRed
+    readonly property color progressBarBackgroundColor: zimaBlue
     // New: distinct colors for writing vs verification phases
-    readonly property color progressBarWritingForegroundColor: raspberryRed
+    readonly property color progressBarWritingForegroundColor: zimaBlue
     readonly property color progressBarTrackColor: titleBackgroundColor
 
     readonly property color lanbarBackgroundColor: "#ffffe3"
@@ -75,7 +75,7 @@ Item {
     readonly property color formLabelErrorColor: "red"
     readonly property color formLabelDisabledColor: "grey"
     // Active color for radio buttons, checkboxes, and switches
-    readonly property color formControlActiveColor: "#1955AE"
+    readonly property color formControlActiveColor: "#0057FF"
 
     readonly property color embeddedModeInfoTextColor: "#ffffff"
 
@@ -86,7 +86,7 @@ Item {
     readonly property int focusOutlineMargin: -4
 
     // === FONTS ===
-    readonly property alias fontFamily: roboto.name
+    readonly property alias fontFamily: robotoRegular.name
     readonly property alias fontFamilyLight: robotoLight.name
     readonly property alias fontFamilyBold: robotoBold.name
 
@@ -120,7 +120,10 @@ Item {
     readonly property int spacingExtraLarge: 30
 
     // === SIZES ===
-    readonly property int buttonHeightStandard: 40
+    readonly property int buttonHeightStandard: 32
+    readonly property int buttonFontSize: fontSizeSm          // 14px
+    readonly property int buttonLineHeight: 20
+    readonly property int buttonPadding: 6
     readonly property int buttonWidthMinimum: 120
     readonly property int buttonWidthSkip: 150
     
@@ -134,14 +137,14 @@ Item {
     readonly property int cardPadding: 20
     readonly property int scrollBarWidth: 10
     readonly property int sidebarWidth: 200
-    readonly property int sidebarItemBorderRadius: 4
+    readonly property int sidebarItemBorderRadius: 8
     // Embedded-mode overrides (0 radius to avoid software renderer artifacts)
-    readonly property int sectionBorderRadiusEmbedded: 0
-    readonly property int listItemBorderRadiusEmbedded: 0
-    readonly property int sidebarItemBorderRadiusEmbedded: 0
-    readonly property int buttonBorderRadiusEmbedded: 0
+    readonly property int sectionBorderRadiusEmbedded: 8
+    readonly property int listItemBorderRadiusEmbedded: 8
+    readonly property int sidebarItemBorderRadiusEmbedded: 8
+    readonly property int buttonBorderRadiusEmbedded: 8
     // Sidebar item heights
-    readonly property int sidebarItemHeight: buttonHeightStandard
+    readonly property int sidebarItemHeight: 40
     readonly property int sidebarSubItemHeight: sidebarItemHeight - 12
 
     // === LAYOUT ===
@@ -151,7 +154,7 @@ Item {
     readonly property int stepContentSpacing: 16
 
     // Font loaders
-    FontLoader { id: roboto;      source: "fonts/Roboto-Regular.ttf" }
-    FontLoader { id: robotoLight; source: "fonts/Roboto-Light.ttf" }
-    FontLoader { id: robotoBold;  source: "fonts/Roboto-Bold.ttf" }
+    FontLoader { id: robotoRegular; source: "fonts/Roboto-Regular.ttf" }
+    FontLoader { id: robotoLight;   source: "fonts/Roboto-Light.ttf" }
+    FontLoader { id: robotoBold;    source: "fonts/Roboto-Bold.ttf" }
 }

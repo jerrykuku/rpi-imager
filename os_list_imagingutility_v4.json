@@ -1,0 +1,34 @@
+{
+  "imager": {
+    "latest_version": "2.0.6",
+    "url": "https://www.zimaspace.com/zimaos",
+    "devices": [
+      {
+        "name": "Intel/AMD PC",
+        "tags": [
+          "x86_64-uefi"
+        ],
+        "icon": "https://downloads.raspberrypi.com/imager/icons/RPi_5.png",
+        "description": "Intel/AMD Generic x86_64 PC with UEFI firmware",
+        "matching_type": "exclusive",
+        "capabilities": []
+      }
+    ]
+  },
+  "os_list": [
+    {
+      "name": "ZimaOS 1.5.4",
+      "description": "A port of Debian Trixie with the Raspberry Pi Desktop (Recommended)",
+      "icon": "https://get.casaos.io/Zima.svg",
+      "url": "https://github.com/IceWhaleTech/ZimaOS/releases/download/1.5.4/zimaos-x86_64-1.5.4_installer.img",
+      "extract_size": 1413435392,
+      "extract_sha256": "e7c1f39224801fa89866e2c443cdcd026b3009ae037356e3b44327ba4dc58da5",
+      "image_download_size": 1413435392,
+      "release_date": "2026-02-04",
+      "init_format": "",
+      "devices": [
+        "x86_64-uefi"
+      ]
+    }
+  ]
+}

@@ -402,9 +402,13 @@ WizardStepBase {
                 // DO NOT disable ListView's highlight - both systems work in harmony
                 color: (parentListView && parentListView.currentIndex === index) ? Style.listViewHighlightColor :
                        (osMouseArea.containsMouse ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor)
-                radius: 0
+                radius: 8
+                border.color: (parentListView && parentListView.currentIndex === index) ? Style.zimaBlue : "transparent"
+                border.width: 1
+                anchors.bottomMargin: 4
+                anchors.topMargin: 4
                 anchors.rightMargin: (
-                    (parentListView && parentListView.contentHeight > parentListView.height) ? Style.scrollBarWidth : 0)
+                    (parentListView && parentListView.contentHeight > parentListView.height) ? Style.scrollBarWidth + 4 : 4)
                 Accessible.ignored: true
                 
                 MouseArea {

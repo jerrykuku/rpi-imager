@@ -264,10 +264,15 @@ WizardStepBase {
             Rectangle {
                 id: hwbgrect
                 anchors.fill: parent
+                anchors.bottomMargin: 4
+                anchors.topMargin: 4
                 color: (hwlist.currentIndex === hwitem.index) ? Style.listViewHighlightColor :
                        (hwMouseArea.containsMouse ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor)
-                radius: 0
-                anchors.rightMargin: (hwlist.contentHeight > hwlist.height ? Style.scrollBarWidth : 0)
+                // border color is the same as the highlight color
+                border.color: (hwlist.currentIndex === hwitem.index) ? Style.zimaBlue : "transparent"
+                border.width: 1
+                radius: 8
+                anchors.rightMargin: (hwlist.contentHeight > hwlist.height ? Style.scrollBarWidth+4 : 4)
                 Accessible.ignored: true
                 
                 MouseArea {
