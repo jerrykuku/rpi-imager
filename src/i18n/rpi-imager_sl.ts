@@ -335,7 +335,7 @@
 <context>
     <name>DeviceSelectionStep</name>
     <message>
-        <source>Select your Raspberry Pi device</source>
+        <source>Select your device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1280,7 +1280,7 @@ or type a path in the address bar above.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select an operating system to install on your Raspberry Pi</source>
+        <source>Select the ZimaOS version you want to install</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -335,7 +335,7 @@
 <context>
     <name>DeviceSelectionStep</name>
     <message>
-        <source>Select your Raspberry Pi device</source>
+        <source>Select your device</source>
         <translation>Výběr Raspberry Pi zařízení</translation>
     </message>
     <message>
@@ -1281,7 +1281,7 @@ nebo zadejte cestu do adresního řádku nahoře.</translation>
         <translation>Výběr operačního systému</translation>
     </message>
     <message>
-        <source>Select an operating system to install on your Raspberry Pi</source>
+        <source>Select the ZimaOS version you want to install</source>
         <translation>Vyberte operační systém, který chcete nainstalovat na svůj Raspberry Pi</translation>
     </message>
     <message>

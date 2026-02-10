@@ -335,8 +335,8 @@
 <context>
     <name>DeviceSelectionStep</name>
     <message>
-        <source>Select your Raspberry Pi device</source>
-        <translation>选择你的 Raspberry Pi 设备</translation>
+        <source>Select your device</source>
+        <translation>选择你的设备</translation>
     </message>
     <message>
         <source>Device selection list</source>
@@ -1281,8 +1281,8 @@ or type a path in the address bar above.</source>
         <translation>选择操作系统</translation>
     </message>
     <message>
-        <source>Select an operating system to install on your Raspberry Pi</source>
-        <translation>选择要安装到 Raspberry Pi 上的操作系统</translation>
+        <source>Select the ZimaOS version you want to install</source>
+        <translation>选择你想要安装的 ZimaOS 版本</translation>
     </message>
     <message>
         <source>Operating system list</source>

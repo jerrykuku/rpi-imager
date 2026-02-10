@@ -18,7 +18,7 @@
   "os_list": [
     {
       "name": "ZimaOS 1.5.4",
-      "description": "A port of Debian Trixie with the Raspberry Pi Desktop (Recommended)",
+      "description": "A Simplified, Focused and Open NAS OS_ (Recommended)",
       "icon": "https://get.casaos.io/Zima.svg",
       "url": "https://github.com/IceWhaleTech/ZimaOS/releases/download/1.5.4/zimaos-x86_64-1.5.4_installer.img",
       "extract_size": 1413435392,

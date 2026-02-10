@@ -34,6 +34,7 @@
 #include <QSessionManager>
 #include <QFileOpenEvent>
 #include <QtMath>
+#include <QtQuickControls2/QQuickStyle>
 #endif
 #include "platformquirks.h"
 #ifdef Q_OS_DARWIN
@@ -312,6 +313,11 @@ int main(int argc, char *argv[])
         qDebug() << "Embedded mode detected. System locale:" << QLocale::system().name();
     }
 #endif
+
+    // Set non-native style to allow custom control styling
+    // This prevents warnings about unsupported customization on native styles
+    QQuickStyle::setStyle("Basic");
+
     NetworkAccessManagerFactory namf;
     QQmlApplicationEngine engine;
     QString customQm;
