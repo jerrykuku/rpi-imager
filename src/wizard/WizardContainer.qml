@@ -1335,7 +1335,7 @@ Item {
                 anchors.margins: Style.spacingSmall
                 text: repositoryUrlDialog.repoUrl
                 font.pixelSize: Style.fontSizeCaption
-                font.family: "monospace"
+                font.family: "Monaco, Courier New, Courier"
                 color: Style.formLabelColor
                 wrapMode: Text.WrapAnywhere
                 elide: Text.ElideMiddle

@@ -249,7 +249,10 @@ WizardStepBase {
             Layout.preferredHeight: visible ? bannerContent.implicitHeight + Style.spacingMedium * 2 : 0
             visible: root.osListUnavailable
             color: Style.titleBackgroundColor
-            
+            radius: 8
+            anchors.topMargin: 4
+            anchors.bottomMargin: 4
+            anchors.rightMargin: 4
             RowLayout {
                 id: bannerContent
                 anchors.fill: parent
