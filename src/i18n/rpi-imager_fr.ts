@@ -504,8 +504,8 @@
         <translation>Le téléchargement semble corrompu. Le hachage SHA256 ne correspond pas.&lt;br&gt;Attendu&#xa0;: %1&lt;br&gt;Actuel&#xa0;: %2&lt;br&gt;Veuillez vérifier votre connexion réseau et ré-essayer.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>L&apos;accès contrôlé aux dossiers semble être activé. Veuillez ajouter rpi-imager.exe à la liste des apps autorisées et ré-essayer.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>L&apos;accès contrôlé aux dossiers semble être activé. Veuillez ajouter zimaos-usb-creator.exe à la liste des apps autorisées et ré-essayer.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>

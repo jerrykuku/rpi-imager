@@ -228,7 +228,7 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("raspberrypi.com");
     app.setApplicationName("ZimaOS USB Creator");
     app.setApplicationVersion(ImageWriter::staticVersion());
-    app.setWindowIcon(QIcon(":/icons/rpi-imager.ico"));
+    app.setWindowIcon(QIcon(":/icons/zimaos.ico"));
 
     // Log display scaling information for debugging (embedded mode only)
     if (::isEmbeddedMode()) {

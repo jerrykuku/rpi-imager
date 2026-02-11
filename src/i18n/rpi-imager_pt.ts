@@ -504,8 +504,8 @@
         <translation>A transferência parece estar corrompida. O hash SHA256 não corresponde.&lt;br&gt;Esperado: %1&lt;br&gt;Atual: %2&lt;br&gt;Verifique a sua ligação de rede e tente novamente.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>O Acesso Controlado a Pastas parece estar ativado. Adicione o rpi-imager.exe à lista de aplicações permitidas e tente novamente.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>O Acesso Controlado a Pastas parece estar ativado. Adicione o zimaos-usb-creator.exe à lista de aplicações permitidas e tente novamente.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>

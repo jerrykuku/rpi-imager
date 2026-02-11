@@ -1,10 +1,13 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: rpi-imager
-Source: 
+Upstream-Name: zimaos-usb-creator
+Source: https://github.com/IceWhaleTech/ZimaOS-USB-Creator
 
 Files: *
 Copyright: 2020 Raspberry Pi Ltd
+           2026 IceWhale Technology Ltd.
 License: Apache-2.0
+Comment: This is a modified version of Raspberry Pi Imager, adapted for ZimaOS.
+         Original project: https://github.com/raspberrypi/rpi-imager
 
 Files: src/dependencies/mountutils/* src/dependencies/drivelist/*
 Copyright: 2017 Balena.io 

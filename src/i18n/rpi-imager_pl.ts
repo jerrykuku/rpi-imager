@@ -505,8 +505,8 @@
         <translation>Pobieranie wydaje się być uszkodzone. Skrót SHA256 nie pasuje.&lt;br&gt;Oczekiwany: %1&lt;br&gt;Rzeczywisty: %2&lt;br&gt;Sprawdź połączenie sieciowe i spróbuj ponownie.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>Wydaje się, że funkcja kontrolowanego dostępu do folderów jest włączona. Dodaj plik rpi-imager.exe do listy dozwolonych aplikacji i spróbuj ponownie.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>Wydaje się, że funkcja kontrolowanego dostępu do folderów jest włączona. Dodaj plik zimaos-usb-creator.exe do listy dozwolonych aplikacji i spróbuj ponownie.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>

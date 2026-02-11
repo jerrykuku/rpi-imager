@@ -472,8 +472,8 @@
         <translation>Odepřený přistup při zapisování souboru na disk.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>Zdá se, že je zapnutý Řízený přístup ke složkám. Přidejte prosím rpi-imager.exe do seznamu výjimek a zkuste znovu.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>Zdá se, že je zapnutý Řízený přístup ke složkám. Přidejte prosím zimaos-usb-creator.exe do seznamu výjimek a zkuste znovu.</translation>
     </message>
     <message>
         <source>Error writing to storage (while flushing)</source>

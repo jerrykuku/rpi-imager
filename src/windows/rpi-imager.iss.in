@@ -1,9 +1,9 @@
 #define MyAppName "ZimaOS USB Creator"
 #define MyAppVersion "@IMAGER_VERSION_STR@"
-#define MyAppPublisher "Raspberry Pi Ltd"
-#define RaspberryPiSoftwareURL "https://www.raspberrypi.com/software"
-#define ImagerRepoRootURL "https://github.com/raspberrypi/rpi-imager"
-#define ImagerRepoIssuesURL "https://github.com/raspberrypi/rpi-imager/issues"
+#define MyAppPublisher "IceWhale Technology Ltd."
+#define ZimaOSURL "https://www.zimaspace.com/"
+#define ImagerRepoRootURL "https://github.com/IceWhaleTech/ZimaOS-USB-Creator"
+#define ImagerRepoIssuesURL "https://github.com/IceWhaleTech/ZimaOS-USB-Creator/issues"
 #define MyAppExeName "rpi-imager.exe"
 
 [Setup]
@@ -21,7 +21,7 @@ AllowNoIcons=yes
 LicenseFile=@CMAKE_BINARY_DIR@\deploy\license.txt
 OutputDir=@CMAKE_BINARY_DIR@\installer
 OutputBaseFilename=imager-{#MyAppVersion}
-SetupIconFile=@CMAKE_SOURCE_DIR@\icons\rpi-imager.ico
+SetupIconFile=@CMAKE_SOURCE_DIR@\icons\zimaos.ico
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern dynamic

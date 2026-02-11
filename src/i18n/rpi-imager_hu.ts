@@ -472,8 +472,8 @@
         <translation>Hozzáférés megtagadva a fájl lemezre írásakor.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>Úgy tűnik, a Vezérelt mappa-hozzáférés engedélyezve van. Adja hozzá a rpi-imager.exe fájlt az engedélyezett alkalmazások listájához, majd próbálja újra.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>Úgy tűnik, a Vezérelt mappa-hozzáférés engedélyezve van. Adja hozzá a zimaos-usb-creator.exe fájlt az engedélyezett alkalmazások listájához, majd próbálja újra.</translation>
     </message>
     <message>
         <source>Error writing to storage (while flushing)</source>

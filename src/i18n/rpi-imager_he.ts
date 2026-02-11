@@ -504,8 +504,8 @@
         <translation>נראה שההורדה פגומה. גיבוב ה־SHA256 לא תואם.&lt;br&gt;אמור להיות: %1&lt;br&gt;בפועל: %2&lt;br&gt;נא לבדוק האם החיבור שלך לרשת תקין ולנסות שוב.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>נראה שגישה מבוקרת לתיקיות פעילה. נא להוסיף את rpi-imager.exe לרשימת היישומים המורשים ולנסות שוב.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>נראה שגישה מבוקרת לתיקיות פעילה. נא להוסיף את zimaos-usb-creator.exe לרשימת היישומים המורשים ולנסות שוב.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>

@@ -505,8 +505,8 @@
         <translation>როგორც ჩანს, გადმოწერილი ფაილი დაზიანებულია. SHA256 ჰეში არ ემთხვევა.&lt;br&gt;მოსალოდნელი: %1&lt;br&gt;ფაქტიური: %2&lt;br&gt;შეამოწმეთ თქვენი ინტერნეტკავშირი და თავიდან სცადეთ.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>როგორც ჩანს, ჩართულია კონტროლირებადი საქაღალდის წვდომა. დაამატეთ rpi-imager.exe და fat32format.exe დაშვებული პროგრამების სიაში და თავიდან სცადეთ.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>როგორც ჩანს, ჩართულია კონტროლირებადი საქაღალდის წვდომა. დაამატეთ zimaos-usb-creator.exe და fat32format.exe დაშვებული პროგრამების სიაში და თავიდან სცადეთ.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>

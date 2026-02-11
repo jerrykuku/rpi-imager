@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-# Script to create AppImage for CLI-only rpi-imager
+# Script to create AppImage for CLI-only zimaos-usb-creator
 # This creates a minimal AppImage that only supports command-line operation
 
 # Parse command line arguments
@@ -184,7 +184,7 @@ BUILD_TYPE="MinSizeRel"  # Optimize for size
 
 # Location of AppDir and output file
 APPDIR="$PWD/AppDir-cli-$ARCH"
-OUTPUT_FILE="$PWD/Raspberry_Pi_Imager-${GIT_VERSION}-cli-${ARCH}.AppImage"
+OUTPUT_FILE="$PWD/ZimaOS_USB_Creator-${GIT_VERSION}-cli-${ARCH}.AppImage"
 
 # Tools directory for downloaded binaries
 TOOLS_DIR="$PWD/appimage-tools"
@@ -228,7 +228,7 @@ fi
 mkdir -p "$APPDIR"
 mkdir -p "$BUILD_DIR"
 
-echo "Building rpi-imager CLI-only for $ARCH..."
+echo "Building zimaos-usb-creator CLI-only for $ARCH..."
 # Configure and build with CMake
 cd "$BUILD_DIR"
 
@@ -271,7 +271,7 @@ export PATH="${HERE}/usr/bin:${PATH}"
 export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"
 
 # Execute the CLI-only binary directly (no --cli flag needed, it's built-in)
-exec "${HERE}/usr/bin/rpi-imager-cli" "$@"
+exec "${HERE}/usr/bin/zimaos-usb-creator-cli" "$@"
 EOF
 chmod +x "$APPDIR/AppRun"
 
@@ -332,14 +332,14 @@ cd "$SAVED_DIR"
 
 echo "Creating CLI-only AppImage..."
 # Remove old symlinks for CLI variant only
-rm -f "$PWD/rpi-imager-cli.AppImage"
-rm -f "$PWD/rpi-imager-cli-$ARCH.AppImage"
+rm -f "$PWD/zimaos-usb-creator-cli.AppImage"
+rm -f "$PWD/zimaos-usb-creator-cli-$ARCH.AppImage"
 
 if [ -n "$LINUXDEPLOY" ] && [ -f "$LINUXDEPLOY" ]; then
     # Create AppImage using linuxdeploy
     # Explicitly specify the desktop file to ensure correct naming
     LD_LIBRARY_PATH="$QT_DIR/lib:$LD_LIBRARY_PATH" "$LINUXDEPLOY" --appdir="$APPDIR" \
-        --desktop-file="$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-cli.desktop" \
+        --desktop-file="$APPDIR/usr/share/applications/com.icewhaletech.zimaos-usb-creator-cli.desktop" \
         --output=appimage \
         --exclude-library="libwayland-*" \
         --exclude-library="libX11*" \
@@ -378,8 +378,8 @@ if [ -f "$OUTPUT_FILE" ]; then
     echo "CLI-only AppImage created at $OUTPUT_FILE"
     
     # Create symlinks for debian packaging and user convenience
-    # Primary symlink matches debian/rpi-imager-cli.install expectations
-    DEBIAN_SYMLINK="$PWD/rpi-imager-cli-$ARCH.AppImage"
+    # Primary symlink matches debian/zimaos-usb-creator-cli.install expectations
+    DEBIAN_SYMLINK="$PWD/zimaos-usb-creator-cli-$ARCH.AppImage"
     if [ -L "$DEBIAN_SYMLINK" ] || [ -f "$DEBIAN_SYMLINK" ]; then
         rm -f "$DEBIAN_SYMLINK"
     fi
@@ -387,7 +387,7 @@ if [ -f "$OUTPUT_FILE" ]; then
     echo "Created symlink: $DEBIAN_SYMLINK -> $(basename "$OUTPUT_FILE")"
     
     # Additional architecture-independent symlink for convenience
-    SIMPLE_SYMLINK="$PWD/rpi-imager-cli.AppImage"
+    SIMPLE_SYMLINK="$PWD/zimaos-usb-creator-cli.AppImage"
     if [ -L "$SIMPLE_SYMLINK" ] || [ -f "$SIMPLE_SYMLINK" ]; then
         rm -f "$SIMPLE_SYMLINK"
     fi
@@ -396,7 +396,7 @@ if [ -f "$OUTPUT_FILE" ]; then
     
     # Show size comparison if desktop AppImage exists
     # Desktop AppImage uses GIT_VERSION and has -desktop- suffix
-    REGULAR_APPIMAGE="$PWD/Raspberry_Pi_Imager-${GIT_VERSION}-desktop-${ARCH}.AppImage"
+    REGULAR_APPIMAGE="$PWD/ZimaOS_USB_Creator-${GIT_VERSION}-desktop-${ARCH}.AppImage"
     if [ -f "$REGULAR_APPIMAGE" ]; then
         CLI_SIZE=$(stat -f%z "$OUTPUT_FILE" 2>/dev/null || stat -c%s "$OUTPUT_FILE" 2>/dev/null || echo "unknown")
         REGULAR_SIZE=$(stat -f%z "$REGULAR_APPIMAGE" 2>/dev/null || stat -c%s "$REGULAR_APPIMAGE" 2>/dev/null || echo "unknown")

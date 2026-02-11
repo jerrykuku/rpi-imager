@@ -2,7 +2,7 @@
 Type=Application
 Name=ZimaOS USB Creator (CLI)
 Comment=ZimaOS USB Creator command-line interface
-Exec=rpi-imager-cli
+Exec=zimaos-usb-creator-cli
 Icon=rpi-imager
 Categories=System;
 Terminal=true

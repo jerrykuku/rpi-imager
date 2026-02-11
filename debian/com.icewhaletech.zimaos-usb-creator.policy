@@ -4,19 +4,19 @@
  "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 <policyconfig>
 
-  <vendor>Raspberry Pi Ltd</vendor>
-  <vendor_url>https://www.raspberrypi.com/</vendor_url>
+  <vendor>IceWhale Technology Ltd.</vendor>
+  <vendor_url>https://www.zimaspace.com/</vendor_url>
 
-  <action id="com.raspberrypi.rpi-imager.run">
+  <action id="com.icewhaletech.zimaos-usb-creator.run">
     <description>Run ZimaOS USB Creator</description>
     <message>Authentication is required to run ZimaOS USB Creator</message>
-    <icon_name>rpi-imager</icon_name>
+    <icon_name>zimaos-usb-creator</icon_name>
     <defaults>
       <allow_any>auth_admin</allow_any>
       <allow_inactive>auth_admin</allow_inactive>
       <allow_active>auth_admin_keep</allow_active>
     </defaults>
-    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/rpi-imager</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/zimaos-usb-creator</annotate>
     <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
   </action>
 

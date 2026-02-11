@@ -504,8 +504,8 @@
         <translation>İndirme bozuk görünüyor. SHA256 karması eşleşmiyor.&lt;br&gt;Beklenen: %1&lt;br&gt;Gerçekleşen: %2&lt;br&gt;Lütfen ağ bağlantınızı kontrol edin ve tekrar deneyin.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>Kontrollü Klasör Erişimi etkin görünüyor. Lütfen rpi-imager.exe dosyasını izin verilen uygulamalar listesine ekleyin ve tekrar deneyin.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>Kontrollü Klasör Erişimi etkin görünüyor. Lütfen zimaos-usb-creator.exe dosyasını izin verilen uygulamalar listesine ekleyin ve tekrar deneyin.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>

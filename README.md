@@ -104,7 +104,7 @@ Building ZimaOS USB Creator on macOS is best done with Visual Studio Code (or a 
 
 - Open Visual Studio Code, and select 'Clone repo'. Give it the git url of this project.
 - Open the CMake plugin settings, and set the following Configure Args:
-  - `-DQt6_ROOT=/opt/Qt/6.9.1/macos` - or the equivalent path you installed Qt 6.9 to.
+  - `-DQt6_ROOT=/opt/Qt/6.9.3/macos` - or the equivalent path you installed Qt 6.9 to.
   - `-DIMAGER_SIGNED_APP=ON` - to enable code signing.
   - `-DIMAGER_SIGNING_IDENTITY=$cn` - to specify the Developer ID Certificate Common Name.
   - `-DIMAGER_NOTARIZE_APP=ON` - to enable automatic notarization for distribution to others.
@@ -112,6 +112,10 @@ Building ZimaOS USB Creator on macOS is best done with Visual Studio Code (or a 
 - In the CMake plugin tab, ensure you have selected the `MinSizeRel` variant if you intend to distribute to others.
 - In the CMake plugin tab, select the 'rpi_imager' target, and build it
 - Your resultant DMG will be located at `$WORKSPACE/build/ZimaOS USB Creator-$VERSION.dmg`
+
+`
+source .env.notarization && ./mac-build-dmg.sh --clean --signing-identity="Developer" --notarize-profile=zimaos-notarytool
+`
 
 ### Linux embedded (netboot) build
 

@@ -31,7 +31,6 @@ void ClipboardHelper::setText(const QString &text)
 
 QString ClipboardHelper::getText() const
 {
-    // Use the static method as shown in Qt documentation
     QClipboard *clipboard = QGuiApplication::clipboard();
     if (clipboard) {
         QString text = clipboard->text(QClipboard::Clipboard);
@@ -45,11 +44,9 @@ QString ClipboardHelper::getText() const
 
 bool ClipboardHelper::hasText() const
 {
-    // Use the static method as shown in Qt documentation
     QClipboard *clipboard = QGuiApplication::clipboard();
     if (clipboard) {
         return !clipboard->text(QClipboard::Clipboard).isEmpty();
     }
     return false;
 }
-

@@ -504,8 +504,8 @@
         <translation>La descarga parece estar dañada. El hash SHA256 no coincide.&lt;br&gt;Esperado: %1&lt;br&gt;Real: %2&lt;br&gt;Compruebe su conexión de red e inténtelo de nuevo.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>Parece que el acceso controlado a carpetas está activado. Añada rpi-imager.exe a la lista de aplicaciones permitidas e inténtelo de nuevo.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>Parece que el acceso controlado a carpetas está activado. Añada zimaos-usb-creator.exe a la lista de aplicaciones permitidas e inténtelo de nuevo.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>

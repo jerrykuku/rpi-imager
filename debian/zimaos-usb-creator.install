@@ -1,0 +1,15 @@
+#!/usr/bin/dh-exec
+
+# Install AppImage directly
+[linux-amd64] zimaos-usb-creator-x86_64.AppImage => /usr/bin/zimaos-usb-creator
+[linux-arm64] zimaos-usb-creator-aarch64.AppImage => /usr/bin/zimaos-usb-creator
+
+# Install PolicyKit policy for privilege escalation
+debian/com.icewhaletech.zimaos-usb-creator.policy /usr/share/polkit-1/actions/
+
+src/linux/icon/rpi-imager.svg /usr/share/icons/hicolor/scalable/apps/
+
+debian/com.icewhaletech.zimaos-usb-creator.desktop /usr/share/applications/
+debian/com.icewhaletech.zimaos-usb-creator.metainfo.xml /usr/share/metainfo/
+debian/com.icewhaletech.zimaos-usb-creator-manifest.xml /usr/share/mime/packages/
+

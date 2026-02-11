@@ -2,6 +2,7 @@
 include(cmake/GeneratedResource.cmake)
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2020-2025 Raspberry Pi Ltd
+# Modifications Copyright (C) 2026 IceWhale Technology Ltd.
 
 cmake_minimum_required(VERSION 3.22)
 OPTION (ENABLE_CHECK_VERSION "Check for version updates" ON)
@@ -26,7 +27,7 @@ endif()
 
 set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "Which macOS architectures to build for")
 
-project(rpi-imager LANGUAGES CXX C)
+project(zimaos-usb-creator LANGUAGES CXX C)
 
 # Get version from git tag
 find_package(Git QUIET)
@@ -393,7 +394,9 @@ endif()
 
 # Set output name based on build type
 if(BUILD_CLI_ONLY)
-    set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "rpi-imager-cli")
+    set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "zimaos-usb-creator-cli")
+else()
+    set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "zimaos-usb-creator")
 endif()
 
 # Create an rpi-imager_lupdate target

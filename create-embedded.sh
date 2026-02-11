@@ -198,7 +198,7 @@ BUILD_TYPE="MinSizeRel"  # Optimize for size in embedded systems
 
 # Location of AppDir and output file
 APPDIR="$PWD/AppDir-embedded-$ARCH"
-OUTPUT_FILE="$PWD/Raspberry_Pi_Imager-${GIT_VERSION}-embedded-${ARCH}.AppImage"
+OUTPUT_FILE="$PWD/ZimaOS_USB_Creator-${GIT_VERSION}-embedded-${ARCH}.AppImage"
 
 # Tools directory for downloaded binaries
 TOOLS_DIR="$PWD/appimage-tools"
@@ -257,7 +257,7 @@ fi
 mkdir -p "$APPDIR"
 mkdir -p "$BUILD_DIR"
 
-echo "Building rpi-imager for embedded $ARCH..."
+echo "Building zimaos-usb-creator for embedded $ARCH..."
 # Configure and build with CMake
 cd "$BUILD_DIR"
 
@@ -293,11 +293,11 @@ mkdir -p "$APPDIR/usr/share/applications"
 # Remove any existing desktop files to avoid confusion
 rm -f "$APPDIR/usr/share/applications/"*.desktop
 # Copy and modify the embedded desktop file
-cp "debian/com.raspberrypi.rpi-imager.desktop" "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
+cp "debian/com.icewhaletech.zimaos-usb-creator.desktop" "$APPDIR/usr/share/applications/com.icewhaletech.zimaos-usb-creator-embedded.desktop"
 # Update the desktop file for embedded use (preserve %F for file arguments)
-sed -i 's|Name=.*|Name=ZimaOS USB Creator (Embedded)|' "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
-sed -i 's|Comment=.*|Comment=ZimaOS USB Creator for embedded systems|' "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
-sed -i 's|Exec=.*|Exec=rpi-imager-embedded %F|' "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
+sed -i 's|Name=.*|Name=ZimaOS USB Creator (Embedded)|' "$APPDIR/usr/share/applications/com.icewhaletech.zimaos-usb-creator-embedded.desktop"
+sed -i 's|Comment=.*|Comment=ZimaOS USB Creator for embedded systems|' "$APPDIR/usr/share/applications/com.icewhaletech.zimaos-usb-creator-embedded.desktop"
+sed -i 's|Exec=.*|Exec=zimaos-usb-creator-embedded %F|' "$APPDIR/usr/share/applications/com.icewhaletech.zimaos-usb-creator-embedded.desktop"
 
 # Create the AppRun file
 cat > "$APPDIR/AppRun" << 'EOF'
@@ -417,7 +417,7 @@ export QT_QPA_FB_DRM=/dev/dri/card1
 # Logging (can be disabled in production)
 # export QT_LOGGING_RULES="*.debug=true;*.qpa.*=false"
 
-exec "${HERE}/usr/bin/rpi-imager" "$@"
+exec "${HERE}/usr/bin/zimaos-usb-creator" "$@"
 EOF
 chmod +x "$APPDIR/AppRun"
 
@@ -528,7 +528,7 @@ cp -d "/lib/${ARCH}-linux-gnu"/libdbus-1.so* "$APPDIR/usr/lib/" 2>/dev/null || \
     cp -d "/usr/lib/${ARCH}-linux-gnu"/libdbus-1.so* "$APPDIR/usr/lib/" 2>/dev/null || true
 
 # Note: libsystemd is intentionally NOT included - it must come from the host system
-# to work correctly with DBus (see https://github.com/raspberrypi/rpi-imager/issues/1304)
+# to work correctly with DBus (see https://github.com/raspberrypi/zimaos-usb-creator/issues/1304)
 
 cp -d "/lib/${ARCH}-linux-gnu"/libcap.so* "$APPDIR/usr/lib/" 2>/dev/null || \
     cp -d "/usr/lib/${ARCH}-linux-gnu"/libcap.so* "$APPDIR/usr/lib/" 2>/dev/null || true
@@ -661,7 +661,7 @@ cat > "$APPDIR/etc/fonts/local.conf" << 'FONTCONFIG_EOF'
     </match>
     
     <!-- Cache directory for font cache -->
-    <cachedir>/tmp/fontconfig-cache-rpi-imager</cachedir>
+    <cachedir>/tmp/fontconfig-cache-zimaos-usb-creator</cachedir>
 </fontconfig>
 FONTCONFIG_EOF
 
@@ -742,16 +742,16 @@ cd "$SAVED_DIR"
 
 echo "Creating embedded AppImage..."
 # Remove old symlinks for embedded variant only
-rm -f "$PWD/rpi-imager-embedded.AppImage"
-rm -f "$PWD/rpi-imager-embedded-$ARCH.AppImage"
+rm -f "$PWD/zimaos-usb-creator-embedded.AppImage"
+rm -f "$PWD/zimaos-usb-creator-embedded-$ARCH.AppImage"
 
 if [ -n "$LINUXDEPLOY" ] && [ -f "$LINUXDEPLOY" ]; then
     # Create AppImage using linuxdeploy
     # Explicitly specify the desktop file to ensure correct naming
     # Exclude libsystemd - it must come from the host system to work correctly with DBus
-    # (see https://github.com/raspberrypi/rpi-imager/issues/1304)
+    # (see https://github.com/raspberrypi/zimaos-usb-creator/issues/1304)
     LD_LIBRARY_PATH="$QT_DIR/lib:$LD_LIBRARY_PATH" "$LINUXDEPLOY" --appdir="$APPDIR" \
-        --desktop-file="$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop" \
+        --desktop-file="$APPDIR/usr/share/applications/com.icewhaletech.zimaos-usb-creator-embedded.desktop" \
         --output=appimage \
         --exclude-library="libwayland-*" \
         --exclude-library="libX11*" \
@@ -790,8 +790,8 @@ if [ -f "$OUTPUT_FILE" ]; then
     echo "Embedded AppImage created at $OUTPUT_FILE"
     
     # Create symlinks for debian packaging and user convenience
-    # Primary symlink matches debian/rpi-imager-embedded.install expectations
-    DEBIAN_SYMLINK="$PWD/rpi-imager-embedded.AppImage"
+    # Primary symlink matches debian/zimaos-usb-creator-embedded.install expectations
+    DEBIAN_SYMLINK="$PWD/zimaos-usb-creator-embedded.AppImage"
     if [ -L "$DEBIAN_SYMLINK" ] || [ -f "$DEBIAN_SYMLINK" ]; then
         rm -f "$DEBIAN_SYMLINK"
     fi
@@ -799,7 +799,7 @@ if [ -f "$OUTPUT_FILE" ]; then
     echo "Created symlink: $DEBIAN_SYMLINK -> $(basename "$OUTPUT_FILE")"
     
     # Additional architecture-specific symlink for clarity when building for multiple architectures
-    ARCH_SYMLINK="$PWD/rpi-imager-embedded-$ARCH.AppImage"
+    ARCH_SYMLINK="$PWD/zimaos-usb-creator-embedded-$ARCH.AppImage"
     if [ -L "$ARCH_SYMLINK" ] || [ -f "$ARCH_SYMLINK" ]; then
         rm -f "$ARCH_SYMLINK"
     fi

@@ -504,8 +504,8 @@
         <translation>다운로드가 손상된 것 같습니다. SHA256 해시가 일치하지 않습니다.&lt;br&gt;예상값: %1&lt;br&gt;실제값: %2&lt;br&gt;네트워크 연결을 확인하고 다시 시도하십시오</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>제어된 폴더 액세스가 활성화된 것 같습니다. rpi-imager.exe를 허용 앱 목록에 추가하고 다시 시도하십시오.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>제어된 폴더 액세스가 활성화된 것 같습니다. zimaos-usb-creator.exe를 허용 앱 목록에 추가하고 다시 시도하십시오.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>

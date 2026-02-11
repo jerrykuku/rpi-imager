@@ -492,7 +492,7 @@
         <translation>লেখা যাচাই ব্যর্থ হয়েছে। SD কার্ডে যা আছে সেটা যা লেখা হয়েছিল তার থেকে ভিন্ন মনে হচ্ছে।</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

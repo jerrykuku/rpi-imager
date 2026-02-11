@@ -59,7 +59,7 @@
       <string>Owner</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>com.raspberrypi.rpi-imager-manifest</string>
+        <string>com.icewhaletech.zimaos-usb-creator-manifest</string>
       </array>
     </dict>
   </array>
@@ -67,7 +67,7 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>com.raspberrypi.rpi-imager-manifest</string>
+      <string>com.icewhaletech.zimaos-usb-creator-manifest</string>
       <key>UTTypeDescription</key>
       <string>ZimaOS USB Creator Manifest</string>
       <key>UTTypeConformsTo</key>

@@ -1,51 +1,52 @@
-Source: rpi-imager
+Source: zimaos-usb-creator
 Section: admin
 Priority: optional
-Maintainer: Tom Dewey <tom.dewey@raspberrypi.com>
+Maintainer: IceWhale Technology Ltd. <support@icewhale.org>
 Build-Depends: debhelper-compat (= 13), cmake, libgnutls28-dev, dh-exec
 Standards-Version: 4.1.2
-Homepage: https://www.raspberrypi.com/software
+Homepage: https://github.com/IceWhaleTech/ZimaOS-USB-Creator
 
-Package: rpi-imager
+Package: zimaos-usb-creator
 Build-Profiles: <desktop>
 Architecture: amd64 arm64
 Depends: ${shlibs:Depends}, ${misc:Depends}, dosfstools, fdisk, fuse, libfuse2, util-linux (>= 2.37), pkexec
 Recommends: udisks2
-Conflicts: rpi-imager-embedded
-Description: Raspberry Pi Imaging utility
- A user-friendly tool for creating bootable media for Raspberry Pi Devices.
+Conflicts: zimaos-usb-creator-embedded
+Description: ZimaOS USB Creator
+ A user-friendly tool for creating bootable media for ZimaOS devices.
 
-Package: rpi-imager-embedded
+Package: zimaos-usb-creator-embedded
 Build-Profiles: <embedded>
 Architecture: arm64
 Depends: ${shlibs:Depends}, ${misc:Depends}, 
          dosfstools, fdisk, fuse, libfuse2, util-linux (>= 2.37), libdrm2,
          libinput10, libudev1, openssl
 Suggests: rpi-eeprom, firmware-brcm80211
-Conflicts: rpi-imager
-Description: Raspberry Pi Imaging utility for embedded systems
- A user-friendly tool for creating bootable media for Raspberry Pi devices,
+Conflicts: zimaos-usb-creator
+Description: ZimaOS USB Creator for embedded systems
+ A user-friendly tool for creating bootable media for ZimaOS devices,
  optimized for embedded systems.
  .
- This version is specifically designed for Raspberry Pi embedded systems:
+ This version is specifically designed for embedded systems:
   - Uses linuxfb for direct rendering (no desktop environment required)
   - Optimized for network-based installation
   - Smaller memory footprint for embedded applications
   - Supports DRM/KMS rendering
 
-Package: rpi-imager-cli
+Package: zimaos-usb-creator-cli
 Build-Profiles: <cli>
 Architecture: amd64 arm64 armhf
 Depends: ${shlibs:Depends}, ${misc:Depends}, 
          dosfstools, fdisk, fuse, libfuse2, util-linux (>= 2.37)
-Conflicts: rpi-imager, rpi-imager-embedded
-Description: Raspberry Pi Imaging utility (command-line only)
- A command-line tool for creating bootable media for Raspberry Pi devices.
+Conflicts: zimaos-usb-creator, zimaos-usb-creator-embedded
+Description: ZimaOS USB Creator (command-line only)
+ A command-line tool for creating bootable media for ZimaOS devices.
  .
  This version is optimized for command-line operation:
   - No GUI components - CLI mode only
   - Minimal dependencies (Qt Core only)
-  - Perfect for headless servers, automation and Raspberry Pi OS Lite
+  - Perfect for headless servers, automation and ZimaOS Lite
   - Smaller package size and memory footprint
   - Most imaging functionality available via command line
   - Ideal for scripting and CI/CD pipelines
+

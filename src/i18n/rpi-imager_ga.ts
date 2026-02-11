@@ -504,8 +504,8 @@
         <translation>Is cosúil go bhfuil an íoslódáil truaillithe. Ní hionann an hais SHA256.&lt;br&gt;Measadh: %1&lt;br&gt;Iarbhír: %2&lt;br&gt;Seiceáil do nasc líonra agus déan iarracht arís.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>Is cosúil go bhfuil Rochtain Rialaithe ar Fhillteáin cumasaithe. Cuir rpi-imager.exe leis an liosta aipeanna ceadaithe agus déan iarracht arís.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>Is cosúil go bhfuil Rochtain Rialaithe ar Fhillteáin cumasaithe. Cuir zimaos-usb-creatorexe leis an liosta aipeanna ceadaithe agus déan iarracht arís.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>

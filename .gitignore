@@ -25,6 +25,12 @@ debian/com.raspberrypi.rpi-imager.metainfo.xml
 # macOS
 .DS_Store
 *.DS_Store
+
+# Sensitive credentials (never commit!)
+.env.notarization
+.env.local
+.env.*.local
+
 # editor backups
 *.*swp*
 

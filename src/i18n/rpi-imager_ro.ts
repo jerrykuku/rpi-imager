@@ -504,8 +504,8 @@
         <translation>Descărcarea pare să fie coruptă. Hash-ul SHA256 nu se potrivește.&lt;br&gt;Așteptat: %1&lt;br&gt;Actual: %2&lt;br&gt;Te rog verifică conexiunea la rețea și încearcă din nou.</translation>
     </message>
     <message>
-        <source>Controlled Folder Access seems to be enabled. Please add rpi-imager.exe to the list of allowed apps and try again.</source>
-        <translation>Accesul Controlat la Dosare pare să fie activat. Te rog adaugă rpi-imager.exe în lista aplicațiilor permise și încearcă din nou.</translation>
+        <source>Controlled Folder Access seems to be enabled. Please add zimaos-usb-creator.exe to the list of allowed apps and try again.</source>
+        <translation>Accesul Controlat la Dosare pare să fie activat. Te rog adaugă zimaos-usb-creator.exe în lista aplicațiilor permise și încearcă din nou.</translation>
     </message>
     <message>
         <source>Error: Multiple partitions found on disk. Please ensure the disk is completely clean.</source>
