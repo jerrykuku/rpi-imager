@@ -648,7 +648,7 @@ Item {
                     anchors.bottom: parent.bottom
                     width: 40
                     height: 40
-                    padding: 0
+                    padding: 4
                     activeFocusOnTab: true
                     background: Rectangle {
                         color: optionsButton.enabled ? (optionsButton.activeFocus ? Style.buttonFocusedBackgroundColor : (optionsButton.hovered ? Style.buttonHoveredBackgroundColor : Style.buttonBackgroundColor)) : Qt.rgba(0, 0, 0, 0.1)
@@ -664,8 +664,8 @@ Item {
                         smooth: true
                         antialiasing: true
                         anchors.centerIn: parent
-                        width: 24
-                        height: 24
+                        width: 20
+                        height: 20
                     }
                     Accessible.role: Accessible.Button
                     Accessible.name: qsTr("App Options")
@@ -1336,7 +1336,7 @@ Item {
         // Body / security note
         Text {
             id: repoBodyText
-            text: repositoryUrlDialog.isLocalFile ? qsTr("You are opening a local Raspberry Pi Imager manifest file. This will replace the current OS list with the contents of this file.") : qsTr("A website is requesting to switch Raspberry Pi Imager to use a custom OS repository.\n\n") + qsTr("Only accept if you trust this source and intentionally clicked a link to open this repository.")
+            text: repositoryUrlDialog.isLocalFile ? qsTr("You are opening a local ZimaOS USB Creator manifest file. This will replace the current OS list with the contents of this file.") : qsTr("A website is requesting to switch ZimaOS USB Creator to use a custom OS repository.\n\n") + qsTr("Only accept if you trust this source and intentionally clicked a link to open this repository.")
             font.pixelSize: Style.fontSizeFormLabel
             font.family: Style.fontFamily
             color: Style.formLabelColor

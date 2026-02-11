@@ -36,8 +36,8 @@
         <translation>Zakázat varování?</translation>
     </message>
     <message>
-        <source>If you disable warnings, Raspberry Pi Imager will &lt;b&gt;not show confirmation prompts before writing images&lt;/b&gt;. You will still be required to &lt;b&gt;type the exact name&lt;/b&gt; when selecting a system drive.</source>
-        <translation>Pokud zakážete varování, Raspberry Pi Imager &lt;b&gt;nebude zobrazovat potvrzovací výzvy před zápisem obrazů&lt;/b&gt;. Při výběru systémového disku &lt;b&gt;budete stále muset zadat přesný název.</translation>
+        <source>If you disable warnings, ZimaOS USB Creator will &lt;b&gt;not show confirmation prompts before writing images&lt;/b&gt;. You will still be required to &lt;b&gt;type the exact name&lt;/b&gt; when selecting a system drive.</source>
+        <translation>Pokud zakážete varování, ZimaOS USB Creator &lt;b&gt;nebude zobrazovat potvrzovací výzvy před zápisem obrazů&lt;/b&gt;. Při výběru systémového disku &lt;b&gt;budete stále muset zadat přesný název.</translation>
     </message>
     <message>
         <source>Content Repository</source>
@@ -52,8 +52,8 @@
         <translation>Zavřít dialog nastavení bez uložení jakýchkoli změn</translation>
     </message>
     <message>
-        <source>Save the selected options and apply them to Raspberry Pi Imager</source>
-        <translation>Uložit provedená nastavení a použít je v Raspberry Pi Imager</translation>
+        <source>Save the selected options and apply them to ZimaOS USB Creator</source>
+        <translation>Uložit provedená nastavení a použít je v ZimaOS USB Creator</translation>
     </message>
     <message>
         <source>Keep warnings enabled and return to the options dialog</source>
@@ -72,8 +72,8 @@
         <translation>Automaticky vysunout úložné zařízení po úspěšném dokončení zápisu</translation>
     </message>
     <message>
-        <source>Send anonymous usage statistics to help improve Raspberry Pi Imager</source>
-        <translation>Odesílat anonymní statistiky o používání pro zlepšení Raspberry Pi Imager</translation>
+        <source>Send anonymous usage statistics to help improve ZimaOS USB Creator</source>
+        <translation>Odesílat anonymní statistiky o používání pro zlepšení ZimaOS USB Creator</translation>
     </message>
     <message>
         <source>Skip confirmation dialogs before writing images (advanced users only)</source>
@@ -402,8 +402,8 @@
         <translation>Restartovat systém, aby se změny projevily</translation>
     </message>
     <message>
-        <source>Close Raspberry Pi Imager and exit the application</source>
-        <translation>Zavřít Raspberry Pi Imager a ukončit aplikaci</translation>
+        <source>Close ZimaOS USB Creator and exit the application</source>
+        <translation>Zavřít ZimaOS USB Creator a ukončit aplikaci</translation>
     </message>
     <message>
         <source>Return to storage selection to write the same image to another storage device</source>
@@ -448,8 +448,8 @@
 <context>
     <name>DownloadThread</name>
     <message>
-        <source>Please verify if 'Raspberry Pi Imager' is allowed access to 'removable volumes' in privacy settings (under 'files and folders' or alternatively give it 'full disk access').</source>
-        <translation>Prosím ověřte, zda má 'Raspberry Pi Imager' přístup k 'vyměnitelným svazkům' v nastaveních soukromí (pod 'soubory a složky', případně mu udělte 'plný přístup k disku').</translation>
+        <source>Please verify if 'ZimaOS USB Creator' is allowed access to 'removable volumes' in privacy settings (under 'files and folders' or alternatively give it 'full disk access').</source>
+        <translation>Prosím ověřte, zda má 'ZimaOS USB Creator' přístup k 'vyměnitelným svazkům' v nastaveních soukromí (pod 'soubory a složky', případně mu udělte 'plný přístup k disku').</translation>
     </message>
     <message>
         <source>Cannot open storage device '%1'.</source>
@@ -1147,12 +1147,12 @@ nebo zadejte cestu do adresního řádku nahoře.</translation>
         <translation>Jazyk:</translation>
     </message>
     <message>
-        <source>Choose your language for Raspberry Pi Imager</source>
-        <translation>Vyberte si jazyk pro Raspberry Pi Imager</translation>
+        <source>Choose your language for ZimaOS USB Creator</source>
+        <translation>Vyberte si jazyk pro ZimaOS USB Creator</translation>
     </message>
     <message>
-        <source>Select the language for the Raspberry Pi Imager interface</source>
-        <translation>Vyberte jazyk uživatelského rozhraní Raspberry Pi Imager</translation>
+        <source>Select the language for the ZimaOS USB Creator interface</source>
+        <translation>Vyberte jazyk uživatelského rozhraní ZimaOS USB Creator</translation>
     </message>
 </context>
 <context>
@@ -1232,8 +1232,8 @@ nebo zadejte cestu do adresního řádku nahoře.</translation>
 <context>
     <name>MacFile</name>
     <message>
-        <source>Raspberry Pi Imager needs to access the disk to write the image.</source>
-        <translation>Raspberry Pi Imager vyžaduje přístup k disku aby mohl zapsat obraz.</translation>
+        <source>ZimaOS USB Creator needs to access the disk to write the image.</source>
+        <translation>ZimaOS USB Creator vyžaduje přístup k disku aby mohl zapsat obraz.</translation>
     </message>
 </context>
 <context>
@@ -1399,8 +1399,8 @@ nebo zadejte cestu do adresního řádku nahoře.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <source>Raspberry Pi Imager requires elevated privileges to write to storage devices.</source>
-        <translation>Raspberry Pi Imager vyžaduje zvýšená oprávnění pro zápis na úložná zařízení.</translation>
+        <source>ZimaOS USB Creator requires elevated privileges to write to storage devices.</source>
+        <translation>ZimaOS USB Creator vyžaduje zvýšená oprávnění pro zápis na úložná zařízení.</translation>
     </message>
     <message>
         <source>Without this, you will encounter permission errors when writing images.</source>
@@ -1827,15 +1827,15 @@ abyste zobrazili systémové disky.</translation>
         <translation>Je dostupná aktualizace</translation>
     </message>
     <message>
-        <source>There is a newer version of Imager available. Would you like to visit the website to download it?</source>
+        <source>There is a newer version of Creator available. Would you like to visit the website to download it?</source>
         <translation>Je k dispozici novější verze Imageru. Chcete navštívit webovou stránku a stáhnout ji?</translation>
     </message>
     <message>
-        <source>Continue using the current version of Raspberry Pi Imager</source>
-        <translation>Pokračovat se stávající verzí Raspberry Pi Imager</translation>
+        <source>Continue using the current version of ZimaOS USB Creator</source>
+        <translation>Pokračovat se stávající verzí ZimaOS USB Creator</translation>
     </message>
     <message>
-        <source>Open the Raspberry Pi website in your browser to download the latest version</source>
+        <source>Open the ZimaOS website in your browser to download the latest version</source>
         <translation>Otevřete webovou stránku Raspberry Pi ve svém prohlížeči a stáhněte nejnovější verzi</translation>
     </message>
 </context>
@@ -2317,8 +2317,8 @@ abyste zobrazili systémové disky.</translation>
         <translation>Použít vlastní soubor .img z vašeho počítače</translation>
     </message>
     <message>
-        <source>Raspberry Pi Imager is still busy. Are you sure you want to quit?</source>
-        <translation>Raspberry Pi Imager je stále zaneprázdněný. Opravdu ho chcete ukončit?</translation>
+        <source>ZimaOS USB Creator is still busy. Are you sure you want to quit?</source>
+        <translation>ZimaOS USB Creator je stále zaneprázdněný. Opravdu ho chcete ukončit?</translation>
     </message>
     <message>
         <source>Storage device removed</source>
@@ -2341,16 +2341,16 @@ abyste zobrazili systémové disky.</translation>
         <translation>Zavřít oznámení o odebrání úložiště a vrátit se k výběru úložiště</translation>
     </message>
     <message>
-        <source>Return to Raspberry Pi Imager and continue the current operation</source>
-        <translation>Návrat do Raspberry Pi Imageru a pokračování v aktuální operaci</translation>
+        <source>Return to ZimaOS USB Creator and continue the current operation</source>
+        <translation>Návrat do ZimaOS USB Creatoru a pokračování v aktuální operaci</translation>
     </message>
     <message>
-        <source>Force quit Raspberry Pi Imager and cancel the current write operation</source>
-        <translation>Vynutit ukončení Raspberry Pi Imageru a zrušit probíhající zápis</translation>
+        <source>Force quit ZimaOS USB Creator and cancel the current write operation</source>
+        <translation>Vynutit ukončení ZimaOS USB Creatoru a zrušit probíhající zápis</translation>
     </message>
     <message>
-        <source>Raspberry Pi Imager %1</source>
-        <translation>Raspberry Pi Imager %1</translation>
+        <source>ZimaOS USB Creator %1</source>
+        <translation>ZimaOS USB Creator %1</translation>
     </message>
     <message>
         <source>Insufficient Permissions</source>
@@ -2365,16 +2365,16 @@ abyste zobrazili systémové disky.</translation>
         <translation>Ukončit</translation>
     </message>
     <message>
-        <source>Exit Raspberry Pi Imager - you must restart with elevated privileges to write images</source>
-        <translation>Ukončete Raspberry Pi Imager – pro zápis obrazů jej musíte spustit znovu s vyššími oprávněními</translation>
+        <source>Exit ZimaOS USB Creator - you must restart with elevated privileges to write images</source>
+        <translation>Ukončete ZimaOS USB Creator – pro zápis obrazů jej musíte spustit znovu s vyššími oprávněními</translation>
     </message>
     <message>
         <source>Install Authorization</source>
         <translation>Nainstalovat oprávnění</translation>
     </message>
     <message>
-        <source>Install system authorization to allow Raspberry Pi Imager to run with elevated privileges</source>
-        <translation>Nainstalovat systémové oprávnění, aby mohl Raspberry Pi Imager běžet s vyššími právy</translation>
+        <source>Install system authorization to allow ZimaOS USB Creator to run with elevated privileges</source>
+        <translation>Nainstalovat systémové oprávnění, aby mohl ZimaOS USB Creator běžet s vyššími právy</translation>
     </message>
     <message>
         <source>Save Performance Data</source>

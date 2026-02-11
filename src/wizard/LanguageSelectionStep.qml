@@ -20,7 +20,7 @@ WizardStepBase {
     property var _internalLanguages: []
 
     title: qsTr("Welcome")
-    subtitle: qsTr("Choose your language for Raspberry Pi Imager")
+    subtitle: qsTr("Choose your language for ZimaOS USB Creator")
     showBackButton: false
 
     // Populate and preselect language on load
@@ -78,7 +78,7 @@ WizardStepBase {
                         editable: false
                         selectTextByMouse: true
                         font.pixelSize: Style.fontSizeInput
-                        Accessible.description: qsTr("Select the language for the Raspberry Pi Imager interface")
+                        Accessible.description: qsTr("Select the language for the ZimaOS USB Creator interface")
                         onActivated: function(index) {
                             if (index >= 0 && index < _internalLanguages.length) {
                                 var internalName = _internalLanguages[index]

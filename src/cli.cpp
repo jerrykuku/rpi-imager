@@ -26,7 +26,7 @@ Cli::Cli(int &argc, char *argv[]) : QObject(nullptr), _imageWriter(nullptr)
     _app = new QCoreApplication(argc, argv);
     _app->setOrganizationName("Raspberry Pi");
     _app->setOrganizationDomain("raspberrypi.com");
-    _app->setApplicationName("Raspberry Pi Imager");
+    _app->setApplicationName("ZimaOS USB Creator");
     _app->setApplicationVersion(ImageWriter::staticVersion());
     // Don't create ImageWriter here - defer until we know we need it
 }

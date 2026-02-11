@@ -36,8 +36,8 @@
         <translation>Uyarılar devre dışı bırakılsın mı?</translation>
     </message>
     <message>
-        <source>If you disable warnings, Raspberry Pi Imager will &lt;b&gt;not show confirmation prompts before writing images&lt;/b&gt;. You will still be required to &lt;b&gt;type the exact name&lt;/b&gt; when selecting a system drive.</source>
-        <translation>Uyarıları devre dışı bırakırsanız, Raspberry Pi Imager &lt;b&gt;görüntüleri yazmadan önce onay istemeyecektir&lt;/b&gt;. Bir sistem sürücüsü seçerken yine de &lt;b&gt;tam adını yazmanız&lt;/b&gt; gerekecektir.</translation>
+        <source>If you disable warnings, ZimaOS USB Creator will &lt;b&gt;not show confirmation prompts before writing images&lt;/b&gt;. You will still be required to &lt;b&gt;type the exact name&lt;/b&gt; when selecting a system drive.</source>
+        <translation>Uyarıları devre dışı bırakırsanız, ZimaOS USB Creator &lt;b&gt;görüntüleri yazmadan önce onay istemeyecektir&lt;/b&gt;. Bir sistem sürücüsü seçerken yine de &lt;b&gt;tam adını yazmanız&lt;/b&gt; gerekecektir.</translation>
     </message>
     <message>
         <source>Content Repository</source>
@@ -52,8 +52,8 @@
         <translation>Değişiklikleri kaydetmeden seçenekler penceresini kapat</translation>
     </message>
     <message>
-        <source>Save the selected options and apply them to Raspberry Pi Imager</source>
-        <translation>Seçilen seçenekleri kaydet ve Raspberry Pi Imager'a uygula</translation>
+        <source>Save the selected options and apply them to ZimaOS USB Creator</source>
+        <translation>Seçilen seçenekleri kaydet ve ZimaOS USB Creator'a uygula</translation>
     </message>
     <message>
         <source>Keep warnings enabled and return to the options dialog</source>
@@ -72,8 +72,8 @@
         <translation>Yazma işlemi başarıyla tamamlandığında depolama cihazını otomatik olarak çıkart</translation>
     </message>
     <message>
-        <source>Send anonymous usage statistics to help improve Raspberry Pi Imager</source>
-        <translation>Raspberry Pi Imager'ı geliştirmeye yardımcı olmak için anonim kullanım istatistikleri gönder</translation>
+        <source>Send anonymous usage statistics to help improve ZimaOS USB Creator</source>
+        <translation>ZimaOS USB Creator'ı geliştirmeye yardımcı olmak için anonim kullanım istatistikleri gönder</translation>
     </message>
     <message>
         <source>Skip confirmation dialogs before writing images (advanced users only)</source>
@@ -402,8 +402,8 @@
         <translation>Değişiklikleri uygulamak için sistemi yeniden başlatın</translation>
     </message>
     <message>
-        <source>Close Raspberry Pi Imager and exit the application</source>
-        <translation>Raspberry Pi Imager'ı kapat ve uygulamadan çık</translation>
+        <source>Close ZimaOS USB Creator and exit the application</source>
+        <translation>ZimaOS USB Creator'ı kapat ve uygulamadan çık</translation>
     </message>
     <message>
         <source>Return to storage selection to write the same image to another storage device</source>
@@ -448,8 +448,8 @@
 <context>
     <name>DownloadThread</name>
     <message>
-        <source>Please verify if &apos;Raspberry Pi Imager&apos; is allowed access to &apos;removable volumes&apos; in privacy settings (under &apos;files and folders&apos; or alternatively give it &apos;full disk access&apos;).</source>
-        <translation>Lütfen &apos;Raspberry Pi Imager&apos;ın gizlilik ayarlarında (&apos;dosyalar ve klasörler&apos; altında veya alternatif olarak &apos;tam disk erişimi&apos;) &apos;çıkarılabilir birimlere erişim&apos; izni verilip verilmediğini doğrulayın.</translation>
+        <source>Please verify if &apos;ZimaOS USB Creator&apos; is allowed access to &apos;removable volumes&apos; in privacy settings (under &apos;files and folders&apos; or alternatively give it &apos;full disk access&apos;).</source>
+        <translation>Lütfen &apos;ZimaOS USB Creator&apos;ın gizlilik ayarlarında (&apos;dosyalar ve klasörler&apos; altında veya alternatif olarak &apos;tam disk erişimi&apos;) &apos;çıkarılabilir birimlere erişim&apos; izni verilip verilmediğini doğrulayın.</translation>
     </message>
     <message>
         <source>Cannot open storage device &apos;%1&apos;.</source>
@@ -1147,12 +1147,12 @@ veya yukarıdaki adres çubuğuna bir yol yazın.</translation>
         <translation>Dil:</translation>
     </message>
     <message>
-        <source>Choose your language for Raspberry Pi Imager</source>
-        <translation>Raspberry Pi Imager için dilinizi seçin</translation>
+        <source>Choose your language for ZimaOS USB Creator</source>
+        <translation>ZimaOS USB Creator için dilinizi seçin</translation>
     </message>
     <message>
-        <source>Select the language for the Raspberry Pi Imager interface</source>
-        <translation>Raspberry Pi Imager arayüzü için dili seçin</translation>
+        <source>Select the language for the ZimaOS USB Creator interface</source>
+        <translation>ZimaOS USB Creator arayüzü için dili seçin</translation>
     </message>
 </context>
 <context>
@@ -1232,8 +1232,8 @@ veya yukarıdaki adres çubuğuna bir yol yazın.</translation>
 <context>
     <name>MacFile</name>
     <message>
-        <source>Raspberry Pi Imager needs to access the disk to write the image.</source>
-        <translation>Raspberry Pi Imager'ın imajı yazabilmesi için diske erişmesi gerekiyor.</translation>
+        <source>ZimaOS USB Creator needs to access the disk to write the image.</source>
+        <translation>ZimaOS USB Creator'ın imajı yazabilmesi için diske erişmesi gerekiyor.</translation>
     </message>
 </context>
 <context>
@@ -1399,8 +1399,8 @@ veya yukarıdaki adres çubuğuna bir yol yazın.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <source>Raspberry Pi Imager requires elevated privileges to write to storage devices.</source>
-        <translation>Raspberry Pi Imager, depolama aygıtlarına yazmak için yüksek ayrıcalıklar gerektirir.</translation>
+        <source>ZimaOS USB Creator requires elevated privileges to write to storage devices.</source>
+        <translation>ZimaOS USB Creator, depolama aygıtlarına yazmak için yüksek ayrıcalıklar gerektirir.</translation>
     </message>
     <message>
         <source>Without this, you will encounter permission errors when writing images.</source>
@@ -1832,15 +1832,15 @@ Sistem sürücülerini göstermek için aşağıdaki
         <translation>Güncelleme mevcut</translation>
     </message>
     <message>
-        <source>There is a newer version of Imager available. Would you like to visit the website to download it?</source>
+        <source>There is a newer version of Creator available. Would you like to visit the website to download it?</source>
         <translation>Imager'ın daha yeni bir sürümü mevcut. İndirmek için web sitesini ziyaret etmek ister misiniz?</translation>
     </message>
     <message>
-        <source>Continue using the current version of Raspberry Pi Imager</source>
-        <translation>Raspberry Pi Imager'ın mevcut sürümünü kullanmaya devam et</translation>
+        <source>Continue using the current version of ZimaOS USB Creator</source>
+        <translation>ZimaOS USB Creator'ın mevcut sürümünü kullanmaya devam et</translation>
     </message>
     <message>
-        <source>Open the Raspberry Pi website in your browser to download the latest version</source>
+        <source>Open the ZimaOS website in your browser to download the latest version</source>
         <translation>En son sürümü indirmek için tarayıcınızda Raspberry Pi web sitesini açın</translation>
     </message>
 </context>
@@ -2327,8 +2327,8 @@ Sistem sürücülerini göstermek için aşağıdaki
         <translation>Bilgisayarınızdan özel bir .img seçin</translation>
     </message>
     <message>
-        <source>Raspberry Pi Imager is still busy. Are you sure you want to quit?</source>
-        <translation>Raspberry Pi Imager hâlâ meşgul. Çıkmak istediğinize emin misiniz?</translation>
+        <source>ZimaOS USB Creator is still busy. Are you sure you want to quit?</source>
+        <translation>ZimaOS USB Creator hâlâ meşgul. Çıkmak istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>Storage device removed</source>
@@ -2351,16 +2351,16 @@ Sistem sürücülerini göstermek için aşağıdaki
         <translation>Depolama çıkarıldı bildirimini kapat ve depolama seçimine dön</translation>
     </message>
     <message>
-        <source>Return to Raspberry Pi Imager and continue the current operation</source>
-        <translation>Raspberry Pi Imager'a dön ve mevcut işleme devam et</translation>
+        <source>Return to ZimaOS USB Creator and continue the current operation</source>
+        <translation>ZimaOS USB Creator'a dön ve mevcut işleme devam et</translation>
     </message>
     <message>
-        <source>Force quit Raspberry Pi Imager and cancel the current write operation</source>
-        <translation>Raspberry Pi Imager'dan çıkmaya zorla ve mevcut yazma işlemini iptal et</translation>
+        <source>Force quit ZimaOS USB Creator and cancel the current write operation</source>
+        <translation>ZimaOS USB Creator'dan çıkmaya zorla ve mevcut yazma işlemini iptal et</translation>
     </message>
     <message>
-        <source>Raspberry Pi Imager %1</source>
-        <translation>Raspberry Pi Imager %1</translation>
+        <source>ZimaOS USB Creator %1</source>
+        <translation>ZimaOS USB Creator %1</translation>
     </message>
     <message>
         <source>Insufficient Permissions</source>
@@ -2375,16 +2375,16 @@ Sistem sürücülerini göstermek için aşağıdaki
         <translation>Çıkış</translation>
     </message>
     <message>
-        <source>Exit Raspberry Pi Imager - you must restart with elevated privileges to write images</source>
-        <translation>Raspberry Pi Imager'dan çık - imaj yazmak için yönetici ayrıcalıklarıyla yeniden başlatmalısınız</translation>
+        <source>Exit ZimaOS USB Creator - you must restart with elevated privileges to write images</source>
+        <translation>ZimaOS USB Creator'dan çık - imaj yazmak için yönetici ayrıcalıklarıyla yeniden başlatmalısınız</translation>
     </message>
     <message>
         <source>Install Authorization</source>
         <translation>Yetkilendirmeyi Yükle</translation>
     </message>
     <message>
-        <source>Install system authorization to allow Raspberry Pi Imager to run with elevated privileges</source>
-        <translation>Raspberry Pi Imager'ın yüksek ayrıcalıklarla çalışmasına izin vermek için sistem yetkilendirmesini yükleyin</translation>
+        <source>Install system authorization to allow ZimaOS USB Creator to run with elevated privileges</source>
+        <translation>ZimaOS USB Creator'ın yüksek ayrıcalıklarla çalışmasına izin vermek için sistem yetkilendirmesini yükleyin</translation>
     </message>
     <message>
         <source>Save Performance Data</source>

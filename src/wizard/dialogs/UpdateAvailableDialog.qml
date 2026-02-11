@@ -56,8 +56,8 @@ BaseDialog {
     Text {
         id: descriptionText
         text: root.version.length > 0
-            ? qsTr("Imager version %1 is available. Would you like to visit the website to download it?").arg(root.version)
-            : qsTr("There is a newer version of Imager available. Would you like to visit the website to download it?")
+            ? qsTr("Creator version %1 is available. Would you like to visit the website to download it?").arg(root.version)
+            : qsTr("There is a newer version of Creator available. Would you like to visit the website to download it?")
         wrapMode: Text.WordWrap
         font.pixelSize: Style.fontSizeDescription
         font.family: Style.fontFamily
@@ -79,7 +79,7 @@ BaseDialog {
         ImButton {
             id: noButton
             text: CommonStrings.no
-            accessibleDescription: qsTr("Continue using the current version of Raspberry Pi Imager")
+            accessibleDescription: qsTr("Continue using the current version of ZimaOS USB Creator")
             activeFocusOnTab: true
             onClicked: {
                 root.reject()
@@ -92,7 +92,7 @@ BaseDialog {
             // Make the primary action button wider to encourage clicking
             // Layout.minimumWidth: Style.buttonWidthMinimum * 1.5
             // implicitWidth: Style.buttonWidthMinimum * 1.5
-            accessibleDescription: qsTr("Open the Raspberry Pi website in your browser to download the latest version")
+            accessibleDescription: qsTr("Open the ZimaOS website in your browser to download the latest version")
             activeFocusOnTab: true
             onClicked: {
                 if (root.url && root.url.toString && root.url.toString().length > 0) {

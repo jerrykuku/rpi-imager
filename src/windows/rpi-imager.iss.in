@@ -1,4 +1,4 @@
-#define MyAppName "Raspberry Pi Imager"
+#define MyAppName "ZimaOS USB Creator"
 #define MyAppVersion "@IMAGER_VERSION_STR@"
 #define MyAppPublisher "Raspberry Pi Ltd"
 #define RaspberryPiSoftwareURL "https://www.raspberrypi.com/software"
@@ -66,13 +66,13 @@ Root: HKLM; Subkey: "Software\Classes\RPI_IMAGINGUTILITY\shell\open\command"; Va
 ; Extension defined in src/config.h (MANIFEST_EXTENSION)
 Root: HKLM; Subkey: "Software\Classes\.rpi-imager-manifest"; ValueType: string; ValueName: ""; ValueData: "RPI_IMAGER_MANIFEST"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "Software\Classes\.rpi-imager-manifest"; ValueType: string; ValueName: "Content Type"; ValueData: "application/vnd.raspberrypi.imager-manifest+json"; Flags: uninsdeletekey
-Root: HKLM; Subkey: "Software\Classes\RPI_IMAGER_MANIFEST"; ValueType: string; ValueName: ""; ValueData: "Raspberry Pi Imager Manifest"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\Classes\RPI_IMAGER_MANIFEST"; ValueType: string; ValueName: ""; ValueData: "ZimaOS USB Creator Manifest"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "Software\Classes\RPI_IMAGER_MANIFEST\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\{#MyAppExeName},0"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "Software\Classes\RPI_IMAGER_MANIFEST\shell\open"; ValueType: string; ValueName: "FriendlyAppName"; ValueData: "{#MyAppName}"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "Software\Classes\RPI_IMAGER_MANIFEST\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey
 
 ; Register rpi-imager:// URL protocol handler
-Root: HKCR; Subkey: "rpi-imager"; ValueType: string; ValueName: ""; ValueData: "URL:Raspberry Pi Imager"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "rpi-imager"; ValueType: string; ValueName: ""; ValueData: "URL:ZimaOS USB Creator"; Flags: uninsdeletekey
 Root: HKCR; Subkey: "rpi-imager"; ValueType: string; ValueName: "URL Protocol"; ValueData: ""; Flags: uninsdeletekey
 Root: HKCR; Subkey: "rpi-imager\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\{#MyAppExeName},1"; Flags: uninsdeletekey
 Root: HKCR; Subkey: "rpi-imager\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\rpi-imager-callback-relay.exe"" ""%1"""; Flags: uninsdeletekey
@@ -429,7 +429,7 @@ begin
 
   // Old Inno (by old AppId)
   if TryGetOldInnoUninstall(Cmd, Args) then begin
-    if MsgBox('A previous Raspberry Pi Imager installation was detected. It will be removed before continuing. Proceed?',
+    if MsgBox('A previous ZimaOS USB Creator installation was detected. It will be removed before continuing. Proceed?',
               mbConfirmation, MB_YESNO) <> IDYES then
     begin Result := False; Exit; end;
 
@@ -440,7 +440,7 @@ begin
   end
   // Old NSIS (name-based)
   else if TryGetOldNsisUninstall(Cmd, Args) then begin
-    if MsgBox('A previous Raspberry Pi Imager installation was detected. It will be removed before continuing. Proceed?',
+    if MsgBox('A previous ZimaOS USB Creator installation was detected. It will be removed before continuing. Proceed?',
               mbConfirmation, MB_YESNO) <> IDYES then
     begin Result := False; Exit; end;
 
@@ -484,7 +484,7 @@ begin
   // make sure app not running
   running := FindProcess('rpi-imager.exe', pid);
   if running then begin
-    if MsgBox('Raspberry Pi Imager is running and needs to be closed before continuing. Close it now?',
+    if MsgBox('ZimaOS USB Creator is running and needs to be closed before continuing. Close it now?',
               mbConfirmation, MB_YESNO) <> IDYES then
     begin Result := False; Exit; end;
     
@@ -493,7 +493,7 @@ begin
     // Re-check if process is actually still running
     Sleep(500); // Give process time to fully terminate
     if FindProcess('rpi-imager.exe', pid) then begin
-      MsgBox('Failed to close Raspberry Pi Imager. Please close it manually and try again.', mbError, MB_OK);
+      MsgBox('Failed to close ZimaOS USB Creator. Please close it manually and try again.', mbError, MB_OK);
       Result := False; Exit;
     end;
   end;

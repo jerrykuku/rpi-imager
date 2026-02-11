@@ -36,8 +36,8 @@
         <translation>Warnungen ausschalten?</translation>
     </message>
     <message>
-        <source>If you disable warnings, Raspberry Pi Imager will &lt;b&gt;not show confirmation prompts before writing images&lt;/b&gt;. You will still be required to &lt;b&gt;type the exact name&lt;/b&gt; when selecting a system drive.</source>
-        <translation>Wenn Sie Warnungen deaktivieren, wird Raspberry Pi Imager vor dem Schreiben von Images &lt;b&gt;keine Bestätigungsaufforderungen anzeigen&lt;/b&gt;. Sie werden bei der Auswahl eines Systemlaufwerks weiterhin &lt;b&gt;den genauen Namen eingeben&lt;/b&gt; müssen.</translation>
+        <source>If you disable warnings, ZimaOS USB Creator will &lt;b&gt;not show confirmation prompts before writing images&lt;/b&gt;. You will still be required to &lt;b&gt;type the exact name&lt;/b&gt; when selecting a system drive.</source>
+        <translation>Wenn Sie Warnungen deaktivieren, wird ZimaOS USB Creator vor dem Schreiben von Images &lt;b&gt;keine Bestätigungsaufforderungen anzeigen&lt;/b&gt;. Sie werden bei der Auswahl eines Systemlaufwerks weiterhin &lt;b&gt;den genauen Namen eingeben&lt;/b&gt; müssen.</translation>
     </message>
     <message>
         <source>Content Repository</source>
@@ -52,8 +52,8 @@
         <translation>Den Einstellungsdialog schließen, ohne die Änderungen zu speichern</translation>
     </message>
     <message>
-        <source>Save the selected options and apply them to Raspberry Pi Imager</source>
-        <translation>Die ausgewählten Einstellungen speichern und auf den Raspberry Pi Imager anwenden</translation>
+        <source>Save the selected options and apply them to ZimaOS USB Creator</source>
+        <translation>Die ausgewählten Einstellungen speichern und auf den ZimaOS USB Creator anwenden</translation>
     </message>
     <message>
         <source>Keep warnings enabled and return to the options dialog</source>
@@ -72,8 +72,8 @@
         <translation>Speichermedium automatisch auswerfen, wenn der Schreibvorgang erfolgreich abgeschlossen ist</translation>
     </message>
     <message>
-        <source>Send anonymous usage statistics to help improve Raspberry Pi Imager</source>
-        <translation>Anonyme Nutzungsstatistiken senden, um zur Verbesserung von Raspberry Pi Imager beizutragen</translation>
+        <source>Send anonymous usage statistics to help improve ZimaOS USB Creator</source>
+        <translation>Anonyme Nutzungsstatistiken senden, um zur Verbesserung von ZimaOS USB Creator beizutragen</translation>
     </message>
     <message>
         <source>Skip confirmation dialogs before writing images (advanced users only)</source>
@@ -402,8 +402,8 @@
         <translation>Das System neustarten, um die Änderungen anzuwenden</translation>
     </message>
     <message>
-        <source>Close Raspberry Pi Imager and exit the application</source>
-        <translation>Raspberry Pi Imager schließen und die Anwendung beenden</translation>
+        <source>Close ZimaOS USB Creator and exit the application</source>
+        <translation>ZimaOS USB Creator schließen und die Anwendung beenden</translation>
     </message>
     <message>
         <source>Return to storage selection to write the same image to another storage device</source>
@@ -448,9 +448,9 @@
 <context>
     <name>DownloadThread</name>
     <message>
-        <source>Please verify if &apos;Raspberry Pi Imager&apos; is allowed access to &apos;removable volumes&apos; in privacy settings (under &apos;files and folders&apos; or alternatively give it &apos;full disk access&apos;).</source>
+        <source>Please verify if &apos;ZimaOS USB Creator&apos; is allowed access to &apos;removable volumes&apos; in privacy settings (under &apos;files and folders&apos; or alternatively give it &apos;full disk access&apos;).</source>
         <translatorcomment>Not sure if current macOS has that option (or if it got moved/renamed)</translatorcomment>
-        <translation type="unfinished">Bitte stellen Sie sicher, dass &apos;Raspberry Pi Imager&apos; Zugriff auf &apos;removable volumes&apos; in privacy settings hat (unter &apos;files and folders&apos;. Sie können ihm auch &apos;full disk access&apos; geben).</translation>
+        <translation type="unfinished">Bitte stellen Sie sicher, dass &apos;ZimaOS USB Creator&apos; Zugriff auf &apos;removable volumes&apos; in privacy settings hat (unter &apos;files and folders&apos;. Sie können ihm auch &apos;full disk access&apos; geben).</translation>
     </message>
     <message>
         <source>Cannot open storage device &apos;%1&apos;.</source>
@@ -1148,12 +1148,12 @@ oder geben Sie einen Pfad in die Adressleiste oben ein.</translation>
         <translation>Sprache:</translation>
     </message>
     <message>
-        <source>Choose your language for Raspberry Pi Imager</source>
-        <translation>Wählen Sie die Sprache für Raspberry Pi Imager</translation>
+        <source>Choose your language for ZimaOS USB Creator</source>
+        <translation>Wählen Sie die Sprache für ZimaOS USB Creator</translation>
     </message>
     <message>
-        <source>Select the language for the Raspberry Pi Imager interface</source>
-        <translation>Die Sprache für die Raspberry Pi Imager-Oberfläche auswählen</translation>
+        <source>Select the language for the ZimaOS USB Creator interface</source>
+        <translation>Die Sprache für die ZimaOS USB Creator-Oberfläche auswählen</translation>
     </message>
 </context>
 <context>
@@ -1233,8 +1233,8 @@ oder geben Sie einen Pfad in die Adressleiste oben ein.</translation>
 <context>
     <name>MacFile</name>
     <message>
-        <source>Raspberry Pi Imager needs to access the disk to write the image.</source>
-        <translation>Raspberry Pi Imager benötigt Zugriff auf die Festplatte, um das Image zu schreiben.</translation>
+        <source>ZimaOS USB Creator needs to access the disk to write the image.</source>
+        <translation>ZimaOS USB Creator benötigt Zugriff auf die Festplatte, um das Image zu schreiben.</translation>
     </message>
 </context>
 <context>
@@ -1400,8 +1400,8 @@ oder geben Sie einen Pfad in die Adressleiste oben ein.</translation>
 <context>
     <name>QObject</name>
     <message>
-        <source>Raspberry Pi Imager requires elevated privileges to write to storage devices.</source>
-        <translation>Raspberry Pi Imager benötigt erhöhte Berechtigungen, um auf Speichermedien schreiben zu können.</translation>
+        <source>ZimaOS USB Creator requires elevated privileges to write to storage devices.</source>
+        <translation>ZimaOS USB Creator benötigt erhöhte Berechtigungen, um auf Speichermedien schreiben zu können.</translation>
     </message>
     <message>
         <source>Without this, you will encounter permission errors when writing images.</source>
@@ -1828,15 +1828,15 @@ um die Systemlaufwerke anzuzeigen.</translation>
         <translation>Update verfügbar</translation>
     </message>
     <message>
-        <source>There is a newer version of Imager available. Would you like to visit the website to download it?</source>
+        <source>There is a newer version of Creator available. Would you like to visit the website to download it?</source>
         <translation>Es ist eine neuere Version von Imager verfügbar. Möchten Sie die Website besuchen, um sie herunterzuladen?</translation>
     </message>
     <message>
-        <source>Continue using the current version of Raspberry Pi Imager</source>
-        <translation>Weiterhin die aktuelle Version von Raspberry Pi Imager verwenden</translation>
+        <source>Continue using the current version of ZimaOS USB Creator</source>
+        <translation>Weiterhin die aktuelle Version von ZimaOS USB Creator verwenden</translation>
     </message>
     <message>
-        <source>Open the Raspberry Pi website in your browser to download the latest version</source>
+        <source>Open the ZimaOS website in your browser to download the latest version</source>
         <translation>Öffnen Sie die Raspberry Pi-Website in Ihrem Browser, um die neueste Version herunterzuladen</translation>
     </message>
 </context>
@@ -2318,8 +2318,8 @@ um die Systemlaufwerke anzuzeigen.</translation>
         <translation>Wählen Sie eine eigene .img-Datei von Ihrem Computer</translation>
     </message>
     <message>
-        <source>Raspberry Pi Imager is still busy. Are you sure you want to quit?</source>
-        <translation>Raspberry Pi Imager ist noch beschäftigt. Möchten Sie wirklich beenden?</translation>
+        <source>ZimaOS USB Creator is still busy. Are you sure you want to quit?</source>
+        <translation>ZimaOS USB Creator ist noch beschäftigt. Möchten Sie wirklich beenden?</translation>
     </message>
     <message>
         <source>Storage device removed</source>
@@ -2342,16 +2342,16 @@ um die Systemlaufwerke anzuzeigen.</translation>
         <translation>Den &quot;Speichermedium entfernt&quot; Hinweis schließen und zur Speicher-Auswahl zurückkehren</translation>
     </message>
     <message>
-        <source>Return to Raspberry Pi Imager and continue the current operation</source>
-        <translation>Zum Raspberry Pi Imager zurückkehren und den aktuellen Vorgang fortsetzen</translation>
+        <source>Return to ZimaOS USB Creator and continue the current operation</source>
+        <translation>Zum ZimaOS USB Creator zurückkehren und den aktuellen Vorgang fortsetzen</translation>
     </message>
     <message>
-        <source>Force quit Raspberry Pi Imager and cancel the current write operation</source>
-        <translation>Den Raspberry Pi Imager schließen und den aktuellen Schreibvorgang abbrechen</translation>
+        <source>Force quit ZimaOS USB Creator and cancel the current write operation</source>
+        <translation>Den ZimaOS USB Creator schließen und den aktuellen Schreibvorgang abbrechen</translation>
     </message>
     <message>
-        <source>Raspberry Pi Imager %1</source>
-        <translation>Raspberry Pi Imager %1</translation>
+        <source>ZimaOS USB Creator %1</source>
+        <translation>ZimaOS USB Creator %1</translation>
     </message>
     <message>
         <source>Insufficient Permissions</source>
@@ -2366,16 +2366,16 @@ um die Systemlaufwerke anzuzeigen.</translation>
         <translation>Beenden</translation>
     </message>
     <message>
-        <source>Exit Raspberry Pi Imager - you must restart with elevated privileges to write images</source>
-        <translation>Raspberry Pi Imager beenden – Sie müssen mit erhöhten Rechten neu starten, um Images zu schreiben</translation>
+        <source>Exit ZimaOS USB Creator - you must restart with elevated privileges to write images</source>
+        <translation>ZimaOS USB Creator beenden – Sie müssen mit erhöhten Rechten neu starten, um Images zu schreiben</translation>
     </message>
     <message>
         <source>Install Authorization</source>
         <translation>Autorisierung installieren</translation>
     </message>
     <message>
-        <source>Install system authorization to allow Raspberry Pi Imager to run with elevated privileges</source>
-        <translation>Systemautorisierung installieren, um Raspberry Pi Imager die Ausführung mit erhöhten Rechten zu ermöglichen</translation>
+        <source>Install system authorization to allow ZimaOS USB Creator to run with elevated privileges</source>
+        <translation>Systemautorisierung installieren, um ZimaOS USB Creator die Ausführung mit erhöhten Rechten zu ermöglichen</translation>
     </message>
     <message>
         <source>Save Performance Data</source>

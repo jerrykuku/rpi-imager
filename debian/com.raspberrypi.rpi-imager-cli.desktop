@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=Raspberry Pi Imager (CLI)
-Comment=Raspberry Pi Imager command-line interface
+Name=ZimaOS USB Creator (CLI)
+Comment=ZimaOS USB Creator command-line interface
 Exec=rpi-imager-cli
 Icon=rpi-imager
 Categories=System;

@@ -295,8 +295,8 @@ rm -f "$APPDIR/usr/share/applications/"*.desktop
 # Copy and modify the embedded desktop file
 cp "debian/com.raspberrypi.rpi-imager.desktop" "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
 # Update the desktop file for embedded use (preserve %F for file arguments)
-sed -i 's|Name=.*|Name=Raspberry Pi Imager (Embedded)|' "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
-sed -i 's|Comment=.*|Comment=Raspberry Pi Imager for embedded systems|' "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
+sed -i 's|Name=.*|Name=ZimaOS USB Creator (Embedded)|' "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
+sed -i 's|Comment=.*|Comment=ZimaOS USB Creator for embedded systems|' "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
 sed -i 's|Exec=.*|Exec=rpi-imager-embedded %F|' "$APPDIR/usr/share/applications/com.raspberrypi.rpi-imager-embedded.desktop"
 
 # Create the AppRun file

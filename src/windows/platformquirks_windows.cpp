@@ -229,7 +229,7 @@ void applyQuirks() {
     HANDLE hMutex = CreateMutexW(nullptr, TRUE, L"Global\\RaspberryPiImagerMutex");
     if (GetLastError() == ERROR_ALREADY_EXISTS) {
         // Another instance running
-        MessageBoxW(nullptr, L"Raspberry Pi Imager is already running.", L"Raspberry Pi Imager", MB_OK | MB_ICONINFORMATION);
+        MessageBoxW(nullptr, L"ZimaOS USB Creator is already running.", L"ZimaOS USB Creator", MB_OK | MB_ICONINFORMATION);
         exit(0);
     }
 }
