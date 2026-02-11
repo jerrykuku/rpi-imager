@@ -288,6 +288,15 @@ int main(int argc, char *argv[])
         }
     }
 #endif
+#ifdef Q_OS_WIN
+    /* On Windows, use Microsoft YaHei UI as default font for proper CJK character display */
+    {
+        QFont defaultFont("Microsoft YaHei UI");
+        defaultFont.setPointSize(9);
+        defaultFont.setStyleStrategy(QFont::PreferAntialias);
+        QGuiApplication::setFont(defaultFont);
+    }
+#endif
 #ifdef Q_OS_LINUX
     if (imageWriter.isEmbeddedMode()) {
         // Font and locale setup only needed for embedded Linux systems

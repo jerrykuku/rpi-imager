@@ -4,7 +4,7 @@
 #define ZimaOSURL "https://www.zimaspace.com/"
 #define ImagerRepoRootURL "https://github.com/IceWhaleTech/ZimaOS-USB-Creator"
 #define ImagerRepoIssuesURL "https://github.com/IceWhaleTech/ZimaOS-USB-Creator/issues"
-#define MyAppExeName "rpi-imager.exe"
+#define MyAppExeName "zimaos-usb-creator.exe"
 
 [Setup]
 AppId={{46C75BF3-E267-4834-AE1D-BEB77E05BFA1}
@@ -12,7 +12,7 @@ AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
-AppPublisherURL={#RaspberryPiSoftwareURL}
+AppPublisherURL={#ZimaOSURL}
 AppSupportURL={#ImagerRepoIssuesURL}
 AppUpdatesURL={#ImagerRepoRootURL}
 DefaultDirName={autopf}\{#MyAppPublisher}\Imager
@@ -20,7 +20,7 @@ DefaultGroupName=Raspberry Pi
 AllowNoIcons=yes
 LicenseFile=@CMAKE_BINARY_DIR@\deploy\license.txt
 OutputDir=@CMAKE_BINARY_DIR@\installer
-OutputBaseFilename=imager-{#MyAppVersion}
+OutputBaseFilename=zimaos-usb-creator-{#MyAppVersion}
 SetupIconFile=@CMAKE_SOURCE_DIR@\icons\zimaos.ico
 Compression=lzma2/max
 SolidCompression=yes
@@ -482,17 +482,17 @@ var
   pid: Integer;
 begin
   // make sure app not running
-  running := FindProcess('rpi-imager.exe', pid);
+  running := FindProcess('zimaos-usb-creator.exe', pid);
   if running then begin
     if MsgBox('ZimaOS USB Creator is running and needs to be closed before continuing. Close it now?',
               mbConfirmation, MB_YESNO) <> IDYES then
     begin Result := False; Exit; end;
     
-    ShellExec('', 'taskkill.exe', '/IM rpi-imager.exe /F', '', SW_HIDE, ewWaitUntilTerminated, rc);
+    ShellExec('', 'taskkill.exe', '/IM zimaos-usb-creator.exe /F', '', SW_HIDE, ewWaitUntilTerminated, rc);
     // taskkill may fail if process exited between detection and kill attempt (race condition)
     // Re-check if process is actually still running
     Sleep(500); // Give process time to fully terminate
-    if FindProcess('rpi-imager.exe', pid) then begin
+    if FindProcess('zimaos-usb-creator.exe', pid) then begin
       MsgBox('Failed to close ZimaOS USB Creator. Please close it manually and try again.', mbError, MB_OK);
       Result := False; Exit;
     end;

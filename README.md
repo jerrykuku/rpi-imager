@@ -77,7 +77,7 @@ Building ZimaOS USB Creator on Windows is best done with Visual Studio Code (or 
 
 - Open Visual Studio Code, and select 'Clone repo'. Give it the git url of this project.
 - Open the CMake plugin settings, and set the following Configure Args:
-  - `-DQt6_ROOT=C:\Qt\6.9.0\mingw_64` - or the equivalent path you installed Qt 6.9 to.
+  - `-DQt6_ROOT=C:\Qt\6.9.3\mingw_64` - or the equivalent path you installed Qt 6.9 to.
   - `-DMINGW64_ROOT=C:\Qt\Tools\mingw1310_64` - or the equivalent path you installed mingw64 to.
   - `-DENABLE_INNO_INSTALLER=ON` - to enable the Inno Setup installer, rather than the legacy NSIS installer.
   - `-DIMAGER_SIGNED_APP=ON` - to enable code signing for redistribution.

@@ -89,9 +89,11 @@ Item {
     readonly property int focusOutlineMargin: -4
 
     // === FONTS ===
-    readonly property alias fontFamily: robotoRegular.name
-    readonly property alias fontFamilyLight: robotoLight.name
-    readonly property alias fontFamilyBold: robotoBold.name
+    // On Windows, use Microsoft YaHei for CJK character support (set in main.cpp)
+    // On other platforms, use embedded Roboto fonts
+    readonly property string fontFamily: Qt.platform.os === "windows" ? "Microsoft YaHei UI" : robotoRegular.name
+    readonly property string fontFamilyLight: Qt.platform.os === "windows" ? "Microsoft YaHei UI" : robotoLight.name
+    readonly property string fontFamilyBold: Qt.platform.os === "windows" ? "Microsoft YaHei UI" : robotoBold.name
 
     // Font sizes
     // Base scale (single source of truth)
