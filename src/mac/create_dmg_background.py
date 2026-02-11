@@ -72,9 +72,9 @@ def create_dmg_background(output_path="dmg_background.png", version_str="", widt
     
     # Draw title with version if provided
     if version_str:
-        title_text = f"Raspberry Pi Imager {version_str}"
+        title_text = f"ZimaOS USB Creator {version_str}"
     else:
-        title_text = "Raspberry Pi Imager"
+        title_text = "ZimaOS USB Creator"
     
     title_bbox = draw.textbbox((0, 0), title_text, font=title_font)
     title_width = title_bbox[2] - title_bbox[0]
