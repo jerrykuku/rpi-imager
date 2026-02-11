@@ -1,15 +1,34 @@
 # ZimaOS USB Creator
 
-ZimaOS USB Imaging Utility
+> **Note**: This project is a fork of [Raspberry Pi Imager](https://github.com/raspberrypi/rpi-imager) by Raspberry Pi Ltd, licensed under Apache-2.0.
 
-- To install on Raspberry Pi OS, use `sudo apt update && sudo apt install rpi-imager`.
-- Download the latest version for Windows, macOS and Ubuntu from the [Raspberry Pi downloads page](https://www.raspberrypi.com/software/).
+ZimaOS USB Imaging Utility - A tool for creating bootable USB drives for ZimaOS.
 
-## How to install and use Raspberry Pi Imager
+## About This Fork
 
-Please see our [official documentation](https://www.raspberrypi.com/documentation/computers/getting-started.html#raspberry-pi-imager).
+This is a modified version of the Raspberry Pi Imager, adapted specifically for ZimaOS. Key changes include:
+- Rebranded user interface to "ZimaOS USB Creator"
+- Modified to work with ZimaOS image repositories
+- Updated translations and localization
+- Customized for ZimaOS ecosystem
 
-## Contributing
+**Original project**: https://github.com/raspberrypi/rpi-imager
+
+## License
+
+This project maintains the Apache-2.0 license of the original Raspberry Pi Imager.
+- Original work: Copyright (C) 2020 Raspberry Pi Ltd
+- Modifications: Copyright (C) 2026 IceWhale Technology Ltd.
+
+See [license.txt](license.txt) for full license details.
+
+## Installation
+
+### From Binary Releases
+
+Download the latest release for your platform from the Releases page.
+
+### Building from Source
 
 ### Linux
 
@@ -24,7 +43,7 @@ sudo apt install --no-install-recommends build-essential cmake git libgnutls28-d
 #### Get the source
 
 ```sh
-git clone --depth 1 https://github.com/raspberrypi/rpi-imager
+git clone --depth 1 https://github.com/IceWhaleTech/ZimaOS-USB-Creator
 ```
 
 #### Build Qt
@@ -33,13 +52,13 @@ git clone --depth 1 https://github.com/raspberrypi/rpi-imager
 sudo ./qt/build-qt.sh
 ```
 
-This will build and install the version of Qt preferred for Raspberry Pi Imager into /opt/Qt/<version>. You must use `sudo` for the installation step to complete.
+This will build and install the version of Qt preferred for ZimaOS USB Creator into /opt/Qt/<version>. You must use `sudo` for the installation step to complete.
 
 #### Build the AppImage
 
 ```sh
 ./create-appimage.sh
-./Raspberry_Pi_Imager-*.AppImage
+./ZimaOS_USB_Creator-*.AppImage
 ```
 
 ### Windows
@@ -54,7 +73,7 @@ This will build and install the version of Qt preferred for Raspberry Pi Imager 
 
 #### Building
 
-Building Raspberry Pi Imager on Windows is best done with Visual Studio Code (or a derivative).
+Building ZimaOS USB Creator on Windows is best done with Visual Studio Code (or a derivative).
 
 - Open Visual Studio Code, and select 'Clone repo'. Give it the git url of this project.
 - Open the CMake plugin settings, and set the following Configure Args:
@@ -81,7 +100,7 @@ Building Raspberry Pi Imager on Windows is best done with Visual Studio Code (or
 
 #### Building
 
-Building Raspberry Pi Imager on macOS is best done with Visual Studio Code (or a derivative).
+Building ZimaOS USB Creator on macOS is best done with Visual Studio Code (or a derivative).
 
 - Open Visual Studio Code, and select 'Clone repo'. Give it the git url of this project.
 - Open the CMake plugin settings, and set the following Configure Args:
@@ -92,7 +111,7 @@ Building Raspberry Pi Imager on macOS is best done with Visual Studio Code (or a
   - `-DIMAGER_NOTARIZE_KEYCHAIN_PROFILE=notarytool-password` - specify the name of the keychain item containing your Apple ID credentials for notarizing.
 - In the CMake plugin tab, ensure you have selected the `MinSizeRel` variant if you intend to distribute to others.
 - In the CMake plugin tab, select the 'rpi_imager' target, and build it
-- Your resultant DMG will be located at `$WORKSPACE/build/Raspberry Pi Imager-$VERSION.dmg`
+- Your resultant DMG will be located at `$WORKSPACE/build/ZimaOS USB Creator-$VERSION.dmg`
 
 ### Linux embedded (netboot) build
 
@@ -135,18 +154,19 @@ So can simply create another 'start menu shortcut' to the application with that 
 
 #### Why and what
 
-In order to understand usage of the application (e.g. uptake of Raspberry Pi Imager versions and which images and operating systems are most popular), Raspberry Pi Imager collects anonymous metrics (telemetry) by default. These metrics are used to prioritise and justify work on the Raspberry Pi Imager, and contain the following information:
+ZimaOS USB Creator inherits the telemetry system from the original Raspberry Pi Imager.
+The telemetry data is sent to Raspberry Pi's servers, not ZimaOS servers.
+
+In order to understand usage of the application (e.g. uptake of ZimaOS USB Creator versions and which images and operating systems are most popular), the application collects anonymous metrics (telemetry) by default. These metrics contain the following information:
 
 - The URL of the OS you have selected
 - The category of the OS you have selected
 - The observed name of the OS you have selected
-- The version of Raspberry Pi Imager
-- A flag to say if Raspberry Pi Imager is being used on the Desktop or as part of the Network Installer
+- The version of ZimaOS USB Creator
+- A flag to say if the tool is being used on the Desktop or as part of the Network Installer
 - The host operating system version (e.g. Windows 11)
 - The host operating system architecture (e.g. arm64, x86_64)
 - The host operating system locale name (e.g. en-GB)
-
-If the Raspberry Pi Imager is being run a part of the Network Installer, Imager will also collect the revision of Raspberry Pi it is running on.
 
 #### Where is it stored
 
@@ -160,8 +180,12 @@ As the data is stored in aggregate form, only aggregate data is available to any
 
 #### Opting out
 
-The most convenient way to opt-out of anonymous metric collection is via the Raspberry Pi Imager UI:
+The most convenient way to opt-out of anonymous metric collection is via the ZimaOS USB Creator UI:
 
 - Select "App Options"
 - Untoggle "Enable anonymous statistics (telemetry) collection"
 - Press "Save"
+
+## Acknowledgments
+
+This project is based on the excellent work of the Raspberry Pi Foundation and their Raspberry Pi Imager tool. We are grateful for their contribution to the open-source community.

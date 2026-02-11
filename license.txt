@@ -1,5 +1,20 @@
 ==
-Raspberry Pi Imaging Utility main code license terms
+ZimaOS USB Creator - Modified Version
+==
+
+This is a modified version of Raspberry Pi Imager, adapted for ZimaOS.
+
+Modifications Copyright (C) 2026 IceWhale Technology Ltd.
+
+This modified version is based on Raspberry Pi Imager and is licensed under
+the same Apache License 2.0. All modifications are clearly marked in the
+source code.
+
+Original project: https://github.com/raspberrypi/rpi-imager
+Modified project: https://github.com/IceWhaleTech/ZimaOS-USB-Creator
+
+==
+Original Raspberry Pi Imaging Utility main code license terms
 ==
 
 Copyright (C) 2020 Raspberry Pi Ltd

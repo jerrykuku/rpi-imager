@@ -1,0 +1,55 @@
+ZimaOS USB Creator
+Copyright (C) 2026 IceWhale Technology Ltd.
+
+This product is based on Raspberry Pi Imager
+Copyright (C) 2020 Raspberry Pi Ltd
+https://github.com/raspberrypi/rpi-imager
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+================================================================================
+
+MODIFICATIONS
+
+This version has been modified from the original Raspberry Pi Imager with
+the following key changes:
+
+1. Rebranded user interface from "Raspberry Pi Imager" to "ZimaOS USB Creator"
+2. Updated application metadata and descriptions for ZimaOS
+3. Modified translations and localization files
+4. Customized for ZimaOS ecosystem integration
+
+All modifications are licensed under the same Apache License 2.0 as the
+original work.
+
+For a complete list of changes, please refer to the git commit history at:
+https://github.com/IceWhaleTech/ZimaOS-USB-Creator
+
+================================================================================
+
+THIRD-PARTY COMPONENTS
+
+This software depends on the following third-party components covered by
+open source licenses. For full license texts, see license.txt:
+
+- Qt (LGPL license)
+- GNU C library (LGPL license)
+- MinGW library (MIT license)
+- Balena.io drivelist (Apache license)
+- Balena.io mountutils (Apache license)
+- libarchive (BSD license)
+- liblzma (public domain)
+- sha256crypt (public domain)
+- zlib (zlib license)
+- libcurl (libcurl license)
+- zstd (BSD license)
