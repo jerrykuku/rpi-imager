@@ -14,19 +14,19 @@ import RpiImager
 
 WizardStepBase {
     id: root
-    
+
     required property ImageWriter imageWriter
     required property var wizardContainer
-    
+
     readonly property HWListModel hwmodel: imageWriter.getHWList()
     readonly property OSListModel osmodel: imageWriter.getOSList()
-    
+
     title: qsTr("Choose operating system")
     // subtitle: qsTr("Select the ZimaOS version you want to install")
     showNextButton: true
     // Disable Next until a concrete OS has been selected
     nextButtonEnabled: oslist.currentIndex !== -1 && wizardContainer.selectedOsName.length > 0
-    
+
     property alias oslist: oslist
     property alias osswipeview: osswipeview
     property string categorySelected: ""
@@ -34,94 +34,94 @@ WizardStepBase {
     // Track if a custom local image has been chosen in this step
     property bool customSelected: false
     property real customSelectedSize: 0
-    
+
     // Property to trigger cache status re-evaluation when cache changes
     property int cacheStatusVersion: 0
-    
+
     // Connect to cache status changes
     Connections {
         target: imageWriter
         function onCacheStatusChanged() {
             // Save scroll position before updating cache status (which causes all delegates to re-evaluate)
-            var savedContentY = oslist.contentY
-            root.cacheStatusVersion++
+            var savedContentY = oslist.contentY;
+            root.cacheStatusVersion++;
             // Restore scroll position after cache status update
-            Qt.callLater(function() {
-                oslist.contentY = savedContentY
-            })
+            Qt.callLater(function () {
+                oslist.contentY = savedContentY;
+            });
         }
     }
-    
+
     signal updatePopupRequested(var url, string version)
     signal defaultEmbeddedDriveRequested(var drive)
-    
+
     // Forward the nextClicked signal as next() function
     function next() {
-        root.nextClicked()
+        root.nextClicked();
     }
-    
+
     // Common handler functions for OS selection
     function handleOSSelection(modelData, fromKeyboard, fromMouse) {
         if (fromKeyboard === undefined) {
-            fromKeyboard = true  // Default to keyboard since this is called from keyboard handlers
+            fromKeyboard = true;  // Default to keyboard since this is called from keyboard handlers
         }
         if (fromMouse === undefined) {
-            fromMouse = false  // Default to not from mouse
+            fromMouse = false;  // Default to not from mouse
         }
-        
+
         // Check if this is a sublist item - if so, navigate to it
         if (modelData && root.isOSsublist(modelData)) {
-            root.selectOSitem(modelData, true, fromMouse)
-        } else if (modelData && typeof(modelData.subitems_url) === "string" && modelData.subitems_url === "internal://back") {
+            root.selectOSitem(modelData, true, fromMouse);
+        } else if (modelData && typeof (modelData.subitems_url) === "string" && modelData.subitems_url === "internal://back") {
             // Back button - just navigate back without auto-advancing
-            root.selectOSitem(modelData, false, fromMouse)
+            root.selectOSitem(modelData, false, fromMouse);
         } else {
             // Regular OS selection
-            root.selectOSitem(modelData, false, fromMouse)
-            
+            root.selectOSitem(modelData, false, fromMouse);
+
             // For keyboard selection of concrete OS items, automatically advance to next step
             if (fromKeyboard && modelData && !root.isOSsublist(modelData)) {
                 // Use Qt.callLater to ensure the OS selection completes first
-                Qt.callLater(function() {
+                Qt.callLater(function () {
                     if (root.nextButtonEnabled) {
-                        root.next()
+                        root.next();
                     }
-                })
+                });
             }
         }
     }
-    
+
     function handleOSNavigation(modelData) {
         // Right arrow key: only navigate to sublists, ignore regular OS items
         if (modelData && root.isOSsublist(modelData)) {
-            root.selectOSitem(modelData, true, false)
+            root.selectOSitem(modelData, true, false);
         }
     }
-    
+
     function handleBackNavigation() {
-        osswipeview.decrementCurrentIndex()
-        root.categorySelected = ""
+        osswipeview.decrementCurrentIndex();
+        root.categorySelected = "";
         // Rebuild focus order when returning to main list
-        root.rebuildFocusOrder()
+        root.rebuildFocusOrder();
     }
-    
+
     function initializeListViewFocus(listView) {
         // No-op: Do not auto-select first item to avoid unwanted highlighting on load
     }
 
     Component.onCompleted: {
         // Try initial load in case data is already available
-        onOsListPreparedHandler()
+        onOsListPreparedHandler();
 
         // Register the OS list for keyboard navigation
-        root.registerFocusGroup("os_list", function(){
+        root.registerFocusGroup("os_list", function () {
             // Only include the currently active list view
-            var currentPage = osswipeview.itemAt(osswipeview.currentIndex)
-            return currentPage ? [currentPage] : [oslist]
-        }, 0)
+            var currentPage = osswipeview.itemAt(osswipeview.currentIndex);
+            return currentPage ? [currentPage] : [oslist];
+        }, 0);
 
         // Initial focus will automatically go to title, then subtitle, then first control (handled by WizardStepBase)
-        _focusFirstItemInCurrentView()
+        _focusFirstItemInCurrentView();
     }
 
     Connections {
@@ -131,70 +131,70 @@ WizardStepBase {
             // (softRefresh only updates existing rows, doesn't add new ones)
             if (root.osListUnavailable) {
                 // Still unavailable - no point refreshing
-                return
+                return;
             }
-            
+
             // If model was loaded with just Erase/Use custom (2 items) but now we have more,
             // we need a full reload, not just softRefresh
-            var needsFullReload = !root.modelLoaded || (root.osmodel && root.osmodel.rowCount() <= 2)
-            
+            var needsFullReload = !root.modelLoaded || (root.osmodel && root.osmodel.rowCount() <= 2);
+
             if (needsFullReload) {
-                root.modelLoaded = false  // Reset so handler does full reload
-                onOsListPreparedHandler()
+                root.modelLoaded = false;  // Reset so handler does full reload
+                onOsListPreparedHandler();
             } else if (root.osmodel && typeof root.osmodel.softRefresh === "function") {
                 // Just updating existing data (e.g., sublist loaded)
-                root.osmodel.softRefresh()
+                root.osmodel.softRefresh();
             }
         }
         function onOsListUnavailableChanged() {
             // When transitioning from unavailable to available, force a full reload
             if (!root.osListUnavailable && root.osmodel) {
-                root.modelLoaded = false
-                onOsListPreparedHandler()
+                root.modelLoaded = false;
+                onOsListPreparedHandler();
             }
         }
         function onHwFilterChanged() {
             // Hardware filter changed (device selected) - reload OS list to apply new filter
             if (root.modelLoaded && root.osmodel) {
-                root.osmodel.reload()
+                root.osmodel.reload();
             }
         }
         // Handle native file selection for "Use custom"
         function onFileSelected(fileUrl) {
             // Ensure ImageWriter src is set to the chosen file explicitly
-            imageWriter.setSrc(fileUrl)
+            imageWriter.setSrc(fileUrl);
             // Update selected OS name to the chosen file name
-            root.wizardContainer.selectedOsName = imageWriter.srcFileName()
-            root.wizardContainer.customizationSupported = imageWriter.imageSupportsCustomization()
+            root.wizardContainer.selectedOsName = imageWriter.srcFileName();
+            root.wizardContainer.customizationSupported = imageWriter.imageSupportsCustomization();
             // For custom images, customization is not supported; clear any staged flags
             if (!root.wizardContainer.customizationSupported) {
-                root.wizardContainer.hostnameConfigured = false
-                root.wizardContainer.localeConfigured = false
-                root.wizardContainer.userConfigured = false
-                root.wizardContainer.wifiConfigured = false
-                root.wizardContainer.sshEnabled = false
-                root.wizardContainer.piConnectEnabled = false
-                root.wizardContainer.piConnectAvailable = false
-                root.wizardContainer.secureBootAvailable = imageWriter.isSecureBootForcedByCliFlag()
+                root.wizardContainer.hostnameConfigured = false;
+                root.wizardContainer.localeConfigured = false;
+                root.wizardContainer.userConfigured = false;
+                root.wizardContainer.wifiConfigured = false;
+                root.wizardContainer.sshEnabled = false;
+                root.wizardContainer.piConnectEnabled = false;
+                root.wizardContainer.piConnectAvailable = false;
+                root.wizardContainer.secureBootAvailable = imageWriter.isSecureBootForcedByCliFlag();
             }
-            root.customSelected = true
-            root.customSelectedSize = imageWriter.getSelectedSourceSize()
-            root.nextButtonEnabled = true
-            
+            root.customSelected = true;
+            root.customSelectedSize = imageWriter.getSelectedSourceSize();
+            root.nextButtonEnabled = true;
+
             // Scroll back to the "Use custom" option so user can see their selection
-            Qt.callLater(function() {
+            Qt.callLater(function () {
                 if (oslist && oslist.model) {
                     // Find the "Use custom" item (url === "internal://custom")
                     for (var i = 0; i < oslist.count; i++) {
-                        var itemData = oslist.getModelData(i)
+                        var itemData = oslist.getModelData(i);
                         if (itemData && itemData.url === "internal://custom") {
-                            oslist.currentIndex = i
-                            oslist.positionViewAtIndex(i, ListView.Center)
-                            break
+                            oslist.currentIndex = i;
+                            oslist.positionViewAtIndex(i, ListView.Center);
+                            break;
                         }
                     }
                 }
-            })
+            });
         }
     }
 
@@ -208,165 +208,166 @@ WizardStepBase {
         anchors.centerIn: parent
         nameFilters: CommonStrings.imageFiltersList
         onAccepted: {
-            imageWriter.acceptCustomImageFromQml(selectedFile)
+            imageWriter.acceptCustomImageFromQml(selectedFile);
         }
         onRejected: {
             // No-op; user cancelled
         }
     }
-    
+
     // No-op (previous auto-focus/auto-select logic removed to avoid stealing click timing)
-    function _focusFirstItemInCurrentView() {}
-    
+    function _focusFirstItemInCurrentView() {
+    }
+
     // Ensure the clicked selection is visually highlighted in the current list view
     function _highlightMatchingEntryInCurrentView(selectedModel) {
-        var currentView = osswipeview.currentItem
+        var currentView = osswipeview.currentItem;
         if (!currentView || !currentView.model || typeof currentView.model.get !== "function") {
-            return
+            return;
         }
         for (var i = 0; i < currentView.count; i++) {
-            var entry = currentView.model.get(i)
+            var entry = currentView.model.get(i);
             if (entry && entry.name === selectedModel.name && entry.url === selectedModel.url) {
-                currentView.currentIndex = i
-                break
+                currentView.currentIndex = i;
+                break;
             }
         }
     }
-    
+
     // Track whether OS list is unavailable (no data loaded)
     readonly property bool osListUnavailable: imageWriter.isOsListUnavailable
-    
+
     // Content
     content: [
-    ColumnLayout {
-        anchors.fill: parent
-        spacing: 0
-        
-        // Offline banner (shown when OS list fetch failed)
-        Rectangle {
-            id: offlineBanner
-            Layout.fillWidth: true
-            Layout.preferredHeight: visible ? bannerContent.implicitHeight + Style.spacingMedium * 2 : 0
-            visible: root.osListUnavailable
-            color: Style.titleBackgroundColor
-            radius: 8
-            anchors.topMargin: 4
-            anchors.bottomMargin: 4
-            anchors.rightMargin: 4
-            RowLayout {
-                id: bannerContent
-                anchors.fill: parent
-                anchors.leftMargin: Style.spacingMedium
-                anchors.rightMargin: Style.spacingMedium
-                anchors.topMargin: Style.spacingSmall
-                anchors.bottomMargin: Style.spacingSmall
-                spacing: Style.spacingMedium
-                
-                Text {
-                    text: "⚠"
-                    font.pixelSize: Style.fontSizeFormLabel
-                    color: Style.formLabelColor
-                    Accessible.ignored: true
-                }
-                
-                Text {
-                    text: qsTr("Unable to download OS list. You can still use a local image file.")
-                    font.pixelSize: Style.fontSizeDescription
-                    font.family: Style.fontFamily
-                    color: Style.formLabelColor
-                    Layout.fillWidth: true
-                    wrapMode: Text.WordWrap
-                    Accessible.role: Accessible.StaticText
-                    Accessible.name: text
-                }
-                
-                ImButton {
-                    id: retryButton
-                    text: qsTr("Retry")
-                    accessibleDescription: qsTr("Retry downloading the OS list")
-                    onClicked: {
-                        imageWriter.beginOSListFetch()
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: 0
+
+            // Offline banner (shown when OS list fetch failed)
+            Rectangle {
+                id: offlineBanner
+                Layout.fillWidth: true
+                Layout.preferredHeight: visible ? bannerContent.implicitHeight + Style.spacingMedium * 2 : 0
+                visible: root.osListUnavailable
+                color: Style.titleBackgroundColor
+                radius: Style.listItemBorderRadius
+                anchors.topMargin: Style.sectionMargin
+                anchors.bottomMargin: Style.sectionMargin
+                anchors.rightMargin: Style.sectionMargin
+                RowLayout {
+                    id: bannerContent
+                    anchors.fill: parent
+                    anchors.leftMargin: Style.spacingMedium
+                    anchors.rightMargin: Style.spacingMedium
+                    anchors.topMargin: Style.spacingSmall
+                    anchors.bottomMargin: Style.spacingSmall
+                    spacing: Style.spacingMedium
+
+                    Text {
+                        text: "⚠"
+                        font.pixelSize: Style.fontSizeFormLabel
+                        color: Style.formLabelColor
+                        Accessible.ignored: true
+                    }
+
+                    Text {
+                        text: qsTr("Unable to download OS list. You can still use a local image file.")
+                        font.pixelSize: Style.fontSizeDescription
+                        font.family: Style.fontFamily
+                        color: Style.formLabelColor
+                        Layout.fillWidth: true
+                        wrapMode: Text.WordWrap
+                        Accessible.role: Accessible.StaticText
+                        Accessible.name: text
+                    }
+
+                    ImButton {
+                        id: retryButton
+                        text: qsTr("Retry")
+                        accessibleDescription: qsTr("Retry downloading the OS list")
+                        onClicked: {
+                            imageWriter.beginOSListFetch();
+                        }
                     }
                 }
             }
-        }
-        
-        // OS selection area - fill available space without extra chrome/padding
-        Item {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            
-            // OS SwipeView for navigation between categories
-            SwipeView {
-                id: osswipeview
-                anchors.fill: parent
-                interactive: false
-                clip: true
-                focus: false  // Don't let SwipeView steal focus from its children
-                activeFocusOnTab: false
 
-                onCurrentIndexChanged: {
-                    _focusFirstItemInCurrentView()
-                    // Rebuild focus order when switching between main list and sublists
-                    root.rebuildFocusOrder()
-                    // Ensure the current view gets focus when SwipeView index changes
-                    Qt.callLater(function() {
-                        var currentView = osswipeview.currentItem
-                        if (currentView && typeof currentView.forceActiveFocus === "function") {
-                            currentView.forceActiveFocus()
-                        }
-                    })
-                }
-                    
+            // OS selection area - fill available space without extra chrome/padding
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                // OS SwipeView for navigation between categories
+                SwipeView {
+                    id: osswipeview
+                    anchors.fill: parent
+                    interactive: false
+                    clip: true
+                    focus: false  // Don't let SwipeView steal focus from its children
+                    activeFocusOnTab: false
+
+                    onCurrentIndexChanged: {
+                        _focusFirstItemInCurrentView();
+                        // Rebuild focus order when switching between main list and sublists
+                        root.rebuildFocusOrder();
+                        // Ensure the current view gets focus when SwipeView index changes
+                        Qt.callLater(function () {
+                            var currentView = osswipeview.currentItem;
+                            if (currentView && typeof currentView.forceActiveFocus === "function") {
+                                currentView.forceActiveFocus();
+                            }
+                        });
+                    }
+
                     // Main OS list
                     OSSelectionListView {
                         id: oslist
                         model: root.osmodel
                         delegate: osdelegate
                         accessibleName: {
-                            var count = oslist.count
-                            var name = qsTr("Operating system list")
-                            
+                            var count = oslist.count;
+                            var name = qsTr("Operating system list");
+
                             if (count === 0) {
-                                name += ". " + qsTr("No operating systems")
+                                name += ". " + qsTr("No operating systems");
                             } else if (count === 1) {
-                                name += ". " + qsTr("1 operating system")
+                                name += ". " + qsTr("1 operating system");
                             } else {
-                                name += ". " + qsTr("%1 operating systems").arg(count)
+                                name += ". " + qsTr("%1 operating systems").arg(count);
                             }
-                            
-                            name += ". " + qsTr("Use arrow keys to navigate, Enter or Space to select")
-                            return name
+
+                            name += ". " + qsTr("Use arrow keys to navigate, Enter or Space to select");
+                            return name;
                         }
                         accessibleDescription: ""
-                        
+
                         // Connect to our OS selection handler
                         osSelectionHandler: root.handleOSSelection
-                        
-                        onRightPressed: function(index, item, modelData) {
-                            root.handleOSNavigation(modelData)
+
+                        onRightPressed: function (index, item, modelData) {
+                            root.handleOSNavigation(modelData);
                         }
-                        
+
                         Component.onCompleted: {
-                            root.initializeListViewFocus(oslist)
+                            root.initializeListViewFocus(oslist);
                         }
-                        
+
                         onCountChanged: {
-                            root.initializeListViewFocus(oslist)
+                            root.initializeListViewFocus(oslist);
                         }
                     }
+                }
             }
         }
-    }
     ]
-    
+
     // OS delegate component
     Component {
         id: osdelegate
-        
+
         Item {
             id: delegateItem
-            
+
             required property int index
             required property string name
             required property string description
@@ -377,24 +378,24 @@ WizardStepBase {
             required property QtObject model
             required property double image_download_size
             required property var devices
-            
+
             // Get reference to the containing ListView
             // IMPORTANT: Cache ListView.view in a property for reliable access.
             // This delegate is shared between the main OS list and dynamically created sublists.
             // Using ListView.view directly in bindings can be unreliable, so we cache it here.
             // This enables proper highlighting for both keyboard and mouse navigation in all lists.
             property var parentListView: ListView.view
-            
+
             width: parentListView ? parentListView.width : 200
             // Let content determine height for balanced vertical padding
             height: Math.max(96, row.implicitHeight + Style.spacingSmallPlus + Style.spacingSmallPlus)
-            
+
             // Accessibility properties
             Accessible.role: Accessible.ListItem
             Accessible.name: delegateItem.name + ". " + delegateItem.description + (delegateItem.release_date !== "" ? ". " + qsTr("Released: %1").arg(delegateItem.release_date) : "")
             Accessible.focusable: true
             Accessible.ignored: false
-            
+
             Rectangle {
                 id: osbgrect
                 anchors.left: parent.left
@@ -403,28 +404,26 @@ WizardStepBase {
                 anchors.bottom: parent.bottom
                 // Delegate highlighting: Works together with ListView's built-in highlight system
                 // DO NOT disable ListView's highlight - both systems work in harmony
-                color: (parentListView && parentListView.currentIndex === index) ? Style.listViewHighlightColor :
-                       (osMouseArea.containsMouse ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor)
+                color: (parentListView && parentListView.currentIndex === index) ? Style.listViewHighlightColor : (osMouseArea.containsMouse ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor)
                 radius: 8
                 border.color: (parentListView && parentListView.currentIndex === index) ? Style.zimaBlue : "transparent"
                 border.width: 1
                 anchors.bottomMargin: 4
                 anchors.topMargin: 4
-                anchors.rightMargin: (
-                    (parentListView && parentListView.contentHeight > parentListView.height) ? Style.scrollBarWidth + 4 : 0)
+                anchors.rightMargin: ((parentListView && parentListView.contentHeight > parentListView.height) ? Style.scrollBarWidth + 4 : 0)
                 Accessible.ignored: true
-                
+
                 MouseArea {
                     id: osMouseArea
                     anchors.fill: parent
                     hoverEnabled: true
                     preventStealing: true
                     cursorShape: Qt.PointingHandCursor
-                    
+
                     onPressed: {
                         if (parentListView) {
                             if (!parentListView.activeFocus) {
-                                parentListView.forceActiveFocus()
+                                parentListView.forceActiveFocus();
                             }
                         }
                     }
@@ -433,19 +432,19 @@ WizardStepBase {
                         // Trigger the itemSelected signal to handle selection with scroll preservation
                         if (parentListView) {
                             // Set flag to indicate this is a mouse click
-                            parentListView.currentSelectionIsFromMouse = true
-                            parentListView.itemSelected(index, delegateItem)
+                            parentListView.currentSelectionIsFromMouse = true;
+                            parentListView.itemSelected(index, delegateItem);
                         }
                     }
-                    
+
                     onDoubleClicked: {
                         // Double-click acts like pressing Return - select and advance
                         if (parentListView) {
-                            parentListView.itemDoubleClicked(index, delegateItem)
+                            parentListView.itemDoubleClicked(index, delegateItem);
                         }
                     }
                 }
-                
+
                 RowLayout {
                     id: row
                     anchors.fill: parent
@@ -454,7 +453,7 @@ WizardStepBase {
                     anchors.topMargin: Style.spacingSmall
                     anchors.bottomMargin: Style.spacingMedium
                     spacing: Style.spacingMedium
-                    
+
                     // OS Icon
                     Image {
                         id: osicon
@@ -479,11 +478,11 @@ WizardStepBase {
                             visible: parent.status === Image.Error
                         }
                     }
-                    
+
                     ColumnLayout {
                         Layout.fillWidth: true
                         spacing: Style.spacingXXSmall
-                        
+
                         Text {
                             text: delegateItem.name
                             font.pixelSize: Style.fontSizeFormLabel
@@ -493,7 +492,7 @@ WizardStepBase {
                             Layout.fillWidth: true
                             Accessible.ignored: true
                         }
-                        
+
                         Text {
                             text: delegateItem.description
                             font.pixelSize: Style.fontSizeDescription
@@ -511,25 +510,15 @@ WizardStepBase {
                             font.pixelSize: Style.fontSizeSmall
                             font.family: Style.fontFamily
                             // Hide for custom until a file is chosen; otherwise show status
-                            visible: (typeof(delegateItem.url) === "string" && delegateItem.url !== "internal://custom" && delegateItem.url !== "internal://format")
-                                     || (typeof(delegateItem.url) === "string" && delegateItem.url === "internal://custom" && root.customSelected)
-                            text:
-                                (typeof(delegateItem.url) === "string" && delegateItem.url === "internal://custom")
-                                ? (function(){
+                            visible: (typeof (delegateItem.url) === "string" && delegateItem.url !== "internal://custom" && delegateItem.url !== "internal://format") || (typeof (delegateItem.url) === "string" && delegateItem.url === "internal://custom" && root.customSelected)
+                            text: (typeof (delegateItem.url) === "string" && delegateItem.url === "internal://custom") ? (function () {
                                     var sz = root.customSelected ? root.customSelectedSize : 0;
                                     return sz > 0 ? qsTr("Local - %1").arg(imageWriter.formatSize(sz)) : "";
-                                  })()
-                                : (!delegateItem.url ? "" :
-                                  ((typeof(delegateItem.extract_sha256) !== "undefined" && 
-                                    root.cacheStatusVersion >= 0 && // Force re-evaluation when cache status changes
-                                    imageWriter.isCached(delegateItem.url, delegateItem.extract_sha256))
-                                    ? qsTr("Cached on your computer")
-                                    : (delegateItem.url.startsWith("file://")
-                                       ? qsTr("Local file")
-                                       : qsTr("Online - %1 download").arg(imageWriter.formatSize(delegateItem.image_download_size)))))
+                                })() : (!delegateItem.url ? "" : ((typeof (delegateItem.extract_sha256) !== "undefined" && root.cacheStatusVersion >= 0 && // Force re-evaluation when cache status changes
+                                        imageWriter.isCached(delegateItem.url, delegateItem.extract_sha256)) ? qsTr("Cached on your computer") : (delegateItem.url.startsWith("file://") ? qsTr("Local file") : qsTr("Online - %1 download").arg(imageWriter.formatSize(delegateItem.image_download_size)))))
                             Accessible.ignored: true
                         }
-                        
+
                         Text {
                             text: delegateItem.release_date !== "" ? qsTr("Released: %1").arg(delegateItem.release_date) : ""
                             font.pixelSize: Style.fontSizeSmall
@@ -544,65 +533,65 @@ WizardStepBase {
             }
         }
     }
-    
+
     // Sublist page component
     Component {
         id: suboslist
-        
+
         OSSelectionListView {
             id: sublistview
             model: ListModel {
                 id: sublistModel
-                
+
                 // Notify accessibility system when the model changes
                 onCountChanged: {
                     // Force accessibility update by briefly toggling and restoring focus
                     if (sublistview.activeFocus) {
-                        Qt.callLater(function() {
+                        Qt.callLater(function () {
                             // The accessibleName binding will re-evaluate with the new count
                             // Force the screen reader to re-announce by resetting focus
-                            var parent = sublistview.parent
+                            var parent = sublistview.parent;
                             if (parent) {
-                                parent.forceActiveFocus()
-                                Qt.callLater(function() {
-                                    sublistview.forceActiveFocus()
-                                })
+                                parent.forceActiveFocus();
+                                Qt.callLater(function () {
+                                    sublistview.forceActiveFocus();
+                                });
                             }
-                        })
+                        });
                     }
                 }
             }
             delegate: osdelegate
             accessibleName: {
                 // Subtract 1 from count because the first item is the "Back" button, not an OS
-                var osCount = Math.max(0, sublistview.count - 1)
-                var name = qsTr("Operating system category")
-                
+                var osCount = Math.max(0, sublistview.count - 1);
+                var name = qsTr("Operating system category");
+
                 if (osCount === 0) {
-                    name += ". " + qsTr("No operating systems")
+                    name += ". " + qsTr("No operating systems");
                 } else if (osCount === 1) {
-                    name += ". " + qsTr("1 operating system")
+                    name += ". " + qsTr("1 operating system");
                 } else {
-                    name += ". " + qsTr("%1 operating systems").arg(osCount)
+                    name += ". " + qsTr("%1 operating systems").arg(osCount);
                 }
-                
-                name += ". " + qsTr("Use arrow keys to navigate, Enter or Space to select, Left arrow to go back")
-                return name
+
+                name += ". " + qsTr("Use arrow keys to navigate, Enter or Space to select, Left arrow to go back");
+                return name;
             }
             accessibleDescription: ""
-            
+
             // Connect to our OS selection handler
             osSelectionHandler: root.handleOSSelection
-            
-            onRightPressed: function(index, item, modelData) {
-                root.handleOSNavigation(modelData)
+
+            onRightPressed: function (index, item, modelData) {
+                root.handleOSNavigation(modelData);
             }
-            
+
             onLeftPressed: {
-                console.log("Sublist onLeftPressed handler called")
-                root.handleBackNavigation()
+                console.log("Sublist onLeftPressed handler called");
+                root.handleBackNavigation();
             }
-            
+
             Component.onCompleted: {
                 // Build the back entry dynamically to support translations
                 sublistModel.append({
@@ -622,11 +611,11 @@ WizardStepBase {
                     init_format: "",
                     capabilities: "",
                     devices: []
-                })
-                
+                });
+
                 // Ensure this sublist can receive keyboard focus
-                forceActiveFocus()
-                root.initializeListViewFocus(sublistview)
+                forceActiveFocus();
+                root.initializeListViewFocus(sublistview);
             }
         }
     }
@@ -634,216 +623,195 @@ WizardStepBase {
     // OS selection functions (adapted from OSPopup.qml)
     function selectOSitem(model, navigateOnly, fromMouse) {
         if (navigateOnly === undefined) {
-            navigateOnly = false
+            navigateOnly = false;
         }
         if (fromMouse === undefined) {
-            fromMouse = false
+            fromMouse = false;
         }
-        
+
         if (isOSsublist(model)) {
             // Navigate to sublist (whether navigateOnly is true or false)
-            categorySelected = model.name
-            var lm = newSublist()
-            populateSublistInto(lm, model)
+            categorySelected = model.name;
+            var lm = newSublist();
+            populateSublistInto(lm, model);
             // Navigate to sublist
-            var nextView = osswipeview.itemAt(osswipeview.currentIndex+1)
-            osswipeview.incrementCurrentIndex()
+            var nextView = osswipeview.itemAt(osswipeview.currentIndex + 1);
+            osswipeview.incrementCurrentIndex();
             // Ensure focus is on the new view and select first item for navigation consistency
-            _focusFirstItemInCurrentView()
-            Qt.callLater(function() {
-                var currentView = osswipeview.currentItem
+            _focusFirstItemInCurrentView();
+            Qt.callLater(function () {
+                var currentView = osswipeview.currentItem;
                 if (currentView) {
                     // Set currentIndex to 0 for sublists - user explicitly navigated here
-                    currentView.currentIndex = 0
+                    currentView.currentIndex = 0;
                     if (typeof currentView.forceActiveFocus === "function") {
-                        currentView.forceActiveFocus()
+                        currentView.forceActiveFocus();
                     }
                 }
-            })
-        } else if (typeof(model.subitems_url) === "string" && model.subitems_url === "internal://back") {
+            });
+        } else if (typeof (model.subitems_url) === "string" && model.subitems_url === "internal://back") {
             // Back button - just navigate back without setting any OS selection
-            osswipeview.decrementCurrentIndex()
-            categorySelected = ""
+            osswipeview.decrementCurrentIndex();
+            categorySelected = "";
         } else {
             // Select this OS - explicit branching for clarity
-            if (typeof(model.url) === "string" && model.url === "internal://custom") {
+            if (typeof (model.url) === "string" && model.url === "internal://custom") {
                 // Use custom: open native file selector if available, otherwise fall back to QML FileDialog
                 // Don't clear selectedOsName or customSelected here - only update them when user actually selects a file
                 // Changing these properties causes delegate height changes and scroll position resets
-                root.nextButtonEnabled = false
+                root.nextButtonEnabled = false;
                 if (imageWriter.nativeFileDialogAvailable()) {
                     // Defer opening the native dialog until after the current event completes
-                    Qt.callLater(function() {
-                        imageWriter.openFileDialog(
-                            qsTr("Select image"),
-                            CommonStrings.imageFiltersString)
-                    })
+                    Qt.callLater(function () {
+                        imageWriter.openFileDialog(qsTr("Select image"), CommonStrings.imageFiltersString);
+                    });
                 } else if (root.hasOwnProperty("customImageFileDialog")) {
                     // Ensure reasonable defaults
-                    customImageFileDialog.dialogTitle = qsTr("Select image")
-                    customImageFileDialog.nameFilters = CommonStrings.imageFiltersList
+                    customImageFileDialog.dialogTitle = qsTr("Select image");
+                    customImageFileDialog.nameFilters = CommonStrings.imageFiltersList;
                     // Default to Downloads folder
-                    var dl = StandardPaths.writableLocation(StandardPaths.DownloadLocation)
+                    var dl = StandardPaths.writableLocation(StandardPaths.DownloadLocation);
                     if (dl && dl.length > 0) {
-                        var furl = (Qt.platform.os === "windows") ? ("file:///" + dl) : ("file://" + dl)
-                        customImageFileDialog.currentFolder = furl
-                        customImageFileDialog.folder = furl
+                        var furl = (Qt.platform.os === "windows") ? ("file:///" + dl) : ("file://" + dl);
+                        customImageFileDialog.currentFolder = furl;
+                        customImageFileDialog.folder = furl;
                     }
-                    customImageFileDialog.open()
+                    customImageFileDialog.open();
                 } else {
-                    console.warn("OSSelectionStep: No FileDialog fallback available")
+                    console.warn("OSSelectionStep: No FileDialog fallback available");
                 }
-            } else if (typeof(model.url) === "string" && model.url === "internal://format") {
+            } else if (typeof (model.url) === "string" && model.url === "internal://format") {
                 // Erase/format flow
-                imageWriter.setSrc(
-                    model.url,
-                    model.image_download_size,
-                    model.extract_size,
-                    typeof(model.extract_sha256) != "undefined" ? model.extract_sha256 : "",
-                    typeof(model.contains_multiple_files) != "undefined" ? model.contains_multiple_files : false,
-                    categorySelected,
-                    model.name,
-                    typeof(model.init_format) != "undefined" ? model.init_format : ""
-                )
-                imageWriter.setSWCapabilitiesList("[]")
+                imageWriter.setSrc(model.url, model.image_download_size, model.extract_size, typeof (model.extract_sha256) != "undefined" ? model.extract_sha256 : "", typeof (model.contains_multiple_files) != "undefined" ? model.contains_multiple_files : false, categorySelected, model.name, typeof (model.init_format) != "undefined" ? model.init_format : "");
+                imageWriter.setSWCapabilitiesList("[]");
 
-                root.wizardContainer.selectedOsName = model.name
-                root.wizardContainer.customizationSupported = imageWriter.imageSupportsCustomization()
-                root.wizardContainer.piConnectAvailable = false
-                root.wizardContainer.secureBootAvailable = imageWriter.isSecureBootForcedByCliFlag()
-                root.wizardContainer.ccRpiAvailable = false
-                root.wizardContainer.ifAndFeaturesAvailable = false
-                root.nextButtonEnabled = true
+                root.wizardContainer.selectedOsName = model.name;
+                root.wizardContainer.customizationSupported = imageWriter.imageSupportsCustomization();
+                root.wizardContainer.piConnectAvailable = false;
+                root.wizardContainer.secureBootAvailable = imageWriter.isSecureBootForcedByCliFlag();
+                root.wizardContainer.ccRpiAvailable = false;
+                root.wizardContainer.ifAndFeaturesAvailable = false;
+                root.nextButtonEnabled = true;
                 if (fromMouse) {
-                    Qt.callLater(function() { _highlightMatchingEntryInCurrentView(model) })
+                    Qt.callLater(function () {
+                        _highlightMatchingEntryInCurrentView(model);
+                    });
                 }
             } else {
                 // Normal OS selection
-                imageWriter.setSrc(
-                    model.url,
-                    model.image_download_size,
-                    model.extract_size,
-                    typeof(model.extract_sha256) != "undefined" ? model.extract_sha256 : "",
-                    typeof(model.contains_multiple_files) != "undefined" ? model.contains_multiple_files : false,
-                    categorySelected,
-                    model.name,
-                    typeof(model.init_format) != "undefined" ? model.init_format : "",
-                    typeof(model.release_date) != "undefined" ? model.release_date : ""
-                )
-                imageWriter.setSWCapabilitiesList(model.capabilities)
+                imageWriter.setSrc(model.url, model.image_download_size, model.extract_size, typeof (model.extract_sha256) != "undefined" ? model.extract_sha256 : "", typeof (model.contains_multiple_files) != "undefined" ? model.contains_multiple_files : false, categorySelected, model.name, typeof (model.init_format) != "undefined" ? model.init_format : "", typeof (model.release_date) != "undefined" ? model.release_date : "");
+                imageWriter.setSWCapabilitiesList(model.capabilities);
 
-                root.wizardContainer.selectedOsName = model.name
-                root.wizardContainer.customizationSupported = imageWriter.imageSupportsCustomization()
-                root.wizardContainer.piConnectAvailable = imageWriter.checkSWCapability("rpi_connect")
-                root.wizardContainer.secureBootAvailable = imageWriter.checkSWCapability("secure_boot") || imageWriter.isSecureBootForcedByCliFlag()
-                root.wizardContainer.ccRpiAvailable = imageWriter.imageSupportsCcRpi()
-                
+                root.wizardContainer.selectedOsName = model.name;
+                root.wizardContainer.customizationSupported = imageWriter.imageSupportsCustomization();
+                root.wizardContainer.piConnectAvailable = imageWriter.checkSWCapability("rpi_connect");
+                root.wizardContainer.secureBootAvailable = imageWriter.checkSWCapability("secure_boot") || imageWriter.isSecureBootForcedByCliFlag();
+                root.wizardContainer.ccRpiAvailable = imageWriter.imageSupportsCcRpi();
+
                 // Check if any interface/feature capabilities are available (requires both HW and SW support)
                 if (root.wizardContainer.ccRpiAvailable) {
-                    var hasAnyIfFeatures = imageWriter.checkHWAndSWCapability("i2c") ||
-                                           imageWriter.checkHWAndSWCapability("spi") ||
-                                           imageWriter.checkHWAndSWCapability("onewire") ||
-                                           imageWriter.checkHWAndSWCapability("serial") ||
-                                           imageWriter.checkHWAndSWCapability("usb_otg")
-                    root.wizardContainer.ifAndFeaturesAvailable = hasAnyIfFeatures
+                    var hasAnyIfFeatures = imageWriter.checkHWAndSWCapability("i2c") || imageWriter.checkHWAndSWCapability("spi") || imageWriter.checkHWAndSWCapability("onewire") || imageWriter.checkHWAndSWCapability("serial") || imageWriter.checkHWAndSWCapability("usb_otg");
+                    root.wizardContainer.ifAndFeaturesAvailable = hasAnyIfFeatures;
                 } else {
-                    root.wizardContainer.ifAndFeaturesAvailable = false
-                }
-                
-                // Clean up incompatible settings from customizationSettings based on OS capabilities
-                if (!root.wizardContainer.piConnectAvailable) {
-                    delete root.wizardContainer.customizationSettings.piConnectEnabled
-                    root.wizardContainer.piConnectEnabled = false
-                }
-                if (!root.wizardContainer.secureBootAvailable) {
-                    delete root.wizardContainer.customizationSettings.secureBootEnabled
-                    root.wizardContainer.secureBootEnabled = false
-                }
-                if (!root.wizardContainer.ccRpiAvailable) {
-                    delete root.wizardContainer.customizationSettings.enableI2C
-                    delete root.wizardContainer.customizationSettings.enableSPI
-                    delete root.wizardContainer.customizationSettings.enable1Wire
-                    delete root.wizardContainer.customizationSettings.enableSerial
-                    delete root.wizardContainer.customizationSettings.enableUsbGadget
-                    root.wizardContainer.ifI2cEnabled = false
-                    root.wizardContainer.ifSpiEnabled = false
-                    root.wizardContainer.if1WireEnabled = false
-                    root.wizardContainer.ifSerial = "Disabled"
-                    root.wizardContainer.featUsbGadgetEnabled = false
+                    root.wizardContainer.ifAndFeaturesAvailable = false;
                 }
 
-                root.customSelected = false
-                root.nextButtonEnabled = true
+                // Clean up incompatible settings from customizationSettings based on OS capabilities
+                if (!root.wizardContainer.piConnectAvailable) {
+                    delete root.wizardContainer.customizationSettings.piConnectEnabled;
+                    root.wizardContainer.piConnectEnabled = false;
+                }
+                if (!root.wizardContainer.secureBootAvailable) {
+                    delete root.wizardContainer.customizationSettings.secureBootEnabled;
+                    root.wizardContainer.secureBootEnabled = false;
+                }
+                if (!root.wizardContainer.ccRpiAvailable) {
+                    delete root.wizardContainer.customizationSettings.enableI2C;
+                    delete root.wizardContainer.customizationSettings.enableSPI;
+                    delete root.wizardContainer.customizationSettings.enable1Wire;
+                    delete root.wizardContainer.customizationSettings.enableSerial;
+                    delete root.wizardContainer.customizationSettings.enableUsbGadget;
+                    root.wizardContainer.ifI2cEnabled = false;
+                    root.wizardContainer.ifSpiEnabled = false;
+                    root.wizardContainer.if1WireEnabled = false;
+                    root.wizardContainer.ifSerial = "Disabled";
+                    root.wizardContainer.featUsbGadgetEnabled = false;
+                }
+
+                root.customSelected = false;
+                root.nextButtonEnabled = true;
                 if (fromMouse) {
-                    Qt.callLater(function() { _highlightMatchingEntryInCurrentView(model) })
+                    Qt.callLater(function () {
+                        _highlightMatchingEntryInCurrentView(model);
+                    });
                 }
             }
             // Stay on page; user must click Next
         }
     }
-    
+
     function isOSsublist(model) {
         // Properly handle undefined/null values
-        var jsonType = typeof(model.subitems_json)
-        var jsonNotEmpty = model.subitems_json !== ""
-        var hasSubitemsJson = (jsonType == "string" && jsonNotEmpty)
-        
-        var urlType = typeof(model.subitems_url)
-        var urlNotEmpty = model.subitems_url !== ""
-        var urlNotBack = model.subitems_url !== "internal://back"
-        var hasSubitemsUrl = (urlType == "string" && urlNotEmpty && urlNotBack)
-        
-        var isSublist = hasSubitemsJson || hasSubitemsUrl
-        
-        return isSublist
+        var jsonType = typeof (model.subitems_json);
+        var jsonNotEmpty = model.subitems_json !== "";
+        var hasSubitemsJson = (jsonType == "string" && jsonNotEmpty);
+
+        var urlType = typeof (model.subitems_url);
+        var urlNotEmpty = model.subitems_url !== "";
+        var urlNotBack = model.subitems_url !== "internal://back";
+        var hasSubitemsUrl = (urlType == "string" && urlNotEmpty && urlNotBack);
+
+        var isSublist = hasSubitemsJson || hasSubitemsUrl;
+
+        return isSublist;
     }
-    
+
     // Add or reuse sublist page and return its ListModel
     function newSublist() {
         if (osswipeview.currentIndex === (osswipeview.count - 1)) {
-            var newlist = suboslist.createObject(osswipeview)
-            osswipeview.addItem(newlist)
+            var newlist = suboslist.createObject(osswipeview);
+            osswipeview.addItem(newlist);
             // Rebuild focus order to include the new sublist
-            root.rebuildFocusOrder()
+            root.rebuildFocusOrder();
         }
-        var m = osswipeview.itemAt(osswipeview.currentIndex+1).model
+        var m = osswipeview.itemAt(osswipeview.currentIndex + 1).model;
         if (m.count > 1) {
-            m.remove(1, m.count - 1)
+            m.remove(1, m.count - 1);
         }
-        return m
+        return m;
     }
 
     // Populate given ListModel from a model's subitems_json, flattening nested items
     function populateSublistInto(listModel, model) {
-        if (typeof(model.subitems_json) !== "string" || model.subitems_json === "") {
-            return
+        if (typeof (model.subitems_json) !== "string" || model.subitems_json === "") {
+            return;
         }
-        var subitems = []
+        var subitems = [];
         try {
-            subitems = JSON.parse(model.subitems_json)
+            subitems = JSON.parse(model.subitems_json);
         } catch (e) {
-            console.log("Failed to parse subitems_json:", e)
-            return
+            console.log("Failed to parse subitems_json:", e);
+            return;
         }
         for (var i in subitems) {
-            var entry = subitems[i]
-            if (entry && typeof(entry) === "object") {
+            var entry = subitems[i];
+            if (entry && typeof (entry) === "object") {
                 if ("subitems" in entry) {
-                    entry["subitems_json"] = JSON.stringify(entry["subitems"])
-                    delete entry["subitems"]
+                    entry["subitems_json"] = JSON.stringify(entry["subitems"]);
+                    delete entry["subitems"];
                 }
                 // Propagate init_format from parent when missing so customization remains available
-                if (typeof(entry.init_format) === "undefined" && typeof(model.init_format) === "string" && model.init_format !== "") {
-                    entry.init_format = model.init_format
+                if (typeof (entry.init_format) === "undefined" && typeof (model.init_format) === "string" && model.init_format !== "") {
+                    entry.init_format = model.init_format;
                 }
-                if (typeof(entry.icon) === "string" && entry.icon.indexOf("icons/") === 0) {
-                    entry.icon = "../" + entry.icon
+                if (typeof (entry.icon) === "string" && entry.icon.indexOf("icons/") === 0) {
+                    entry.icon = "../" + entry.icon;
                 }
                 // Ensure role types remain consistent across the ListModel
-                entry.url = String(entry.url || "")
-                entry.icon = String(entry.icon || "")
-                entry.subitems_url = String(entry.subitems_url || "")
-                entry.website = String(entry.website || "")
+                entry.url = String(entry.url || "");
+                entry.icon = String(entry.icon || "");
+                entry.subitems_url = String(entry.subitems_url || "");
+                entry.website = String(entry.website || "");
 
                 if (typeof entry.capabilities === "string") {
                     // keep it
@@ -856,50 +824,50 @@ WizardStepBase {
                     entry.capabilities = "[]";
                 }
 
-                listModel.append(entry)
+                listModel.append(entry);
             }
         }
     }
-    
+
     // Called when OS list data is ready from network
     function onOsListPreparedHandler() {
         if (!root || !root.osmodel) {
-            return
+            return;
         }
         // Always reload to reflect cache status changes and updates from backend
-        var osSuccess = root.osmodel.reload()
+        var osSuccess = root.osmodel.reload();
         if (osSuccess && !modelLoaded) {
-            modelLoaded = true
-            var o = JSON.parse(root.imageWriter.getFilteredOSlist())
+            modelLoaded = true;
+            var o = JSON.parse(root.imageWriter.getFilteredOSlist());
             if ("imager" in o) {
-                var imager = o["imager"]
+                var imager = o["imager"];
                 if (root.imageWriter.getBoolSetting("check_version") && "latest_version" in imager && "url" in imager) {
                     if (!root.imageWriter.isEmbeddedMode() && root.imageWriter.isVersionNewer(imager["latest_version"])) {
-                        root.updatePopupRequested(imager["url"], imager["latest_version"])
+                        root.updatePopupRequested(imager["url"], imager["latest_version"]);
                     }
                 }
                 if ("default_os" in imager) {
-                    selectNamedOS(imager["default_os"], root.osmodel)
+                    selectNamedOS(imager["default_os"], root.osmodel);
                 }
                 if (root.imageWriter.isEmbeddedMode()) {
                     if ("embedded_default_os" in imager) {
-                        selectNamedOS(imager["embedded_default_os"], root.osmodel)
+                        selectNamedOS(imager["embedded_default_os"], root.osmodel);
                     }
                     if ("embedded_default_destination" in imager) {
-                        root.defaultEmbeddedDriveRequested(imager["embedded_default_destination"])
+                        root.defaultEmbeddedDriveRequested(imager["embedded_default_destination"]);
                     }
                 }
             }
         }
     }
-    
+
     function selectNamedOS(osName, model) {
         for (var i = 0; i < model.rowCount(); i++) {
-            var entry = model.get(i)
+            var entry = model.get(i);
             if (entry && entry.name === osName) {
-                selectOSitem(entry)
-                break
+                selectOSitem(entry);
+                break;
             }
         }
     }
-} 
+}

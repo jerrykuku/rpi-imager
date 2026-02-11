@@ -505,6 +505,9 @@ WizardStepBase {
             visible: !confirmDialog.allowAccept
         }
 
+        // Spacer to push buttons to bottom
+        Item { Layout.fillHeight: true }
+
         RowLayout {
             id: confirmButtonRow
             Layout.fillWidth: true
@@ -535,7 +538,7 @@ WizardStepBase {
         }
 
         // Bottom spacer to balance the dialog's internal top padding
-        Item { Layout.preferredHeight: Style.cardPadding }
+        // Item { Layout.preferredHeight: Style.cardPadding }
     }
 
     // Delay accept for 2 seconds - moved outside dialog content

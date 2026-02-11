@@ -90,8 +90,8 @@ BaseDialog {
             id: yesButton
             text: qsTr("Update")
             // Make the primary action button wider to encourage clicking
-            Layout.minimumWidth: Style.buttonWidthMinimum * 1.5
-            implicitWidth: Style.buttonWidthMinimum * 1.5
+            // Layout.minimumWidth: Style.buttonWidthMinimum * 1.5
+            // implicitWidth: Style.buttonWidthMinimum * 1.5
             accessibleDescription: qsTr("Open the Raspberry Pi website in your browser to download the latest version")
             activeFocusOnTab: true
             onClicked: {

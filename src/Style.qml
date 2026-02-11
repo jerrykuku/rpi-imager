@@ -48,7 +48,8 @@ Item {
     readonly property color textDescriptionColor: "#1a1a1a"
     // Sidebar colors
     readonly property color sidebarTitleColor: "#171717"
-    readonly property color sidebarActiveBackgroundColor: zimaBlue
+    readonly property color sidebarActiveBackgroundColor: "#F5F5F5"
+    readonly property color sidebarActiveBorderColor: zimaBlue
     readonly property color sidebarTextOnActiveColor: "#FFFFFF"
     readonly property color sidebarTextOnInactiveColor: zimaBlue
     readonly property color sidebarTextDisabledColor: "#E0E0E0"
@@ -74,7 +75,7 @@ Item {
 
     /// the check-boxes/radio-buttons have labels that might be disabled
     readonly property color formLabelColor: "black"
-    readonly property color formLabelErrorColor: "red"
+    readonly property color formLabelErrorColor: "#EF4444"
     readonly property color formLabelDisabledColor: "grey"
     // Active color for radio buttons, checkboxes, and switches
     readonly property color formControlActiveColor: "#0057FF"
@@ -134,12 +135,14 @@ Item {
     readonly property int sectionPadding: 16
     readonly property int sectionBorderWidth: 1
     readonly property int sectionBorderRadius: 8
-    readonly property int listItemBorderRadius: 5
+    readonly property int listItemBorderRadius: 8
     readonly property int listItemPadding: 12
-    readonly property int cardPadding: 8
+    readonly property int cardPadding: 16
     readonly property int scrollBarWidth: 10
     readonly property int sidebarWidth: 200
+    readonly property int sidebarPadding: 8
     readonly property int sidebarItemBorderRadius: 8
+    readonly property int sectionMargin: 4
     // Embedded-mode overrides (0 radius to avoid software renderer artifacts)
     readonly property int sectionBorderRadiusEmbedded: 8
     readonly property int listItemBorderRadiusEmbedded: 8

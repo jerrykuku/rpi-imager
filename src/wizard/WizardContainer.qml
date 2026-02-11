@@ -395,9 +395,9 @@ Item {
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: sidebarBottom.top
-                anchors.leftMargin: Style.cardPadding
-                anchors.topMargin: Style.cardPadding
-                anchors.bottomMargin: Style.cardPadding
+                anchors.leftMargin: Style.sidebarPadding
+                anchors.topMargin: Style.sidebarPadding
+                anchors.bottomMargin: Style.sidebarPadding
                 contentWidth: -1
                 contentHeight: sidebarColumn.implicitHeight
                 z: 1
@@ -460,7 +460,7 @@ Item {
                                 anchors.top: parent.top
                                 height: Style.sidebarItemHeight
                                 color: stepItem.index === root.getSidebarIndex(root.currentStep) ? Style.sidebarActiveBackgroundColor : Style.transparent
-                                border.color: stepItem.index === root.getSidebarIndex(root.currentStep) ? Style.sidebarActiveBackgroundColor : Style.transparent
+                                border.color: stepItem.index === root.getSidebarIndex(root.currentStep) ? Style.sidebarActiveBorderColor : Style.transparent
                                 border.width: 1
                                 radius: root.imageWriter.isEmbeddedMode() ? Style.sidebarItemBorderRadiusEmbedded : Style.sidebarItemBorderRadius
                                 antialiasing: true  // Smooth edges at non-integer scale factors
@@ -493,7 +493,7 @@ Item {
                                         text: stepItem.modelData
                                         font.pixelSize: Style.fontSizeSidebarItem
                                         font.family: Style.fontFamily
-                                        color: stepItem.index > root.getSidebarIndex(root.currentStep) ? Style.formLabelDisabledColor : (stepItem.index === root.getSidebarIndex(root.currentStep) ? Style.sidebarTextOnActiveColor : Style.sidebarTextOnInactiveColor)
+                                        color: stepItem.index > root.getSidebarIndex(root.currentStep) ? Style.formLabelDisabledColor : (stepItem.index === root.getSidebarIndex(root.currentStep) ? Style.sidebarTitleColor : Style.sidebarTitleColor)
                                     }
                                 }
                             }
@@ -637,21 +637,42 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                anchors.leftMargin: Style.cardPadding
-                anchors.rightMargin: Style.cardPadding
+                anchors.leftMargin: Style.spacingSmall
                 anchors.bottomMargin: Style.spacingSmall
                 height: Style.buttonHeightStandard
                 z: 2
 
-                ImButton {
+                Button {
                     id: optionsButton
                     anchors.left: parent.left
-                    anchors.right: parent.right
                     anchors.bottom: parent.bottom
-                    height: Style.buttonHeightStandard
-                    text: qsTr("App Options")
-                    accessibleDescription: qsTr("Open application settings to configure sound alerts, auto-eject, telemetry, and content repository")
+                    width: 40
+                    height: 40
+                    padding: 0
                     activeFocusOnTab: true
+                    background: Rectangle {
+                        color: optionsButton.enabled ? (optionsButton.activeFocus ? Style.buttonFocusedBackgroundColor : (optionsButton.hovered ? Style.buttonHoveredBackgroundColor : Style.buttonBackgroundColor)) : Qt.rgba(0, 0, 0, 0.1)
+                        radius: 8
+                        border.color: optionsButton.enabled ? Style.popupBorderColor : Qt.rgba(0, 0, 0, 0.2)
+                        border.width: 1
+                        antialiasing: true
+                        clip: true
+                    }
+                    contentItem: Image {
+                        source: "../icons/ic_cog_red.svg"
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
+                        antialiasing: true
+                        anchors.centerIn: parent
+                        width: 24
+                        height: 24
+                    }
+                    Accessible.role: Accessible.Button
+                    Accessible.name: qsTr("App Options")
+                    Accessible.description: qsTr("Open application settings to configure sound alerts, auto-eject, telemetry, and content repository")
+                    Accessible.onPressAction: optionsButton.clicked()
+                    Keys.onEnterPressed: clicked()
+                    Keys.onReturnPressed: clicked()
                     onClicked: {
                         if (root.optionsPopup) {
                             if (!root.optionsPopup.wizardContainer) {
